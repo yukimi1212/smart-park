@@ -10,35 +10,22 @@
 <!-- PAGE TITLE -->
 <title>Home</title>
 
-<!-- ===================================
-	FAVICON ICON
-==================================== -->
 <link rel="shortcut icon" href="images/ico/favicon.png">
 
-<!-- ===================================
-	NORMALIZE CSS
-==================================== -->
+
 <link rel="stylesheet" href="css/normalize.css">
 
-<!-- ===================================
-	BOOTSTRAP 
-==================================== -->
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
 
-<!-- ===================================
-	GOOGLE FONTS
-==================================== -->
+
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Raleway:600,700,400,300' rel='stylesheet' type='text/css'>
 
-<!-- ===================================
-	FONTS ICON
-==================================== -->
+
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 
-<!-- ===================================
-	PLUGIN
-==================================== -->
+
 <link rel="stylesheet" href="css/magnific-popup.css">
 <link rel="stylesheet" href="css/slider-pro.css">
 <link rel="stylesheet" href="css/owl.carousel.css">
@@ -46,22 +33,11 @@
 <link rel="stylesheet" href="css/owl.transitions.css">
 <link rel="stylesheet" href="css/animate.css">
 
-<!-- ===================================
-	MAIN STYLESHEET
-==================================== -->
+
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/responsive.css" />
 <link rel="stylesheet" href="css/color-green.css" id="colors" />
 
-
-<!--[if lt IE 9]>
-	<script src="js/html5shiv.min.js"></script>
-	<script src="js/respond.min.js"></script>
-	<script type="text/javascript" src="js/selectivizr-min.js"></script>
-	<script src="http://s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.5-min.js"></script>
-	<script src="http://css3-mediaqueries-js.googlecode.com/files/css3-mediaqueries.js"></script>
-	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-<![endif]-->
 </head>
 
 <body>

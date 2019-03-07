@@ -8,16 +8,10 @@
     <meta name="description" content="Admin Template">
     <meta name="keywords" content="admin dashboard, admin, flat, flat ui, ui kit, app, web app, responsive">
     <link rel="shortcut icon" href="images/ico/favicon.png">
-    <title>Login</title>
+    <title>登录</title>
 
-    <!-- Base Styles -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -27,15 +21,15 @@
           <img src="images/logo.PNG" alt="smart"/>
       </div>
 
-      <h2 class="form-heading">login</h2>
+      <h2 class="form-heading">登录</h2>
       <div class="container log-row">
       	<form id="form" class="form-signin" action="/login/user" method="get" enctype="multipart/form-data"> 
               <div class="login-wrap">
               	  <span style="color:#f36616" id="warning_id"></span>
-                  <input type="text" id="user_id" name="user_id" class="form-control" placeholder="User ID" autofocus>
+                  <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名" autofocus>
                   <span style="color:#f36616" id="warning_pwd"></span>
-                  <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="Password">
-                  <button class="btn btn-lg btn-success btn-block" type="submit">LOGIN</button>
+                  <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码">
+                  <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
                   <div class="login-social-link">
                   </div>
                   <label class="checkbox-custom check-success">
@@ -44,41 +38,17 @@
                   </label>
 
                   <div class="registration">
-                      Don't have an account yet?
+                      	还未注册?
                       <a class="" href="registration.jsp">
-                          Create an account
+                          	创建账号
                       </a>
                   </div>
 
               </div>
-
-              <!-- Modal 
-              <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="forgotPass" class="modal fade">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              <h4 class="modal-title">Forgot Password ?</h4>
-                          </div>
-                          <div class="modal-body">
-                              <p>Enter your e-mail address below to reset your password.</p>
-                              <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-                          </div>
-                          <div class="modal-footer">
-                              <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                              <button class="btn btn-success" type="button">Submit</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <!-- modal -->
-
 		</form> 
       </div>
 
-      <!--jquery-1.10.2.min-->
       <script src="js/jquery-1.11.1.min.js"></script>
-      <!--Bootstrap Js-->
       <script src="js/bootstrap.min.js"></script>
       <script src="js/respond.min.js"></script>
 	<script src="js/jquery.form.js" type="text/javascript"></script>  
@@ -87,15 +57,6 @@
   
 
 <script type="text/javascript">  	
-	/* $(function () {
-    	$("#form").submit(function () {
-        	$(this).ajaxSubmit(function () {
-            	alert("提交成功1");
-            	window.open(index.jsp);
-        	});
-        	return false;
-    	});
-	}); */
 	
 	$(function () {
 	    $(":submit").click(function () {

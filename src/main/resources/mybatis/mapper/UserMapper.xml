@@ -16,7 +16,7 @@
 	<select id="checkUser" resultMap="UserMap" useCache="false">
     	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time 
     	FROM user  
-    	where user_id = #{user_id} and user_pwd = #{user_pwd}
+    	where user_name = #{user_name} and user_pwd = #{user_pwd}
     </select>
     
 	<select id="getUserById" parameterType="java.lang.String" resultMap="UserMap" useCache="false">

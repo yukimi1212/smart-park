@@ -36,16 +36,15 @@ public class LoginController {
     UserService userService;
    
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String loginUser(String user_id, String user_pwd) {
-        log.info("/login/user/" + user_id);
+    public String loginUser(String user_name, String user_pwd) {
+        log.info("/login/user/" + user_name);
     	String str = "";
-//    	Map<String,Object> map = new HashMap<String,Object>();
-        if(user_id == "")
-        	str = "|id为空|";
+        if(user_name == "")
+        	str = "|用户名为空|";
         else if(user_pwd == "")
-        	str = "|pwd为空|";
+        	str = "|密码为空|";
         else {
-        	User user = userService.checkUser(user_id, user_pwd);
+        	User user = userService.checkUser(user_name, user_pwd);
         	if(user != null)
         		str = "|" + user.getUser_name() + "|";
         	else

@@ -8,7 +8,7 @@ import com.zucc.smart.domain.User;
 @Mapper
 public interface UserMapper {
 	
-	User checkUser(String user_id, String user_pwd);
+	User checkUser(String user_name, String user_pwd);
 
 	User getUserById(String user_id);
 	
