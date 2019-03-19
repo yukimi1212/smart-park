@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="../../vendor/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
+    
+    <style> 		
+      	#search input[type=text] {
+      		margin:0 auto;
+      		width:350px;
+      		height:50px;
+      		border:1px
+        	font-size: 18px;
+        	width: 705px;
+      	}
+      	#search .button {
+        	padding: 10px;
+        	width: 90px;
+      	}
+	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
 <div class="page-wrapper">
@@ -62,7 +77,7 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="#" class="nav-link">
                                     <i class="icon icon-graph"></i> Chart.js
                                 </a>
                             </li>
@@ -72,8 +87,13 @@
                 </ul>
             </nav>
         </div>
-
+		
         <div class="content">
+			<div id="search">
+    			<input type="text" name="search">
+    			<input class="button" type="submit" value="搜索">
+  			</div><br>
+  			
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
