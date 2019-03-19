@@ -220,10 +220,12 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
 					<div class="clean-icon">
-						<i class="fa fa-css3"></i>
+						<a href="javascript:void(0)" onclick="jumpToParking()">
+						<i class="fa fa-edit"></i>
+						</a>
 					</div>
-					<h3>停车场查询</h3>
-					<p>统计了各个停车场的数据，可按地区按类型查询停车场的相关信息。.</p>
+					<h3>停车场统计</h3>
+					<p>统计了各个停车场的数据，可按地区按类型查询停车场的相关信息。</p>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
@@ -359,7 +361,6 @@
 	
 	function jumpToOpen(){
 		var user_name = document.getElementById("user_name").innerHTML;
-//		var user_id = document.getElementById("user_id").value;
 	 	var param = encode64(user_name);
         var uurl = "http://192.168.60.16:8080/user/" + param + "/analysis";
         window.open(uurl);  
@@ -386,8 +387,11 @@
      	}) */
     }	
 	
-	function login(){
-		window.location.href="login.jsp";  
+	function jumpToParking() {
+		var user_name = document.getElementById("user_name").innerHTML;
+	 	var param = encode64(user_name);
+        var uurl = "http://192.168.60.16:8080/user/" + param + "/parking";
+        window.open(uurl);  
 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  

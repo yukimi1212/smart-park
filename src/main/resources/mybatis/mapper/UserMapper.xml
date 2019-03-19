@@ -11,25 +11,26 @@
 		<result column="user_age" property="user_age" />
 		<result column="user_phone" property="user_phone" />
 		<result column="registration_time" property="registration_time" />	
+		<result column="user_identity" property="user_identity" />
 	</resultMap>
 
 	<select id="checkUser" resultMap="UserMap" useCache="false">
-    	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time 
+    	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity 
     	FROM user  
-    	where user_name = #{user_name} and user_pwd = #{user_pwd}
+    	where user_id = #{user_id} and user_pwd = #{user_pwd}
     </select>
     
 	<select id="getUserById" parameterType="java.lang.String" resultMap="UserMap" useCache="false">
-		SELECT user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time
+		SELECT user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity
 		FROM user
 		where user_id = #{user_id}
 	</select>
 	
 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user
-		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time)
+		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)
 		values
-		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_age}, #{user_phone}, now())
+		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_age}, #{user_phone}, now(), #{user_identity})
 	</insert>
     
     <delete id="deleteUser" parameterType="java.lang.String">

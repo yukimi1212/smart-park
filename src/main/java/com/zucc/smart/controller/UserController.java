@@ -47,21 +47,29 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/", "/{user_name}/map"})
-    public String getMap(@PathVariable("user_name") String user_name) {
-//    	user_name = new String (Decode.decode(user_name));
+    public String getMap(@PathVariable("user_name") String user_name_obj) {
+    	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name +"/map");
         return "map";
     }
     
     @RequestMapping(value = {"/", "/{user_name}/analysis"})
-    public String getOpenFlashChart(@PathVariable("user_name") String user_name, Map<String, Object> map) throws IOException {
-//    	user_name = new String (Decode.decode(user_name));
+    public String getOpenFlashChart(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name + "/analysis");
         double[] data1 = new double[]{4,8,9,3,2,6,8,6,3,7,3,5};
         
         build7daysTxt.alertBar1(data1);
         map.put("user_name", user_name);
         return "analysisTest";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_name}/parking"})
+    public String getParkingForm(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	log.info("/user/"+ user_name + "/parking");
+        map.put("user_name", user_name);
+        return "parkingForm";
     }
     
     @RequestMapping(value = {"/", "/{user_name}/home"})

@@ -36,15 +36,15 @@ public class LoginController {
     UserService userService;
    
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String loginUser(String user_name, String user_pwd) {
-        log.info("/login/user/" + user_name);
+    public String loginUser(String user_id, String user_pwd) {
+        log.info("/login/user/" + user_id);
     	String str = "";
-        if(user_name == "")
+        if(user_id == "")
         	str = "|用户名为空|";
         else if(user_pwd == "")
         	str = "|密码为空|";
         else {
-        	User user = userService.checkUser(user_name, user_pwd);
+        	User user = userService.checkUser(user_id, user_pwd);
         	if(user != null)
         		str = "|" + user.getUser_name() + "|";
         	else
@@ -55,7 +55,7 @@ public class LoginController {
     
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register (String user_id, String user_name, String user_pwd, String reuser_pwd, String user_gender, String user_age, String user_phone) {
-        log.info("/login/register/" + user_id);
+        log.info("/login/register/" + user_id + "/" + user_name + "/" + user_pwd + "/" + reuser_pwd + "/" + user_gender + "/" + user_age + "/" + user_phone);
         String str = "";
         if(user_id == "") {
         	str = "|id为空|";
@@ -92,10 +92,10 @@ public class LoginController {
         	boolean flag = userService.addUser(adduser);
         	if(flag) {
         		User user = userService.getUserById(user_id);
-        		user = userService.getUserById(user_id);
         		str = "|" + user.getUser_name() + "|";
         	}
         }
+        System.out.println("str：" + str);
         return str;
     }
     

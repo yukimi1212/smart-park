@@ -26,7 +26,7 @@
       	<form id="form" class="form-signin" action="/login/user" method="get" enctype="multipart/form-data"> 
               <div class="login-wrap">
               	  <span style="color:#f36616" id="warning_id"></span>
-                  <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名" autofocus>
+                  <input type="text" id="user_id" name="user_id" class="form-control" placeholder="用户id" autofocus>
                   <span style="color:#f36616" id="warning_pwd"></span>
                   <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码">
                   <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
@@ -64,11 +64,12 @@
 	            url: "http://192.168.60.16:8080/login/user",
 	            success: function (data) {
 	                var n = data.split("|");	
+	                alert(n[1]);
 	                $("span").empty();
 	                if(n[1] == "id为空"){
 	                	document.getElementById("warning_id").innerHTML = "请输入id";
 	                }
-	                else if(n[1] == "pwd为空"){
+	                else if(n[1] == "密码为空"){
 	                	document.getElementById("warning_pwd").innerHTML = "请输入密码";
 	                }	
 	                else if(n[1] == "不存在"){

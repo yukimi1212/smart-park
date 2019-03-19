@@ -20,10 +20,10 @@ public class UserServiceImpl implements UserService {
    
     @Transactional
 	@Override
-	public User checkUser(String user_name, String user_pwd) {
-        log.info("checkUser: " + user_name + " " + user_pwd);
+	public User checkUser(String user_id, String user_pwd) {
+        log.info("checkUser: " + user_id + " " + user_pwd);
 //        User user = userMapper.getUserById(user_id);
-        User user = userMapper.checkUser(user_name, user_pwd);
+        User user = userMapper.checkUser(user_id, user_pwd);
         return user;
 	}
 

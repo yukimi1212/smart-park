@@ -193,7 +193,9 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
 					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jumpToParking()">
 						<i class="fa fa-edit"></i>
+						</a>
 					</div>
 					<h3>停车场统计</h3>
 					<p>统计了各个停车场的数据，可按地区按类型查询停车场的相关信息。</p>
@@ -306,15 +308,22 @@
 </body>
 
 <script type="text/javascript">  
-	function jumpToMap(){
+	function jumpToMap() {
 		alert("请登录！");
 		window.location.href="#info";
     }	
 	
-	function jumpToOpen(){
+	function jumpToOpen() {
 		alert("请登录！");
 		window.location.href="#info";
-    }	
+    }
+	
+	function jumpToParking() {
+		var user_name = "guide";
+	 	var param = encode64(user_name);
+        var uurl = "http://192.168.60.16:8080/user/" + param + "/parking";
+        window.open(uurl);  
+	}
 
 </script>
 </html>

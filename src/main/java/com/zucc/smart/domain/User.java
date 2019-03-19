@@ -9,6 +9,8 @@ public class User {
     private int user_age;
     private String user_phone;
 	private String registration_time;
+	private String user_identity;
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -50,6 +52,12 @@ public class User {
 	}
 	public void setRegistration_time(String registration_time) {
 		this.registration_time = registration_time;
+	}
+	public String getUser_identity() {
+		return user_identity;
+	}
+	public void setUser_identity(String user_identity) {
+		this.user_identity = user_identity;
 	}
 	
 	
