@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zucc.smart.mapper.ParkingTypeMapper">
+
+	<resultMap id="ParkingTypeMap" type="com.zucc.smart.domain.ParkingType">
+		<result column="typecode" property="typecode" />
+		<result column="typename" property="typename" />
+
+	</resultMap>
+
+	<select id="getAllType" resultMap="ParkingTypeMap" useCache="false">
+    	select typecode, typename 
+    	FROM parkingtype
+    </select>
+    
+	<select id="getTypeName" parameterType="java.lang.String" resultMap="ParkingTypeMap" useCache="false">
+		SELECT typename
+		FROM parkingtype
+		where typecode = #{typecode}
+	</select>      
+</mapper>

@@ -27,7 +27,6 @@
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
-
 <div class="page-wrapper">
     <nav class="navbar page-header">
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
@@ -65,89 +64,86 @@
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
 
-                    <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> 停车场统计
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="alerts.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按类型
+                                <a href="#" class="nav-link">
+                                    <i class="icon icon-graph"></i> Chart.js
                                 </a>
                             </li>
-
-                            <li class="nav-item">
-                                <a href="buttons.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按区域
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="cards.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按街道
-                                </a>
-                            </li>
-
                         </ul>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-graph"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
-                        </a>
                     </li>
                    
                 </ul>
             </nav>
         </div>
 		
-        <div class="content">   
-        	<div id="search">
+        <div class="content">
+			<div id="search">
     			<input type="text" name="search">
     			<input class="button" type="submit" value="搜索">
   			</div><br>
   			
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-light">
-                            	所有停车场信息
+                            Bar Charts
                         </div>
 
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="tab">
-                                    <thead>
-                                    <tr>
-                                        <th>停车场编号</th>
-                                        <th>街道编号</th>
-                                        <th>区域编号</th>
-                                        <th>停车场名</th>
-                                        <th>街道名</th>                                  
-                                        <th>所属区域</th>
-                                        <th>停车场类型编号</th>
-                                        <th>停车位总数</th>
-                                        <th>停车位空余</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                 
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="text-nowrap">Samsung Galaxy S8</td>
-                                        <td>31,589</td>
-                                        <td>$800</td>
-                                        <td>5%</td>
-                                    </tr>
-                                    
-                                    </tbody>
-                                </table>
-                            </div>
+                            <canvas id="bar-chart" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
-                
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            Line Charts
+                        </div>
+
+                        <div class="card-body">
+                            <canvas id="line-chart" width="100%" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            Radar Chart
+                        </div>
+
+                        <div class="card-body">
+                            <canvas id="radar-chart" width="100%" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            Pie Chart
+                        </div>
+
+                        <div class="card-body">
+                            <canvas id="pie-chart" width="100%" height="50"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -161,43 +157,11 @@
 </body>
 
 <script type="text/javascript">  
-
-window.onload = function(){
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
-		$.ajax({
-   		type:'GET',
-     	url:'http://192.168.60.16:8080/park/' + param + '/parking',
-     	async:true,
-     	data:{
-     	},
-     	success:function(result){
-     	    var jsonData = JSON.stringify(result);
-     	    showData(jsonData);
-     	},
-     	error:function(error){
-     		var jsonData = JSON.stringify(error);
-     	    alert(jsonData)
-     	}
- 	})
-};
-
-	function showData(data) {
-		alert("showData：" + data);
-		alert(data[0].parkcode);
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型编号</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td></tr>"; 
-		}
-		str = str + "</tbody>";
-		$("#tab").append(str);      
-	}
-
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
  		var param = encode64(user_name);
-    	var url = "http://192.168.60.16:8080/user/" + param + "/home";
-    	window.open(url);  
+    	var uurl = "http://192.168.60.16:8080/user/" + param + "/home";
+    	window.open(uurl);  
 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  

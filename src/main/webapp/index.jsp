@@ -321,8 +321,8 @@
 	function jumpToParking() {
 		var user_name = "guide";
 	 	var param = encode64(user_name);
-        var uurl = "http://192.168.60.16:8080/user/" + param + "/parking";
-        window.open(uurl);  
+        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
+        window.open(url);  
 	}
 
 </script>

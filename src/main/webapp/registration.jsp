@@ -8,127 +8,113 @@
     <meta name="description" content="Admin Template">
     <meta name="keywords" content="admin dashboard, admin, flat, flat ui, ui kit, app, web app, responsive">
     <link rel="shortcut icon" href="images/ico/favicon.png">
-    <title>Registration</title>
+    <title>登录</title>
 
-    <!-- Base Styles -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
+
 </head>
-<body class="login-body">
 
+  <body class="login-body">
+      
       <div class="login-logo">
-          <img src="images/logo.PNG" alt=""/>
+          <img src="images/logo.PNG" alt="smart"/>
       </div>
 
+      <h2 class="form-heading">注册</h2>
       <div class="container log-row">
-          <form id="form" class="form-signin" enctype="multipart/form-data">
-              <p> 请在下面输入您的信息</p><span style="color:#f36616" id="warning_id"></span>
-              <input type="text" id="user_id" name="user_id" class="form-control" placeholder="User Id" autofocus><span style="color:#f36616" id="warning_name"></span>
-              <input type="text" id="user_name" name="user_name" class="form-control" placeholder="Name" autofocus><span style="color:#f36616" id="warning_phone"></span>
-              <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="Password">
-          	  <input type="password" id="reuser_pwd" name="reuser_pwd" class="form-control" placeholder="Re-type Password">	
-          	  <input type="text" id="user_phone" name="user_phone" class="form-control" placeholder="Phone" autofocus><span style="color:#f36616" id="warning_age"></span>
-              <input type="text" id="user_age" name="user_age" class="form-control" placeholder="Age" autofocus><span style="color:#f36616" id="warning_pwd"></span>	 
-              <div class="radio-custom radio-success">
-                  <input type="radio" value="Male" checked="checked" name="gender" id="male">
-                  <label for="male">Male</label>
-                  <input type="radio"  value="Female" name="gender" id="female">
-                  <label for="female">Female</label>
-              </div>
-              <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
+      	<form id="form" class="form-signin" action="/login/register" method="post" enctype="multipart/form-data"> 
+        	<div class="login-wrap">
+              	<span style="color:#f36616" id="warning_id"></span>
+               	<input type="text" id="user_id" name="user_id" class="form-control" placeholder="用户ID" autofocus>
+                <span style="color:#f36616" id="warning_name"></span>
+                <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名" autofocus>
+                <span style="color:#f36616" id="warning_pwd"></span>
+                <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码">
+                <span style="color:#f36616" id="warning_repwd"></span>
+                <input type="password" id="reuser_pwd" name="reuser_pwd" class="form-control" placeholder="确认密码">
+                <span style="color:#f36616" id="warning_age"></span>
+               	<input type="text" id="user_age" name="user_age" class="form-control" placeholder="年龄" autofocus>
+               	<span style="color:#f36616" id="warning_phone"></span>
+               	<input type="text" id="user_phone" name="user_phone" class="form-control" placeholder="联系电话" autofocus>
 
-              <div class="registration m-t-20 m-b-20">
-                  	已有账号.请直接
-                  <a class="" href="login.jsp">
+                <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
+				<div class="radio-custom radio-success">
+                	<input type="radio" value="Male" checked="checked" name="gender" id="male">
+                  	<label for="male">男</label>
+                  	<input type="radio"  value="Female" name="gender" id="female">
+                  	<label for="female">女</label>
+              	</div>
+
+                <div class="registration m-t-20 m-b-20">
+                	已有账号.请直接
+                  	<a class="" href="login.jsp">
                       	登录
-                  </a>
-              </div>
-          </form>
+                  	</a>
+              	</div>
+
+            </div>
+		</form> 
       </div>
 
-    <!--jquery-1.10.2.min-->
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <!--Bootstrap Js-->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/respond.min.js"></script>
-
-
-
-</body>
+      <script src="js/jquery-1.11.1.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/respond.min.js"></script>
+	<script src="js/jquery.form.js" type="text/javascript"></script>  
+	
+  </body>
   
-	<script type="text/javascript">	
-	 $(function () {
-		    $(":submit").click(function () {
-//		    	e.preventDefault();
-		    	var user_gender = $("input[name='gender']:checked").val();	
-		        var user_id = $("#user_id").html();;
-		        var user_name = $("#user_name").html();
-		        var user_pwd = $("#user_pwd").html();
-		        var reuser_pwd = $("#reuser_pwd").html();
-		        var user_phone = $("#user_phone").html();
-		        var user_age = $("#user_age").html();
-		    	$.ajax({
-		    		type:'POST',
-	                url:"http://localhost:8080/login/register",
-	                async:false,
-		            data:{
- 	                    'user_id':user_id,
-	                    'user_name':user_name,
-	                    'user_pwd':user_pwd,
-	                    'reuser_pwd':reuser_pwd,
-	                    'user_gender':user_gender,
-	                    'user_age':user_age,
-	                    'user_phone':user_phone
-	                }, 
-	                dataType:'text',
-	                success:function(result){
-	                	alert(result);
- 	                	var user_name = JSON.stringify(result);
-	                	var n = user_name.split("|");
-	                	alert(n[1])
-	                	$("span").empty();
-	                	if(n[1] == "id为空"){
-	                		document.getElementById("warning_id").innerHTML = "请输入id";                   	
-	                	}
-	                	else if(n[1] == "name为空"){
-	                		document.getElementById("warning_name").innerHTML = "请输入用户名";
-	                	}
-	                	else if(n[1] == "pwd为空"){
-	                		document.getElementById("warning_pwd").innerHTML = "请输入密码";
-	                	}
-	                	else if(n[1] == "id已存在"){
-	                		document.getElementById("warning_id").innerHTML = "id已存在";
-	                	}
-	                	else if(n[1] == "age输入错误"){
-	                		document.getElementById("warning_age").innerHTML = "年龄应为数字  0-100";
-	                		$("#user_age").val("");
-	                	}
-	                	else if(n[1] == "phone输入错误"){
-	                		document.getElementById("warning_phone").innerHTML = "联系电话应为数字";
-	                		$("#user_phone").val("");
-	                	}
-	                	else if(n[1] == "pwd不一致"){
-	                		document.getElementById("warning_pwd").innerHTML = "两次输入不一致，请重新输入";
-	                		$("#user_pwd").val("");
-	                		$("#reuser_pwd").val("");
-	                	}
-	                	else
-		                	window.location.href="http://localhost:8080/user/" + n[1] + "/home";
- 	 				},
-	 				error:function(error){
-	 					var jsonData = JSON.stringify(error);
-	                    alert("login error: " + jsonData);
-	                }
-	                        
-				}) 
-		    })
-		})
 
+<script type="text/javascript">  	
+	
+	$(function () {
+	    $(":submit").click(function () {
+	    	var user_gender = $("input[name='gender']:checked").val();	
+	        var options = {
+	            url: "http://192.168.60.16:8080/login/register",
+	            data:{
+                    'user_gender':user_gender
+                }, 
+	            success: function (data) {
+	                var n = data.split("|");	
+	                alert(n[1]);
+	                $("span").empty();
+                	if(n[1] == "id为空"){
+                		document.getElementById("warning_id").innerHTML = "请输入id";                   	
+                	}
+                	else if(n[1] == "用户名为空"){
+                		document.getElementById("warning_name").innerHTML = "请输入用户名";
+                	}
+                	else if(n[1] == "密码为空"){
+                		document.getElementById("warning_pwd").innerHTML = "请输入密码";
+                	}
+                	else if(n[1] == "id已存在"){
+                		document.getElementById("warning_id").innerHTML = "id已存在";
+                		$("#user_id").val("");
+                	}
+                	else if(n[1] == "age输入错误"){
+                		document.getElementById("warning_age").innerHTML = "年龄应为数字  0-100";
+                		$("#user_age").val("");
+                	}
+                	else if(n[1] == "phone输入错误"){
+                		document.getElementById("warning_phone").innerHTML = "联系电话应为数字";
+                		$("#user_phone").val("");
+                	}
+                	else if(n[1] == "密码不一致"){
+                		document.getElementById("warning_pwd").innerHTML = "两次输入不一致，请重新输入";
+                		$("#user_pwd").val("");
+                		$("#reuser_pwd").val("");
+                	}
+                	else{
+                		var param = encode64(n[1]);
+	                	window.location.href="http://localhost:8080/user/" + param + "/home";
+                	}
+	            }
+	        };
+	        $("#form").ajaxForm(options);
+	    })
+	})
+	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 
 	function encode64(input) {  
@@ -156,9 +142,5 @@
 
 		return output;  
 	}  
-	
-	</script>
-	
-	
-	
+</script> 
 </html>

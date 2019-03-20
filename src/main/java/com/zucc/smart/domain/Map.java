@@ -17,7 +17,7 @@ import org.json.JSONObject;
  * @author openks
  * @since 2013-7-16 需要添加java-json.jar才能运行
  */
-public class map {
+public class Map {
 
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();

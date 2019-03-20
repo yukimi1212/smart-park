@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.User;
 import com.zucc.smart.service.UserService;
 import com.zucc.smart.service.impl.Decode;
@@ -64,20 +66,21 @@ public class UserController {
         return "analysisTest";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/parking"})
-    public String getParkingForm(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/parking");
-        map.put("user_name", user_name);
-        return "parkingForm";
-    }
-    
     @RequestMapping(value = {"/", "/{user_name}/home"})
     public String enterHome(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) {
         String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/" + user_name + "/home");
     	map.put("user_name", user_name);
         return "index";
+    }
+    
+    
+    @RequestMapping(value = {"/", "/{user_name}/parking"})
+    public String gotoParkingForm(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	log.info("/user/"+ user_name + "/parking");
+    	map.put("user_name", user_name);
+        return "parkingForm";
     }
 
 }

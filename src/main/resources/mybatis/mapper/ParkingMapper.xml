@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zucc.smart.mapper.ParkingMapper">
+
+	<resultMap id="ParkingMap" type="com.zucc.smart.domain.Parking">
+		<result column="parkcode" property="parkcode" />
+		<result column="streetcode" property="streetcode" />
+		<result column="businesscode" property="businesscode" />
+		<result column="parkname" property="parkname" />
+		<result column="streetname" property="streetname" />
+		<result column="areaname" property="areaname" />
+		<result column="typecode" property="typecode" />	
+		<result column="parking_amount" property="parking_amount" />
+		<result column="parking_rest" property="parking_rest" />
+	</resultMap>
+
+	<select id="getBusinesscode" resultMap="ParkingMap" useCache="false">
+    	select distinct BUSINESSCODE
+    	FROM parking
+    	group by BUSINESSCODE
+    </select>
+    
+	<select id="getAllParking" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		SELECT *
+		FROM parking
+	</select>
+	
+<!-- 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
+		INSERT INTO user
+		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)
+		values
+		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_age}, #{user_phone}, now(), #{user_identity})
+	</insert>
+    
+    <delete id="deleteUser" parameterType="java.lang.String">
+		DELETE
+		FROM user
+		where user_id = #{user_id}
+	</delete> -->
+</mapper>

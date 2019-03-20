@@ -66,10 +66,7 @@
 </head>
 
 <body>
-<% 
-/* 	String user_name = (String) request.getParameter("user");
-	System.out.println("index: " + user_name); */
-%>
+
 <div class="preloader">
 	<div class="status"></div>
 </div>
@@ -390,8 +387,8 @@
 	function jumpToParking() {
 		var user_name = document.getElementById("user_name").innerHTML;
 	 	var param = encode64(user_name);
-        var uurl = "http://192.168.60.16:8080/user/" + param + "/parking";
-        window.open(uurl);  
+        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
+        window.open(url);  
 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  

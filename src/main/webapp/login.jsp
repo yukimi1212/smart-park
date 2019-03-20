@@ -30,13 +30,6 @@
                   <span style="color:#f36616" id="warning_pwd"></span>
                   <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码">
                   <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
-                  <div class="login-social-link">
-                  </div>
-                  <label class="checkbox-custom check-success">
-<!--              <input type="checkbox" value="remember-me" id="checkbox1"> <label for="checkbox1">Remember me</label>
-                  <a class="pull-right" data-toggle="modal" href="#forgotPass"> Forgot Password?</a>		-->
-                  </label>
-
                   <div class="registration">
                       	还未注册?
                       <a class="" href="registration.jsp">
