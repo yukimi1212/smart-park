@@ -118,30 +118,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table" id="tab">
-                                    <thead>
-                                    <tr>
-                                        <th>停车场编号</th>
-                                        <th>街道编号</th>
-                                        <th>区域编号</th>
-                                        <th>停车场名</th>
-                                        <th>街道名</th>                                  
-                                        <th>所属区域</th>
-                                        <th>停车场类型编号</th>
-                                        <th>停车位总数</th>
-                                        <th>停车位空余</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                 
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="text-nowrap">Samsung Galaxy S8</td>
-                                        <td>31,589</td>
-                                        <td>$800</td>
-                                        <td>5%</td>
-                                    </tr>
                                     
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -173,7 +150,7 @@ window.onload = function(){
      	},
      	success:function(result){
      	    var jsonData = JSON.stringify(result);
-     	    showData(jsonData);
+     	    showData(result);
      	},
      	error:function(error){
      		var jsonData = JSON.stringify(error);
@@ -187,7 +164,7 @@ window.onload = function(){
 		alert(data[0].parkcode);
 		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型编号</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typecode + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		$("#tab").append(str);      
