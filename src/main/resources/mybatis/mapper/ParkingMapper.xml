@@ -26,6 +26,36 @@
 		FROM parking
 	</select>
 	
+	<select id="getTypeCount" resultType="java.util.HashMap" useCache="false"> 
+		select typecode, count(typecode) 
+		from parking 
+		group by typecode
+	</select>
+	
+	<select id="getAreaCount" resultType="java.util.HashMap" useCache="false"> 
+		select BUSINESSCODE, count(BUSINESSCODE) 
+		from parking 
+		group by BUSINESSCODE
+	</select>
+	
+	<select id="getStreetCount" resultType="java.util.HashMap" useCache="false"> 
+		select streetcode, count(streetcode) 
+		from parking 
+		group by streetcode
+	</select>
+	
+	<select id="getAreaName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+		select distinct areaname 
+		from parking 
+		where BUSINESSCODE = #{BUSINESSCODE}
+	</select>
+	
+	<select id="getStreetName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+		select distinct streetname 
+		from parking 
+		where streetcode = #{streetcode}
+	</select>
+	
 <!-- 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user
 		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)

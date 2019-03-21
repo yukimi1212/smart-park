@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../vendor/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="shortcut icon" href="../../images/ico/favicon.png">
     
     <style> 		
       	#search input[type=text] {
@@ -52,7 +53,7 @@
                     </a>
 
                     <a href="../../index.jsp" class="dropdown-item">
-                        <i class="fa fa-envelope"></i> 登出
+                        <i class="fa fa-lock"></i> 注销
                     </a>
                	</div>
             </li>
@@ -66,26 +67,26 @@
                     <li class="nav-title">数据展示</li>
 
                     <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
+                        <a href="javascript:void(0)" onclick="showForm()" class="nav-link nav-dropdown-toggle active">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="alerts.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按类型
+                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
+                                    <i class="icon icon-target"></i> 类型统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="buttons.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按区域
+                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link">
+                                    <i class="icon icon-target"></i> 区域统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="cards.html" class="nav-link">
-                                    <i class="icon icon-target"></i> 按街道
+                                <a href="javascript:void(0)" onclick="getStreet()" class="nav-link">
+                                    <i class="icon icon-target"></i> 街道统计
                                 </a>
                             </li>
 
@@ -111,8 +112,8 @@
             <div class="row">             
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header bg-light">
-                            	所有停车场信息
+                        <div class="card-header bg-light" id="name">
+                            	
                         </div>
 
                         <div class="card-body">
@@ -262,32 +263,127 @@ function displayPage(){
 		var user_name = $("#user_name").html();
 		var param = encode64(user_name);
 		$.ajax({
-   		type:'GET',
-     	url:'http://192.168.60.16:8080/park/' + param + '/parking',
-     	async:true,
-     	data:{
-     	},
-     	success:function(result){
-     	    var jsonData = JSON.stringify(result);
-     	    showData(result);
-     	    display();
-     	},
-     	error:function(error){
-     		var jsonData = JSON.stringify(error);
-     	    alert(jsonData)
-     	}
- 	})
-}
+   			type:'GET',
+     		url:'http://192.168.60.16:8080/park/' + param + '/parking',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     	    	showData(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+	}
+	
+	function getType(){
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		$.ajax({
+   			type:'GET',
+     		url:'http://192.168.60.16:8080/park/' + param + '/type',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     	    	showDataType(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+	}
+	
+	function getArea(){
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		$.ajax({
+   			type:'GET',
+     		url:'http://192.168.60.16:8080/park/' + param + '/area',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     	    	showDataArea(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+	}
+	
+	function getStreet() {
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		$.ajax({
+   			type:'GET',
+     		url:'http://192.168.60.16:8080/park/' + param + '/street',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     	    	showDataStreet(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert("error：  " + jsonData)
+     		}
+ 		})
+	} 
 
 	function showData(data) {
+		$("#tab").html("");
 		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型编号</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typecode + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "所有停车场信息";
 		$("#tab").append(str); 
 	}
 
+	function showDataType(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>停车场类型编号</th><th>类型名</th><th>拥有停车场数量</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].typecode + "</td><td>" + data[i].typename + "</td><td>" + data[i].amount + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "按类型统计";
+		$("#tab").append(str); 
+	}
+	
+ 	function showDataArea(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>城区编号</th><th>城区名</th><th>拥有停车场数量</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].businesscode + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "按城区统计";
+		$("#tab").append(str); 
+	}
+	
+	function showDataStreet(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>街道编号</th><th>街道名</th><th>拥有停车场数量</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].streetcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].amount + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "按街道统计";
+		$("#tab").append(str); 
+	}
+
+	
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
  		var param = encode64(user_name);

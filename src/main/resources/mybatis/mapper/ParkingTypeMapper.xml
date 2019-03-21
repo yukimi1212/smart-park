@@ -14,7 +14,7 @@
     	FROM parkingtype
     </select>
     
-	<select id="getTypeName" parameterType="java.lang.String" resultMap="ParkingTypeMap" useCache="false">
+	<select id="getTypeName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
 		SELECT typename
 		FROM parkingtype
 		where typecode = #{typecode}

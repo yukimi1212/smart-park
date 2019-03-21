@@ -68,17 +68,17 @@
 			<!-- navbar-collapse start-->
 			<div id="nav-menu" class="navbar-collapse collapse" role="navigation">
 				<ul class="nav navbar-nav clean-menu-wrapper">
-					<li class="active">
+					<li>
 						<a href="#clean-slider">主页</a>		
 					</li>
 					<li>
 						<a href="#about">主要功能</a>	
-					</li>
+					</li>					
 					
 					<li class="dropdown">
                 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 <!--                     		<img src="images/user.PNG" alt="用户登录"  height="50" width="50"/>	-->
-                    		<span>Guest</span> 
+                    		<span>游客</span> 
                     		<b class="caret"></b>
                 		</a>
 
@@ -166,7 +166,7 @@
 <!-- ===================================
 	ABOUT SECTION
 ==================================== -->
-<section id="about" class="clean-section-wrapper background-one">
+<section class="clean-section-wrapper background-one" id="about">
 	<div class="container">
 		<div class="row">
 
@@ -318,12 +318,42 @@
 		window.location.href="#info";
     }
 	
-	function jumpToParking() {
-		var user_name = "guide";
+	function jumpToParking() {	
+		alert("请登录！");
+		window.location.href="#info";
+		/* var user_name = "guide";
 	 	var param = encode64(user_name);
-        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
-        window.open(url);  
+        var url = "http://localhost:8080/user/" + param + "/parking";
+        window.open(url); */
 	}
 
+	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
+
+	function encode64(input) {  
+		var output = "";  
+		var chr1, chr2, chr3 = "";  
+		var enc1, enc2, enc3, enc4 = "";  
+		var i = 0;  
+		do {  
+    		chr1 = input.charCodeAt(i++);  
+    		chr2 = input.charCodeAt(i++);  
+    		chr3 = input.charCodeAt(i++);  
+    		enc1 = chr1 >> 2;  
+    		enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);  
+    		enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);  
+    		enc4 = chr3 & 63;  
+    		if (isNaN(chr2)) {  
+        		enc3 = enc4 = 64;  
+    		} else if (isNaN(chr3)) {  
+        		enc4 = 64;  
+    		}  
+    		output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);  
+    		chr1 = chr2 = chr3 = "";  
+    		enc1 = enc2 = enc3 = enc4 = "";  
+		} while (i < input.length);  
+
+		return output;  
+	} 
+	
 </script>
 </html>

@@ -93,7 +93,7 @@
 			<!-- navbar-collapse start-->
 			<div id="nav-menu" class="navbar-collapse collapse" role="navigation">
 				<ul class="nav navbar-nav clean-menu-wrapper">
-					<li class="active">
+					<li>
 						<a href="#clean-slider">主页</a>
 					</li>
 					<li>
@@ -110,7 +110,7 @@
                     		<li class="divider"></li>
                     			<li><center><a href="#info">个人信息</a></center></li>
                     		<li class="divider"></li>
-                    			<li><center><a href="../../index.jsp">登出</a></center></li>
+                    			<li><center><a href="../../index.jsp">注销</a></center></li>
                 		</ul>
             		</li>
 				</ul>
@@ -190,7 +190,7 @@
 <!-- ===================================
 	ABOUT SECTION
 ==================================== -->
-<section id="about" class="clean-section-wrapper background-one">
+<section class="clean-section-wrapper background-one" id="about">
 	<div class="container">
 		<div class="row">
 
