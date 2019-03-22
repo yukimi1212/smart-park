@@ -56,6 +56,13 @@
 		where streetcode = #{streetcode}
 	</select>
 	
+	<select id="getAreaNameByStreetcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+		select distinct areaname 
+		from parking 
+		where streetcode = #{streetcode}
+	</select>
+	
+	
 <!-- 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user
 		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)

@@ -33,20 +33,6 @@ public class UserController {
 
 	 @Autowired
 	 UserService userService;
-	 
-    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
-    public String getUserById(@PathVariable("user_id") String user_id, @RequestBody Map<String, Object> map) {
-//    	JSONObject jsonObject = JSONObject.fromObject(user_id);
-//    	Map jsonmap = (Map)jsonObject;
-//    	System.out.println("user_id: " + user_id);
-
-        log.info("/user/" + user_id);
-        String user_name = (userService.getUserById(user_id)).getUser_name();
-        map.put("user_id", user_id);
-        map.put("user_name", user_name);
-        map.put("time", new Date());
-    	return "helloworld";
-    }
 
     @RequestMapping(value = {"/", "/{user_name}/map"})
     public String getMap(@PathVariable("user_name") String user_name_obj) {
@@ -81,6 +67,31 @@ public class UserController {
     	log.info("/user/"+ user_name + "/parking");
     	map.put("user_name", user_name);
         return "parkingForm";
+    }
+
+    
+    @RequestMapping(value = {"/", "/{user_name}/type"})
+    public String gotoParkingType(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	log.info("/user/"+ user_name + "/type");
+    	map.put("user_name", user_name);
+        return "parkingType";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_name}/area"})
+    public String gotoParkingArea(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	log.info("/user/"+ user_name + "/area");
+    	map.put("user_name", user_name);
+        return "parkingArea";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_name}/street"})
+    public String gotoParkingStreet(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	log.info("/user/"+ user_name + "/street");
+    	map.put("user_name", user_name);
+        return "parkingStreet";
     }
 
 }

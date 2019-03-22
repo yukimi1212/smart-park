@@ -20,4 +20,6 @@ public interface ParkingMapper {
 	String getAreaName(String businesscode);
 	
 	String getStreetName(String streetcode);
+
+	String getAreaNameByStreetcode(String streetcode);
 }

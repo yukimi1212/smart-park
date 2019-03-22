@@ -3,6 +3,7 @@ package com.zucc.smart.valueObject;
 public class StreetVO {
 	private String streetcode;
 	private String streetname;
+	private String areaname;
 	private int amount;
 	public String getStreetcode() {
 		return streetcode;
@@ -21,5 +22,11 @@ public class StreetVO {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public String getAreaname() {
+		return areaname;
+	}
+	public void setAreaname(String areaname) {
+		this.areaname = areaname;
 	}
 }

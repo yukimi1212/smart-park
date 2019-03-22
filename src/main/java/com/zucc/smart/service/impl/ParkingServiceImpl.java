@@ -102,11 +102,13 @@ public class ParkingServiceImpl implements ParkingService {
 			HashMap<String,Object> map = listmap.get(i);
 			
 			String streetcode = map.get("streetcode").toString();
-			String streetname = parkingMapper.getStreetName(streetcode);	
+			String streetname = parkingMapper.getStreetName(streetcode);
+			String areaname = parkingMapper.getAreaNameByStreetcode(streetcode);
 			int amount = Integer.parseInt(map.get("count(streetcode)").toString());
 			StreetVO streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
 			streetVO.setStreetname(streetname);;
+			streetVO.setAreaname(areaname);
 			streetVO.setAmount(amount);
             list.add(streetVO);
 		}

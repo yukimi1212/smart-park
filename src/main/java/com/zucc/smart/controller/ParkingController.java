@@ -43,7 +43,7 @@ public class ParkingController {
         ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
         
         list = parkingService.getParkingType();
-        System.out.println(list.get(0).getTypecode() + "/" + list.get(0).getTypename() + "/" + list.get(0).getAmount());
+        System.out.println(list.size() + "/" + list.get(0).getTypecode() + "/" + list.get(0).getTypename() + "/" + list.get(0).getAmount());
     	return list;
     }
     
@@ -62,7 +62,7 @@ public class ParkingController {
     public ArrayList<StreetVO> getStreet(@PathVariable("user_name") String user_name_obj) {
     	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/park/"+ user_name + "/street");
-        ArrayList<StreetVO> list = new ArrayList<StreetVO>();
+    	ArrayList<StreetVO> list = new ArrayList<StreetVO>();
         
         list = parkingService.getStreet();
     	return list;

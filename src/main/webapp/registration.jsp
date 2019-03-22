@@ -107,7 +107,7 @@
                 	}
                 	else{
                 		var param = encode64(n[1]);
-	                	window.location.href="http://localhost:8080/user/" + param + "/home";
+	                	window.location.href="http://192.168.60.16:8080/user/" + param + "/home";
                 	}
 	            }
 	        };
