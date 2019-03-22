@@ -72,13 +72,12 @@
                         </a>
 
                         <ul class="nav-dropdown-items">
-                        
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="returnForm()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="returnForm()" class="nav-link">
                                     <i class="icon icon-target"></i> 所有统计
                                 </a>
                             </li>
-                            
+                        
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
                                     <i class="icon icon-target"></i> 类型统计
@@ -86,7 +85,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link active">
                                     <i class="icon icon-target"></i> 城区统计
                                 </a>
                             </li>
@@ -112,7 +111,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="可按编号/名称进行搜索" size="18px">
+    			<input type="text" id="searchWord" value=${searchWord } size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
@@ -166,6 +165,28 @@
 	var begin;
 	var end;
     
+	window.onload = function(){
+		var searchWord = $("#searchWord").val();
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		$.ajax({
+   			type:'GET',
+     		url:'http://192.168.60.16:8080/search/area/user/' + param,
+     		async:true,
+     		data:{
+     			'searchWord':searchWord
+     		},
+     		success:function(result){
+     	    	showData(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+	}
+	
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
@@ -178,38 +199,6 @@
 		}		
 	}
 	
-	window.onload = function(){
-//	function showForm(){
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
-		$.ajax({
-   			type:'GET',
-     		url:'http://192.168.60.16:8080/park/' + param + '/area',
-     		async:true,
-     		data:{
-     		},
-     		success:function(result){
-     	    	showData(result);
-     	    	display();
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
-	}
-
-	function showData(data) {
-	 	$("#tab").html("");
-		var str = "<thead><tr><th>城区编号</th><th>城区名</th><th>拥有停车场数量</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].businesscode + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
-		}
-		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "按城区统计";
-		$("#tab").append(str);
-	}
-
 	function returnForm() {
 		var user_name = document.getElementById("user_name").innerHTML;
 	 	var param = encode64(user_name);
@@ -223,6 +212,13 @@
         var url = "http://192.168.60.16:8080/user/" + param + "/type";
         window.location.href=url;
 	}
+ 	
+	function getArea(){
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		var url = "http://192.168.60.16:8080/user/" + param + "/area";
+		window.location.href=url;
+	}
 	
 	function getStreet() {
 		var user_name = $("#user_name").html();
@@ -230,12 +226,23 @@
 		var url = "http://192.168.60.16:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
+
+	function showData(data) {
+	 	$("#tab").html("");
+		var str = "<thead><tr><th>城区编号</th><th>城区名</th><th>拥有停车场数量</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].businesscode + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "按城区统计";
+		$("#tab").append(str);
+	}
 	
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
  		var param = encode64(user_name);
     	var url = "http://192.168.60.16:8080/user/" + param + "/home";
-    	window.location.href=url;
+    	window.open(url);  
 	}
 	
 	function display() {

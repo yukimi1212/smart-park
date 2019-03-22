@@ -17,4 +17,12 @@ public interface ParkingService {
 	ArrayList<AreaVO> getArea();
 	
 	ArrayList<StreetVO> getStreet();
+
+	ArrayList<Parking> parkingSearch(String searchWord);
+
+	ArrayList<ParkingTypeVO> typeSearch(String searchWord);
+
+	ArrayList<StreetVO> streetSearch(String searchWord);
+
+	ArrayList<AreaVO> AreaSearch(String searchWord);
 }

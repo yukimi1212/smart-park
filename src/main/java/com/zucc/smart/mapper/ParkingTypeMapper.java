@@ -1,9 +1,13 @@
 package com.zucc.smart.mapper;
 
+import java.util.ArrayList;
+
 import com.zucc.smart.domain.ParkingType;
 
 public interface ParkingTypeMapper {
-	ParkingType getAllType();
+	ArrayList<ParkingType> getAllType();
 	
-	String getTypeName(String typecode);	
+	String getTypeName(String typecode);
+
+	ArrayList<ParkingType> searchType(String typecode);	
 }

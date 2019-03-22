@@ -19,4 +19,10 @@
 		FROM parkingtype
 		where typecode = #{typecode}
 	</select>      
+	
+	<select id="searchType" parameterType="java.lang.String" resultMap="ParkingTypeMap" useCache="false">
+		SELECT typecode, typename
+		FROM parkingtype
+		where typecode like #{searchWord} or typename like #{searchWord}
+	</select> 
 </mapper>

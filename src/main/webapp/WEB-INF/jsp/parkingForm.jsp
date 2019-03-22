@@ -111,8 +111,8 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" name="search">
-    			<input class="button" type="submit" value="搜索">
+    			<input type="text" id="searchWord" value="" placeholder="青云街" size="18px">
+    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
             <div class="row">             
@@ -165,12 +165,23 @@
 	var begin;
 	var end;
     
+	function doSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnForm();
+		else{
+			var user_name = $("#user_name").html();
+			var param = encode64(user_name);
+			var url = "http://192.168.60.16:8080/user/" + param + "/" + sWord + "&form";
+	        window.location.href=url;
+		}
+	}
+
+	
 	$(document).ready(function(){  
 		showForm();
 	});
 	
-	
-//window.onload = function(){
 	function showForm(){
 		var user_name = $("#user_name").html();
 		var param = encode64(user_name);
@@ -189,6 +200,13 @@
      	    	alert(jsonData)
      		}
  		})
+	}
+	
+	function returnForm() {
+		var user_name = document.getElementById("user_name").innerHTML;
+	 	var param = encode64(user_name);
+        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
+        window.location.href=url;
 	}
 	
 	function getType(){

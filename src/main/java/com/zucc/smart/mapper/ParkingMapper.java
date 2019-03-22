@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.zucc.smart.domain.Parking;
+import com.zucc.smart.valueObject.StreetVO;
 
 public interface ParkingMapper {
 	ArrayList<Parking> getAllParking();
@@ -22,4 +23,16 @@ public interface ParkingMapper {
 	String getStreetName(String streetcode);
 
 	String getAreaNameByStreetcode(String streetcode);
+
+	ArrayList<Parking> parkingSearch(String search);
+
+	String getOneTypeCount(String typecode);
+
+	ArrayList<HashMap<String, String>> searchStreet(String searchWord);
+
+	String getOneStreetCount(String streetcode);
+	
+	String getOneAreaCount(String BUSINESSCODE);
+
+	ArrayList<HashMap<String, String>> searchArea(String searchWord);
 }

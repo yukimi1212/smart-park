@@ -32,16 +32,34 @@
 		group by typecode
 	</select>
 	
+	<select id="getOneTypeCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
+		select count(parkcode) 
+		from parking 
+		where typecode = #{typecode}
+	</select>
+	
 	<select id="getAreaCount" resultType="java.util.HashMap" useCache="false"> 
 		select BUSINESSCODE, count(BUSINESSCODE) 
 		from parking 
 		group by BUSINESSCODE
 	</select>
 	
+	<select id="getOneAreaCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
+		select count(parkcode) 
+		from parking 
+		where BUSINESSCODE = #{BUSINESSCODE}
+	</select>
+	
 	<select id="getStreetCount" resultType="java.util.HashMap" useCache="false"> 
 		select streetcode, count(streetcode) 
 		from parking 
 		group by streetcode
+	</select>
+	
+	<select id="getOneStreetCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
+		select count(parkcode) 
+		from parking 
+		where streetcode = #{streetcode}
 	</select>
 	
 	<select id="getAreaName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
@@ -62,6 +80,23 @@
 		where streetcode = #{streetcode}
 	</select>
 	
+	<select id="parkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select * 
+		from parking 
+		where parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} or parkname like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord} or typecode like #{searchWord};
+	</select>
+	
+	<select id="searchStreet" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
+		select distinct streetcode,streetname
+		from parking 
+		where streetcode like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord}
+	</select>
+	
+	<select id="searchArea" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
+		select distinct BUSINESSCODE,areaname
+		from parking 
+		where BUSINESSCODE like #{searchWord} or areaname like #{searchWord}
+	</select>
 	
 <!-- 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user

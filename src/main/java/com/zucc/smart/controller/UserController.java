@@ -66,6 +66,7 @@ public class UserController {
     	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name + "/parking");
     	map.put("user_name", user_name);
+    	map.put("searchWord", "");
         return "parkingForm";
     }
 
@@ -75,6 +76,7 @@ public class UserController {
     	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name + "/type");
     	map.put("user_name", user_name);
+    	map.put("searchWord", "");
         return "parkingType";
     }
     
@@ -83,6 +85,7 @@ public class UserController {
     	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name + "/area");
     	map.put("user_name", user_name);
+    	map.put("searchWord", "");
         return "parkingArea";
     }
     
@@ -91,7 +94,28 @@ public class UserController {
     	String user_name = new String (Decode.decode(user_name_obj));
     	log.info("/user/"+ user_name + "/street");
     	map.put("user_name", user_name);
+    	map.put("searchWord", "");
         return "parkingStreet";
     }
-
+    
+    @RequestMapping(value = {"/", "/{user_name}/{searchWord}"})
+    public String doSearch(@PathVariable("user_name") String user_name_obj, @PathVariable("searchWord") String searchWord,Map<String, Object> map) throws IOException {
+    	String user_name = new String (Decode.decode(user_name_obj));
+    	String[] word = searchWord.split("&");
+    	searchWord = word[0];
+    	String source = word[1];
+    	log.info("/user/"+ user_name + "/" + searchWord + "/" + source);
+    	System.out.println(user_name_obj + "***" + searchWord);
+    	map.put("user_name", user_name);
+    	map.put("searchWord", searchWord);
+    	
+    	if(source.equals("form"))
+    		return "searchForm";
+    	else if(source.equals("type"))
+    		return "searchType";
+    	else if(source.equals("street"))
+    		return "searchStreet";
+    	else
+    		return "searchArea";
+    }
 }

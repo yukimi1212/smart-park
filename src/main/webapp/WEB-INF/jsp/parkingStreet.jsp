@@ -112,8 +112,8 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" name="search">
-    			<input class="button" type="submit" value="搜索">
+    			<input type="text" id="searchWord" value="" placeholder="可按编号/名称进行搜索" size="18px">
+    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
             <div class="row">             
@@ -166,6 +166,18 @@
 	var begin;
 	var end;
 	
+	function doSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			getStreet();
+		else{
+			var user_name = $("#user_name").html();
+			var param = encode64(user_name);
+			var url = "http://192.168.60.16:8080/user/" + param + "/" + sWord + "&street";
+	        window.location.href=url;
+		}		
+	}
+	
 	window.onload = function(){
 		var user_name = $("#user_name").html();
 		var param = encode64(user_name);
@@ -217,6 +229,13 @@
 		var url = "http://192.168.60.16:8080/user/" + param + "/area";
 		window.location.href=url;
 	}
+	
+	function getStreet() {
+		var user_name = $("#user_name").html();
+		var param = encode64(user_name);
+		var url = "http://192.168.60.16:8080/user/" + param + "/street";
+		window.location.href=url;
+	} 
 	
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
