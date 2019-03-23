@@ -66,31 +66,47 @@
   
 
 <script type="text/javascript">  	
-	
-	$(function () {
-	    $(":submit").click(function () {
+		
+	 $(function () {
+	    $(":submit").click(function (e) {
+	    	e.preventDefault();
 	    	var user_gender = $("input[name='gender']:checked").val();	
-	        var options = {
-	            url: "http://192.168.60.16:8080/login/register",
+	        var user_id = document.getElementById("user_id").value;
+	        var user_name = document.getElementById("user_name").value;
+	        var user_pwd = document.getElementById("user_pwd").value;
+	        var reuser_pwd = document.getElementById("reuser_pwd").value;
+	        var user_phone = document.getElementById("user_phone").value;
+	        var user_age = document.getElementById("user_age").value;
+	    	$.ajax({
+                type:'POST',
+                url:"http://localhost:8080/login/register",
+                async:true,
 	            data:{
-                    'user_gender':user_gender
+                    'user_id':user_id,
+                    'user_name':user_name,
+                    'user_pwd':user_pwd,
+                    'reuser_pwd':reuser_pwd,
+                    'user_gender':user_gender,
+                    'user_age':user_age,
+                    'user_phone':user_phone
                 }, 
-	            success: function (data) {
-	                var n = data.split("|");	
-	                alert(n[1]);
-	                $("span").empty();
+//                dataType:'json',
+                success:function(result){
+                	var user_name = JSON.stringify(result);
+                	var n = user_name.split("|");
+                	alert(n[1])
+                	$("span").empty();
                 	if(n[1] == "id为空"){
                 		document.getElementById("warning_id").innerHTML = "请输入id";                   	
                 	}
-                	else if(n[1] == "用户名为空"){
+                	else if(n[1] == "name为空"){
                 		document.getElementById("warning_name").innerHTML = "请输入用户名";
                 	}
-                	else if(n[1] == "密码为空"){
+                	else if(n[1] == "pwd为空"){
                 		document.getElementById("warning_pwd").innerHTML = "请输入密码";
                 	}
                 	else if(n[1] == "id已存在"){
                 		document.getElementById("warning_id").innerHTML = "id已存在";
-                		$("#user_id").val("");
                 	}
                 	else if(n[1] == "age输入错误"){
                 		document.getElementById("warning_age").innerHTML = "年龄应为数字  0-100";
@@ -100,18 +116,22 @@
                 		document.getElementById("warning_phone").innerHTML = "联系电话应为数字";
                 		$("#user_phone").val("");
                 	}
-                	else if(n[1] == "密码不一致"){
+                	else if(n[1] == "pwd不一致"){
                 		document.getElementById("warning_pwd").innerHTML = "两次输入不一致，请重新输入";
                 		$("#user_pwd").val("");
                 		$("#reuser_pwd").val("");
                 	}
                 	else{
                 		var param = encode64(n[1]);
-	                	window.location.href="http://192.168.60.16:8080/user/" + param + "/home";
+	                	window.location.href="http://localhost:8080/user/" + param + "/home";
                 	}
-	            }
-	        };
-	        $("#form").ajaxForm(options);
+ 				},
+ 				error:function(error){
+ 					var jsonData = JSON.stringify(error);
+                    alert("login error: " + jsonData);
+                }
+                        
+			}) 
 	    })
 	})
 	

@@ -61,10 +61,10 @@ public class UserController {
     }
     
     
-    @RequestMapping(value = {"/", "/{user_name}/parking"})
+    @RequestMapping(value = {"/", "/{user_name}/form"})
     public String gotoParkingForm(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
     	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/parking");
+    	log.info("/user/"+ user_name + "/form");
     	map.put("user_name", user_name);
     	map.put("searchWord", "");
         return "parkingForm";

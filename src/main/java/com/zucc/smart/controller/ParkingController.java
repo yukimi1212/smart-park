@@ -27,10 +27,10 @@ public class ParkingController {
 	@Autowired
 	ParkingService parkingService;
     
-    @RequestMapping(value = "/{user_name}/parking", method = RequestMethod.GET)
+    @RequestMapping(value = "/{user_name}/from", method = RequestMethod.GET)
     public ArrayList<Parking> getParkingForm(@PathVariable("user_name") String user_name_obj) {
     	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/park/"+ user_name + "/parking");
+    	log.info("/park/"+ user_name + "/form");
         ArrayList<Parking> list = new ArrayList<Parking>();
         list = parkingService.getAllParking();
     	return list;
@@ -43,7 +43,6 @@ public class ParkingController {
         ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
         
         list = parkingService.getParkingType();
-//        System.out.println(list.size() + "/" + list.get(0).getTypecode() + "/" + list.get(0).getTypename() + "/" + list.get(0).getAmount());
     	return list;
     }
     
@@ -54,7 +53,6 @@ public class ParkingController {
         ArrayList<AreaVO> list = new ArrayList<AreaVO>();
         
         list = parkingService.getArea();
-//        System.out.println(list.get(0).getBusinesscode() + "/" + list.get(0).getAreaname() + "/" + list.get(0).getAmount());
     	return list;
     }
     

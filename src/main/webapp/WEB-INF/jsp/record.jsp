@@ -160,7 +160,7 @@
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
  		var param = encode64(user_name);
-    	var uurl = "http://192.168.60.16:8080/user/" + param + "/home";
+    	var uurl = "http://localhost:8080/user/" + param + "/home";
     	window.open(uurl);  
 	}
 	

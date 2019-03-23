@@ -173,7 +173,7 @@
 		else{
 			var user_name = $("#user_name").html();
 			var param = encode64(user_name);
-			var url = "http://192.168.60.16:8080/user/" + param + "/" + sWord + "&area";
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&area";
 	        window.location.href=url;
 		}		
 	}
@@ -184,7 +184,7 @@
 		var param = encode64(user_name);
 		$.ajax({
    			type:'GET',
-     		url:'http://192.168.60.16:8080/park/' + param + '/area',
+     		url:'http://localhost:8080/park/' + param + '/area',
      		async:true,
      		data:{
      		},
@@ -213,28 +213,28 @@
 	function returnForm() {
 		var user_name = document.getElementById("user_name").innerHTML;
 	 	var param = encode64(user_name);
-        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
+        var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
 	}
 	
 	function getType(){
 		var user_name = $("#user_name").html();
 		var param = encode64(user_name);
-        var url = "http://192.168.60.16:8080/user/" + param + "/type";
+        var url = "http://localhost:8080/user/" + param + "/type";
         window.location.href=url;
 	}
 	
 	function getStreet() {
 		var user_name = $("#user_name").html();
 		var param = encode64(user_name);
-		var url = "http://192.168.60.16:8080/user/" + param + "/street";
+		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
 	
 	function jumpToIndex() {
 		var user_name = $("#user_name").html();
  		var param = encode64(user_name);
-    	var url = "http://192.168.60.16:8080/user/" + param + "/home";
+    	var url = "http://localhost:8080/user/" + param + "/home";
     	window.location.href=url;
 	}
 	

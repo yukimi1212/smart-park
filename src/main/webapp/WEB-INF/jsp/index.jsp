@@ -333,7 +333,7 @@
 	function jumpToMap(){
 		var user_name = document.getElementById("user_name").innerHTML;
 	    var param = encode64(user_name);
-        var uurl = "http://192.168.60.16:8080/user/" + param + "/map"; 
+        var uurl = "http://localhost:8080/user/" + param + "/map"; 
         window.open(uurl); 
     
        /*  var uurl = "http://localhost:8080/user/";
@@ -359,7 +359,7 @@
 	function jumpToOpen(){
 		var user_name = document.getElementById("user_name").innerHTML;
 	 	var param = encode64(user_name);
-        var uurl = "http://192.168.60.16:8080/user/" + param + "/analysis";
+        var uurl = "http://localhost:8080/user/" + param + "/analysis";
         window.open(uurl);  
       
      	/* var uurl = "http://localhost:8080/user/";
@@ -387,7 +387,7 @@
 	function jumpToParking() {
 		var user_name = document.getElementById("user_name").innerHTML;
 	 	var param = encode64(user_name);
-        var url = "http://192.168.60.16:8080/user/" + param + "/parking";
+        var url = "http://localhost:8080/user/" + param + "/form";
         window.open(url);  
 	}
 	

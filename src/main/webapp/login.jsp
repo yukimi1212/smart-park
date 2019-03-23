@@ -54,10 +54,9 @@
 	$(function () {
 	    $(":submit").click(function () {
 	        var options = {
-	            url: "http://192.168.60.16:8080/login/user",
+	            url: "http://localhost:8080/login/user",
 	            success: function (data) {
 	                var n = data.split("|");	
-	                alert(n[1]);
 	                $("span").empty();
 	                if(n[1] == "id为空"){
 	                	document.getElementById("warning_id").innerHTML = "请输入id";
@@ -72,7 +71,7 @@
 	                }	
 	                else{
 	                	var param = encode64(n[1]);
-	                	window.location.href="http://192.168.60.16:8080/user/" + param + "/home";
+	                	window.location.href="http://localhost:8080/user/" + param + "/home";
 	                }
 	            }
 	        };
