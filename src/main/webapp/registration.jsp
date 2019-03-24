@@ -40,9 +40,9 @@
 
                 <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
 				<div class="radio-custom radio-success">
-                	<input type="radio" value="Male" checked="checked" name="gender" id="male">
+                	<input type="radio" value="男" checked="checked" name="gender" id="male">
                   	<label for="male">男</label>
-                  	<input type="radio"  value="Female" name="gender" id="female">
+                  	<input type="radio"  value="女" name="gender" id="female">
                   	<label for="female">女</label>
               	</div>
 

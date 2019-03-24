@@ -274,6 +274,7 @@
 							<img src="../../images/user.jpg" alt="用户头像" height="120" width="120">
 						</div>
 						<p class="clean-client-info" id="user_name">${user_name }</p><br>
+						<span id="user_id" style="display:none">${user_id }</span>
 						<p>您好，欢迎来到智能停车管理系统，</p>
 						<p>城市停车场智能化管理，数据录入，分类整理，实时展示，统计分析。</p>						
 						<a href="../../index.jsp"><span style="color:green; font-weight:bold;">登出</span></a>
@@ -331,8 +332,8 @@
 
 <script type="text/javascript">  
 	function jumpToMap(){
-		var user_name = document.getElementById("user_name").innerHTML;
-	    var param = encode64(user_name);
+		var user_id = document.getElementById("user_id").innerHTML;
+	    var param = encode64(user_id);
         var uurl = "http://localhost:8080/user/" + param + "/map"; 
         window.open(uurl); 
     
@@ -357,8 +358,8 @@
     }	
 	
 	function jumpToOpen(){
-		var user_name = document.getElementById("user_name").innerHTML;
-	 	var param = encode64(user_name);
+		var user_id = document.getElementById("user_id").innerHTML;
+	    var param = encode64(user_id);
         var uurl = "http://localhost:8080/user/" + param + "/analysis";
         window.open(uurl);  
       
@@ -385,8 +386,8 @@
     }	
 	
 	function jumpToParking() {
-		var user_name = document.getElementById("user_name").innerHTML;
-	 	var param = encode64(user_name);
+		var user_id = document.getElementById("user_id").innerHTML;
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.open(url);  
 	}

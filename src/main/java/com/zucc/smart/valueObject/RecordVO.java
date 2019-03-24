@@ -1,15 +1,14 @@
-package com.zucc.smart.domain;
+package com.zucc.smart.valueObject;
 
-public class ParkRecord {
+public class RecordVO {
 	private String id;
 	private String berthcode;		//车位编号
 	private String cph;
-	private String parkcode;		//停车场编号
-	private String streetcode;		//街道编号
-	private String businesscode;	//区域编号
+	private String parkname;		//停车场编号
+	private String streetname;		//街道编号
+	private String areaname;	//区域编号
 	private String inserttime;
 	private String dealtime;
-	
 	public String getId() {
 		return id;
 	}
@@ -28,23 +27,23 @@ public class ParkRecord {
 	public void setCph(String cph) {
 		this.cph = cph;
 	}
-	public String getParkcode() {
-		return parkcode;
+	public String getParkname() {
+		return parkname;
 	}
-	public void setParkcode(String parkcode) {
-		this.parkcode = parkcode;
+	public void setParkname(String parkname) {
+		this.parkname = parkname;
 	}
-	public String getStreetcode() {
-		return streetcode;
+	public String getStreetname() {
+		return streetname;
 	}
-	public void setStreetcode(String streetcode) {
-		this.streetcode = streetcode;
+	public void setStreetname(String streetname) {
+		this.streetname = streetname;
 	}
-	public String getBusinesscode() {
-		return businesscode;
+	public String getAreaname() {
+		return areaname;
 	}
-	public void setBusinesscode(String businesscode) {
-		this.businesscode = businesscode;
+	public void setAreaname(String areaname) {
+		this.areaname = areaname;
 	}
 	public String getInserttime() {
 		return inserttime;
@@ -58,4 +57,6 @@ public class ParkRecord {
 	public void setDealtime(String dealtime) {
 		this.dealtime = dealtime;
 	}
-}	
+	
+	
+}

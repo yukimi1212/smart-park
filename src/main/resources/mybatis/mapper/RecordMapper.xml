@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zucc.smart.mapper.RecordMapper">
+
+	<resultMap id="RecordMap" type="com.zucc.smart.domain.Record">
+		<result column="id" property="id" />
+		<result column="berthcode" property="berthcode" />
+		<result column="cph" property="cph" />
+		<result column="parkcode" property="parkcode" />
+		<result column="streetcode" property="streetcode" />
+		<result column="businesscode" property="businesscode" />
+		<result column="inserttime" property="inserttime" />	
+		<result column="dealtime" property="dealtime" />
+	</resultMap>
+
+	<select id="getAllRecord" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    </select>
+
+	<select id="searchRecordByID" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where ID like #{searchWord};
+    </select>
+	
+	<select id="searchRecordByCPH" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where CPH like #{searchWord};
+    </select>
+    
+    <select id="searchRecordByParking" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where parkcode = #{searchWord};
+    </select>
+    
+    <select id="searchRecordByStreet" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where streetcode = #{searchWord};
+    </select>
+    
+    <select id="searchRecordByArea" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where businesscode = #{searchWord};
+    </select>
+    
+</mapper>

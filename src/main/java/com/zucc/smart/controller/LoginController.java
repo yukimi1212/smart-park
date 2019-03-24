@@ -35,7 +35,7 @@ public class LoginController {
         else {
         	User user = userService.checkUser(user_id, user_pwd);
         	if(user != null)
-        		str = "|" + user.getUser_name() + "|";
+        		str = "|" + user.getUser_id() + "|";
         	else
         		str = "|不存在|";
         }
@@ -46,7 +46,7 @@ public class LoginController {
     public String register (@RequestParam(value="user_id") String user_id, @RequestParam("user_name") String user_name,
     		@RequestParam("user_pwd") String user_pwd, @RequestParam("reuser_pwd") String reuser_pwd, @RequestParam("user_gender") String user_gender,
     		@RequestParam("user_age") String user_age, @RequestParam("user_phone") String user_phone) {
-        log.info("/login/register/" + user_id);
+        log.info("/login/register/" + user_id + "---user_name：" + user_name);
         String str = "";
         if(user_id == "") {
         	str = "|id为空|";
@@ -84,8 +84,7 @@ public class LoginController {
         	boolean flag = userService.addUser(adduser);
         	if(flag) {
         		User user = userService.getUserById(user_id);
-        		user = userService.getUserById(user_id);
-        		str = "|" + user.getUser_name() + "|";
+        		str = "|" + user.getUser_id() + "|";
         	}
         }
         return str;

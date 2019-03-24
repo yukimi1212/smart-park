@@ -62,24 +62,6 @@
 		where streetcode = #{streetcode}
 	</select>
 	
-	<select id="getAreaName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
-		select distinct areaname 
-		from parking 
-		where BUSINESSCODE = #{BUSINESSCODE}
-	</select>
-	
-	<select id="getStreetName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
-		select distinct streetname 
-		from parking 
-		where streetcode = #{streetcode}
-	</select>
-	
-	<select id="getAreaNameByStreetcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
-		select distinct areaname 
-		from parking 
-		where streetcode = #{streetcode}
-	</select>
-	
 	<select id="parkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
@@ -98,16 +80,21 @@
 		where BUSINESSCODE like #{searchWord} or areaname like #{searchWord}
 	</select>
 	
-<!-- 	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
-		INSERT INTO user
-		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)
-		values
-		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_age}, #{user_phone}, now(), #{user_identity})
-	</insert>
-    
-    <delete id="deleteUser" parameterType="java.lang.String">
-		DELETE
-		FROM user
-		where user_id = #{user_id}
-	</delete> -->
+	<select id="searchParkNameByParkCode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select distinct parkcode
+		from parking 
+		where parkname like #{searchWord}
+	</select>
+	
+	<select id="searchStreetNameByStreetCode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select distinct streetcode
+		from parking 
+		where streetname like #{searchWord}
+	</select>
+	
+	<select id="searchAreaNameByBusinesscode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select distinct BUSINESSCODE
+		from parking 
+		where areaname like #{searchWord}
+	</select>
 </mapper>

@@ -13,6 +13,7 @@ import java.util.Set;
 
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.ParkingType;
+import com.zucc.smart.mapper.HelperMapper;
 import com.zucc.smart.mapper.ParkingMapper;
 import com.zucc.smart.mapper.ParkingTypeMapper;
 import com.zucc.smart.service.ParkingService;
@@ -23,13 +24,16 @@ import com.zucc.smart.valueObject.StreetVO;
 @Service
 public class ParkingServiceImpl implements ParkingService {
 
-	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(ParkingServiceImpl.class);
 
     @Autowired
     ParkingMapper parkingMapper;    
     
     @Autowired
     ParkingTypeMapper parkingTypeMapper;
+    
+    @Autowired
+    HelperMapper helperMapper;
 	
 	@Override
 	public ArrayList<Parking> getAllParking() {
@@ -78,7 +82,7 @@ public class ParkingServiceImpl implements ParkingService {
 			HashMap<String,Object> map = listmap.get(i);
 	
 			String businesscode = map.get("BUSINESSCODE").toString();
-			String areaname = parkingMapper.getAreaName(businesscode);	
+			String areaname = helperMapper.getAreaName(businesscode);	
 			int amount = Integer.parseInt(map.get("count(BUSINESSCODE)").toString());
 			AreaVO areaVO = new AreaVO();
             areaVO.setBusinesscode(businesscode);
@@ -101,8 +105,8 @@ public class ParkingServiceImpl implements ParkingService {
 			HashMap<String,Object> map = listmap.get(i);
 			
 			String streetcode = map.get("streetcode").toString();
-			String streetname = parkingMapper.getStreetName(streetcode);
-			String areaname = parkingMapper.getAreaNameByStreetcode(streetcode);
+			String streetname = helperMapper.getStreetName(streetcode);
+			String areaname = helperMapper.getAreaNameByStreetcode(streetcode);
 			int amount = Integer.parseInt(map.get("count(streetcode)").toString());
 			StreetVO streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
@@ -159,7 +163,7 @@ public class ParkingServiceImpl implements ParkingService {
 			
 			String streetcode = map.get("streetcode").toString();
 			String streetname = map.get("streetname").toString();
-			String areaname = parkingMapper.getAreaNameByStreetcode(streetcode);
+			String areaname = helperMapper.getAreaNameByStreetcode(streetcode);
 			int amount = Integer.parseInt(parkingMapper.getOneStreetCount(streetcode));
 			StreetVO streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);

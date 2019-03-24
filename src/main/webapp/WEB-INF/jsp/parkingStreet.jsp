@@ -44,6 +44,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
+                    <span id="user_id" style="display:none">${user_id }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -101,8 +102,8 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-graph"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
+                            <i class="icon icon-graph"></i> 停车记录统计
                         </a>
                     </li>
                    
@@ -171,16 +172,16 @@
 		if(sWord == "")
 			getStreet();
 		else{
-			var user_name = $("#user_name").html();
-			var param = encode64(user_name);
+			var user_id = $("#user_id").html();
+			var param = encode64(user_id);
 			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&street";
 	        window.location.href=url;
 		}		
 	}
 	
 	window.onload = function(){
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
 		$.ajax({
    			type:'GET',
      		url:'http://localhost:8080/park/' + param + '/street',
@@ -210,36 +211,43 @@
 	}
 
 	function returnForm() {
-		var user_name = document.getElementById("user_name").innerHTML;
-	 	var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
 	}
 	
 	function getType(){
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/type";
         window.location.href=url;
 	}
  	
 	function getArea(){
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/area";
 		window.location.href=url;
 	}
 	
 	function getStreet() {
-		var user_name = $("#user_name").html();
-		var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
 	
+	function getRecord() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
 	function jumpToIndex() {
-		var user_name = $("#user_name").html();
- 		var param = encode64(user_name);
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
     	var url = "http://localhost:8080/user/" + param + "/home";
     	window.location.href=url;
 	}

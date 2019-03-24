@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../vendor/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="shortcut icon" href="../../images/ico/favicon.png">
     
     <style> 		
       	#search input[type=text] {
@@ -27,6 +28,7 @@
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
+
 <div class="page-wrapper">
     <nav class="navbar page-header">
         <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
@@ -42,6 +44,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
+                    <span id="user_id" style="display:none">${user_id }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -51,7 +54,7 @@
                     </a>
 
                     <a href="../../index.jsp" class="dropdown-item">
-                        <i class="fa fa-envelope"></i> 登出
+                        <i class="fa fa-lock"></i> 注销
                     </a>
                	</div>
             </li>
@@ -64,86 +67,92 @@
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active">
-                            <i class="icon icon-speedometer"></i> 停车场统计
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item nav-dropdown">
+                    <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-graph"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon icon-graph"></i> Chart.js
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="returnForm()"  class="nav-link">
+                                    <i class="icon icon-target"></i> 所有统计
                                 </a>
                             </li>
+                        
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
+                                    <i class="icon icon-target"></i> 类型统计
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link">
+                                    <i class="icon icon-target"></i> 城区统计
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getStreet()" class="nav-link">
+                                    <i class="icon icon-target"></i> 街道统计
+                                </a>
+                            </li>
+
                         </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link active">
+                            <i class="icon icon-graph"></i> 停车记录统计
+                        </a>
                     </li>
                    
                 </ul>
             </nav>
         </div>
 		
-        <div class="content">
-			<div id="search">
-    			<input type="text" name="search">
-    			<input class="button" type="submit" value="搜索">
+        <div class="content">   
+        	<div id="search">
+    			<input type="text" id="searchWord" value="" placeholder="ID/车牌/停车场/所属街道/所属城区" size="18px">
+<!--     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
+ -->    		<div class="btn-group">
+ 					<button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">搜索<span class="caret"></span></button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="javascript:void(0)" onclick="doIDSearch()" style="font-size:16px">按ID</a></li>
+						<li><a href="javascript:void(0)" onclick="doCPHSearch()" style="font-size:16px">按车牌</a></li>
+						<li><a href="javascript:void(0)" onclick="doParkingSearch()" style="font-size:16px">按停车场</a></li>
+						<li><a href="javascript:void(0)" onclick="doStreetSearch()" style="font-size:16px">按所属街道</a></li>
+						<li><a href="javascript:void(0)" onclick="doAreaSearch()" style="font-size:16px">按所属城区</a></li>
+					</ul>
+				</div>
   			</div><br>
   			
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row">             
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header bg-light">
-                            Bar Charts
+                        <div class="card-header bg-light" id="name">
+                            	
                         </div>
 
                         <div class="card-body">
-                            <canvas id="bar-chart" width="100%" height="50"></canvas>
+                            <div class="table-responsive">
+                                <table class="table" id="tab">
+                                    
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header bg-light">
-                            Line Charts
-                        </div>
-
-                        <div class="card-body">
-                            <canvas id="line-chart" width="100%" height="50"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header bg-light">
-                            Radar Chart
-                        </div>
-
-                        <div class="card-body">
-                            <canvas id="radar-chart" width="100%" height="50"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header bg-light">
-                            Pie Chart
-                        </div>
-
-                        <div class="card-body">
-                            <canvas id="pie-chart" width="100%" height="50"></canvas>
-                        </div>
-                    </div>
-                </div>
+                
+                <a id="btn0"></a>		
+ 				<a id="sjzl"></a>&nbsp;
+                <a  href="#" id="btn1">首页</a>
+                <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
+                <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
+                <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
+                <a>&nbsp&nbsp转到&nbsp;</a>
+                <input id="changePage" type="text" size="1" maxlength="4"/>
+                <a>页&nbsp;</a>
+                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>
             </div>
         </div>
     </div>
@@ -157,12 +166,297 @@
 </body>
 
 <script type="text/javascript">  
-	function jumpToIndex() {
-		var user_name = $("#user_name").html();
- 		var param = encode64(user_name);
-    	var uurl = "http://localhost:8080/user/" + param + "/home";
-    	window.open(uurl);  
+
+	var pageSize = 15;    //每页显示的记录条数
+ 	var curPage=0;        //当前页
+ 	var lastPage;        //最后页
+ 	var direct=0;        //方向
+	var len;            //总行数
+	var page;            //总页数
+	var begin;
+	var end;
+    
+	function doIDSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnRecord();
+		else{			
+			var user_id = $("#user_id").html();			
+			if(user_id == "admin"){
+				var url = "http://localhost:8080/admin/ID&" + sWord + "/record";
+		        window.location.href=url;
+			}
+			else{
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+			}		
+		}
 	}
+	
+	function doCPHSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnRecord();
+		else{			
+			var user_id = $("#user_id").html();			
+			if(user_id == "admin"){
+				var url = "http://localhost:8080/admin/CPH&" + sWord + "/record";
+		        window.location.href=url;
+			}
+			else{
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+			}		
+		}
+	}
+	
+	function doParkingSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnRecord();
+		else{			
+			var user_id = $("#user_id").html();			
+			if(user_id == "admin"){
+				var url = "http://localhost:8080/admin/parking&" + sWord + "/record";
+		        window.location.href=url;
+			}
+			else{
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+			}		
+		}
+	}
+	
+	function doStreetSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnRecord();
+		else{			
+			var user_id = $("#user_id").html();			
+			if(user_id == "admin"){
+				var url = "http://localhost:8080/admin/street&" + sWord + "/record";
+		        window.location.href=url;
+			}
+			else{
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+			}		
+		}
+	}
+	
+	function doAreaSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnRecord();
+		else{			
+			var user_id = $("#user_id").html();			
+			if(user_id == "admin"){
+				var url = "http://localhost:8080/admin/area&" + sWord + "/record";
+		        window.location.href=url;
+			}
+			else{
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+			}		
+		}
+	}
+
+	
+	$(document).ready(function(){  
+		showForm();
+	});
+	
+	function showForm(){
+		var user_id = $("#user_id").html();
+		$.ajax({
+   			type:'GET',
+     		url:'http://localhost:8080/record/form',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+//     			alert(JSON.stringify(result));
+     	    	showData(result);
+     	    	display();
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+/* 		if(user_id == "admin"){
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/form',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}
+		else{
+			var param = encode64(user_id);
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/' + param + '/form',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		} */
+	}
+	
+	function returnForm() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/form";
+        window.location.href=url;
+	}
+	
+	function returnRecord() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/form";
+        window.location.href=url;
+	}
+	
+	function getType(){
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/type";
+        window.location.href=url;
+	}
+ 	
+	function getArea(){
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/area";
+		window.location.href=url;
+	}
+	
+	function getStreet() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/street";
+		window.location.href=url;
+	} 
+
+	function showData(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>ID</th><th>车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>停入时间</th><th>离开时间</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].id + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "所有停车场信息";
+		$("#tab").append(str); 
+	}
+
+	
+	function getRecord() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
+	function jumpToIndex() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+    	var url = "http://localhost:8080/user/" + param + "/home";
+    	window.open(url);  
+	}
+	
+	function display() {
+    	len =$("#tab tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
+
+    	page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
+    	curPage=1;    // 设置当前为第一页
+    	displayPage();//显示第一页
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";    // 显示当前多少页
+   		document.getElementById("sjzl").innerHTML="&nbsp&nbsp&nbsp数据总量 " + len + "&nbsp&nbsp&nbsp";        // 显示数据量       
+    
+    	$("#btn1").click(function firstPage(){    // 首页
+        	curPage=1;
+        	direct = 0;
+        	displayPage();
+    	});	
+    	$("#btn2").click(function frontPage(){    // 上一页
+    	    direct=-1;
+    	    displayPage();
+    	});
+    	$("#btn3").click(function nextPage(){    // 下一页
+    	    direct=1;
+       		displayPage();
+    	});
+    	$("#btn4").click(function lastPage(){    // 尾页
+       		curPage=page;
+        	direct = 0;
+        	displayPage();
+    	});
+    	$("#btn5").click(function changePage(){    // 转页
+    	    curPage=document.getElementById("changePage").value * 1;
+    	    if (!/^[1-9]\d*$/.test(curPage)) {
+    	        alert("请输入正整数");
+    	        return ;
+    	    }
+    	    if (curPage > page) {
+       	    	alert("超出数据页面");
+            	return ;
+        	}
+        	direct = 0;
+        	displayPage();
+    	});
+	}
+
+	function displayPage(){
+    	if(curPage <=1 && direct==-1){
+        	direct=0;
+        	alert("已经是第一页了");
+        	return;
+    	} else if (curPage >= page && direct==1) {
+       		direct=0;
+        	alert("已经是最后一页了");
+        	return ;
+    	}
+    
+    	lastPage = curPage;
+    	
+    	// 修复当len=1时，curPage计算得0的bug
+    	if (len > pageSize) {
+        	curPage = ((curPage + direct + len) % len);
+    	} else {
+        	curPage = 1;
+    	}
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";        // 显示当前多少页
+    	begin=(curPage-1)*pageSize + 1;// 起始记录号
+    	end = begin + 1*pageSize - 1;    // 末尾记录号
+     
+    	if(end > len ) 
+    		end=len;
+    	$("#tab tr").hide();    // 首先，设置这行为隐藏
+    	$("#tab tr").each(function(i){    // 然后，通过条件判断决定本行是否恢复显示
+        	if((i>=begin && i<=end) || i==0 )//显示begin<=x<=end的记录
+            	$(this).show();
+    	});
+ 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 

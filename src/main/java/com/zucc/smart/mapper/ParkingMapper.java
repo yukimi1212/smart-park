@@ -35,4 +35,11 @@ public interface ParkingMapper {
 	String getOneAreaCount(String BUSINESSCODE);
 
 	ArrayList<HashMap<String, String>> searchArea(String searchWord);
+
+	ArrayList<Parking> searchParkNameByParkCode(String searchWord);
+
+	ArrayList<Parking> searchStreetNameByStreetCode(String string);
+	
+	ArrayList<Parking> searchAreaNameByBusinesscode(String string);
+
 }

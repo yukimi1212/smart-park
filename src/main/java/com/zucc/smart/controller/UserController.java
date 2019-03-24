@@ -34,79 +34,104 @@ public class UserController {
 	 @Autowired
 	 UserService userService;
 
-    @RequestMapping(value = {"/", "/{user_name}/map"})
-    public String getMap(@PathVariable("user_name") String user_name_obj) {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name +"/map");
+    @RequestMapping(value = {"/", "/{user_id}/map"})
+    public String getMap(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	log.info("/user/"+ user_id +"/map");
         return "map";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/analysis"})
-    public String getOpenFlashChart(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/analysis");
+    @RequestMapping(value = {"/", "/{user_id}/analysis"})
+    public String getOpenFlashChart(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/analysis");
         double[] data1 = new double[]{4,8,9,3,2,6,8,6,3,7,3,5};
-        
         build7daysTxt.alertBar1(data1);
-        map.put("user_name", user_name);
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
         return "analysisTest";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/home"})
-    public String enterHome(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) {
-        String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/" + user_name + "/home");
+    @RequestMapping(value = {"/", "/{user_id}/home"})
+    public String enterHome(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
+        String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/" + user_id + "/home");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
         return "index";
     }
     
     
-    @RequestMapping(value = {"/", "/{user_name}/form"})
-    public String gotoParkingForm(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/form");
+    @RequestMapping(value = {"/", "/{user_id}/form"})
+    public String gotoParkingForm(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/form");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
     	map.put("searchWord", "");
         return "parkingForm";
     }
 
     
-    @RequestMapping(value = {"/", "/{user_name}/type"})
-    public String gotoParkingType(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/type");
+    @RequestMapping(value = {"/", "/{user_id}/type"})
+    public String gotoParkingType(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/type");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
     	map.put("searchWord", "");
         return "parkingType";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/area"})
-    public String gotoParkingArea(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/area");
+    @RequestMapping(value = {"/", "/{user_id}/area"})
+    public String gotoParkingArea(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/area");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
     	map.put("searchWord", "");
         return "parkingArea";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/street"})
-    public String gotoParkingStreet(@PathVariable("user_name") String user_name_obj, Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/user/"+ user_name + "/street");
+    @RequestMapping(value = {"/", "/{user_id}/street"})
+    public String gotoParkingStreet(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/street");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
     	map.put("searchWord", "");
         return "parkingStreet";
     }
     
-    @RequestMapping(value = {"/", "/{user_name}/{searchWord}"})
-    public String doSearch(@PathVariable("user_name") String user_name_obj, @PathVariable("searchWord") String searchWord,Map<String, Object> map) throws IOException {
-    	String user_name = new String (Decode.decode(user_name_obj));
+    @RequestMapping(value = {"/", "/{user_id}/record"})
+    public String gotoParkingRecord(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/record");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+        return "record";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/{searchWord}"})
+    public String doSearch(@PathVariable("user_id") String user_id_obj, @PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
     	String[] word = searchWord.split("&");
     	searchWord = word[0];
     	String source = word[1];
-    	log.info("/user/"+ user_name + "/" + searchWord + "/" + source);
-    	System.out.println(user_name_obj + "***" + searchWord);
+    	log.info("/user/"+ user_id + "/" + searchWord + "/" + source);
+    	System.out.println(user_id_obj + "***" + searchWord);
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
     	map.put("searchWord", searchWord);
     	
     	if(source.equals("form"))
@@ -115,7 +140,9 @@ public class UserController {
     		return "searchType";
     	else if(source.equals("street"))
     		return "searchStreet";
-    	else
+    	else if(source.equals("area"))
     		return "searchArea";
+    	else
+    		return "searchRecord";
     }
 }

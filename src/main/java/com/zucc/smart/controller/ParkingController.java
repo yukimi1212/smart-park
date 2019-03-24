@@ -22,44 +22,45 @@ import com.zucc.smart.valueObject.StreetVO;
 @RestController
 @RequestMapping("/park")
 public class ParkingController {
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	private static final Logger log = LoggerFactory.getLogger(ParkingController.class);
 
 	@Autowired
 	ParkingService parkingService;
     
-    @RequestMapping(value = "/{user_name}/from", method = RequestMethod.GET)
-    public ArrayList<Parking> getParkingForm(@PathVariable("user_name") String user_name_obj) {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/park/"+ user_name + "/form");
+    @RequestMapping(value = "/{user_id}/form", method = RequestMethod.GET)
+    public ArrayList<Parking> getParkingForm(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/park/"+ user_id + "/form");
         ArrayList<Parking> list = new ArrayList<Parking>();
         list = parkingService.getAllParking();
+//        System.out.println("list.size()：" +  list.size());
     	return list;
     }
     
-    @RequestMapping(value = "/{user_name}/type", method = RequestMethod.GET)
-    public ArrayList<ParkingTypeVO> getParkingType(@PathVariable("user_name") String user_name_obj) {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/park/"+ user_name + "/type");
+    @RequestMapping(value = "/{user_id}/type", method = RequestMethod.GET)
+    public ArrayList<ParkingTypeVO> getParkingType(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/park/"+ user_id + "/type");
         ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
         
         list = parkingService.getParkingType();
     	return list;
     }
     
-    @RequestMapping(value = "/{user_name}/area", method = RequestMethod.GET)
-    public ArrayList<AreaVO> getArea(@PathVariable("user_name") String user_name_obj) {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/park/"+ user_name + "/area");
+    @RequestMapping(value = "/{user_id}/area", method = RequestMethod.GET)
+    public ArrayList<AreaVO> getArea(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/park/"+ user_id + "/area");
         ArrayList<AreaVO> list = new ArrayList<AreaVO>();
         
         list = parkingService.getArea();
     	return list;
     }
     
-    @RequestMapping(value = "/{user_name}/street", method = RequestMethod.GET)
-    public ArrayList<StreetVO> getStreet(@PathVariable("user_name") String user_name_obj) {
-    	String user_name = new String (Decode.decode(user_name_obj));
-    	log.info("/park/"+ user_name + "/street");
+    @RequestMapping(value = "/{user_id}/street", method = RequestMethod.GET)
+    public ArrayList<StreetVO> getStreet(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/park/"+ user_id + "/street");
     	ArrayList<StreetVO> list = new ArrayList<StreetVO>();
         
         list = parkingService.getStreet();

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zucc.smart.mapper.HelperMapper">
+
+	<select id="getStreetName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select streetname
+    	FROM street
+    	where streetcode = #{streetcode}
+    </select>
+
+	<select id="getAreaName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select areaname
+    	FROM area
+    	where businesscode = #{businesscode}
+    </select>
+    
+    <select id="getAreaNameByStreetcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct areaname
+    	FROM street
+    	where streetcode = #{streetcode}
+    </select>
+    
+    <select id="getParkingName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct parkname
+    	FROM parking
+    	where parkcode = #{parkcode}
+    </select>
+</mapper>
