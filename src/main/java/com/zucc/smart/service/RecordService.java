@@ -12,10 +12,10 @@ public interface RecordService {
 	ArrayList<RecordVO> getAdminRecord();
 
 	ArrayList<RecordVO> userRecordSearch(String searchWord);
-
-	ArrayList<RecordVO> adminRecordIDSearch(String searchWord);
-
+	
 	ArrayList<RecordVO> changeToVO(ArrayList<Record> list);
+
+	ArrayList<RecordVO> adminRecordIDSearch(String searchWord);	
 
 	ArrayList<RecordVO> adminRecordCPHSearch(String searchWord);
 
@@ -24,5 +24,7 @@ public interface RecordService {
 	ArrayList<RecordVO> adminRecordStreetSearch(String searchWord);
 
 	ArrayList<RecordVO> adminRecordAreaSearch(String searchWord);
+	
+	ArrayList<RecordVO> adminRecordSearch(String searchWord);
 
 }

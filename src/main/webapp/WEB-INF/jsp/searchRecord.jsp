@@ -114,8 +114,8 @@
         <div class="content">   
         	<div id="search">
     			<input type="text" id="searchWord" value="${searchWord }" placeholder="ID/车牌/停车场/所属街道/所属城区" size="18px">
-<!--     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
- -->    		<div class="btn-group">
+    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
+	    		<!-- <div class="btn-group">
  					<button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">搜索<span class="caret"></span></button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="javascript:void(0)" onclick="doIDSearch()" style="font-size:16px">按ID</a></li>
@@ -124,7 +124,7 @@
 						<li><a href="javascript:void(0)" onclick="doStreetSearch()" style="font-size:16px">按所属街道</a></li>
 						<li><a href="javascript:void(0)" onclick="doAreaSearch()" style="font-size:16px">按所属城区</a></li>
 					</ul>
-				</div>
+				</div> -->
   			</div><br>
   			
             <div class="row">             
@@ -177,14 +177,15 @@
 	var begin;
 	var end;
     
-	function doIDSearch() {
+	
+	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
 			returnRecord();
 		else{			
 			var user_id = $("#user_id").html();			
 			if(user_id == "admin"){
-				var url = "http://localhost:8080/admin/ID&" + sWord + "/record";
+				var url = "http://localhost:8080/admin/" + sWord + "/record";
 		        window.location.href=url;
 			}
 			else{
@@ -194,75 +195,6 @@
 		}
 	}
 	
-	function doCPHSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnRecord();
-		else{			
-			var user_id = $("#user_id").html();			
-			if(user_id == "admin"){
-				var url = "http://localhost:8080/admin/CPH&" + sWord + "/record";
-		        window.location.href=url;
-			}
-			else{
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
-			}		
-		}
-	}
-	
-	function doParkingSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnRecord();
-		else{			
-			var user_id = $("#user_id").html();			
-			if(user_id == "admin"){
-				var url = "http://localhost:8080/admin/parking&" + sWord + "/record";
-		        window.location.href=url;
-			}
-			else{
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
-			}		
-		}
-	}
-	
-	function doStreetSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnRecord();
-		else{			
-			var user_id = $("#user_id").html();			
-			if(user_id == "admin"){
-				var url = "http://localhost:8080/admin/street&" + sWord + "/record";
-		        window.location.href=url;
-			}
-			else{
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
-			}		
-		}
-	}
-	
-	function doAreaSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnRecord();
-		else{			
-			var user_id = $("#user_id").html();			
-			if(user_id == "admin"){
-				var url = "http://localhost:8080/admin/area&" + sWord + "/record";
-		        window.location.href=url;
-			}
-			else{
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
-			}		
-		}
-	}
-
-
 	
 	window.onload = function(){
 		var searchWord = $("#searchWord").val();
@@ -316,6 +248,13 @@
 		var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
+	}
+	
+	function returnRecord() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
 	}
 	
 	function getType(){
@@ -468,6 +407,92 @@
 
 		return output;  
 	}  
+
+/*	
+function doIDSearch() {
+	var sWord = $("#searchWord").val();
+	if(sWord == "")
+		returnRecord();
+	else{			
+		var user_id = $("#user_id").html();			
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/ID&" + sWord + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+		}		
+	}
+}
+
+function doCPHSearch() {
+	var sWord = $("#searchWord").val();
+	if(sWord == "")
+		returnRecord();
+	else{			
+		var user_id = $("#user_id").html();			
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/CPH&" + sWord + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+		}		
+	}
+}
+
+function doParkingSearch() {
+	var sWord = $("#searchWord").val();
+	if(sWord == "")
+		returnRecord();
+	else{			
+		var user_id = $("#user_id").html();			
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/parking&" + sWord + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+		}		
+	}
+}
+
+function doStreetSearch() {
+	var sWord = $("#searchWord").val();
+	if(sWord == "")
+		returnRecord();
+	else{			
+		var user_id = $("#user_id").html();			
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/street&" + sWord + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+		}		
+	}
+}
+
+function doAreaSearch() {
+	var sWord = $("#searchWord").val();
+	if(sWord == "")
+		returnRecord();
+	else{			
+		var user_id = $("#user_id").html();			
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/area&" + sWord + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+		}		
+	}
+} */
 </script>
 
 </html>

@@ -84,9 +84,10 @@ public class SearchController {
     
     @RequestMapping(value = "/record/admin", method = RequestMethod.GET)
     public ArrayList<RecordVO> getAdminRecordSearch(String searchWord,String property) {
-    	log.info("/search/record/admin" + "----- searchWord：" + searchWord + " & property：" + property);
+    	log.info("/search/record/admin" + "----- searchWord：" + searchWord);
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-    	if(property.equals("ID")) 
+    	list = recordService.adminRecordSearch(searchWord);
+/*    	if(property.equals("ID")) 
     		list = recordService.adminRecordIDSearch(searchWord);	
     	else if(property.equals("CPH")) 
     		list = recordService.adminRecordCPHSearch(searchWord);
@@ -96,6 +97,7 @@ public class SearchController {
     		list = recordService.adminRecordStreetSearch(searchWord);
     	else
     		list = recordService.adminRecordAreaSearch(searchWord);
+*/    		
 		return list;
     }
     

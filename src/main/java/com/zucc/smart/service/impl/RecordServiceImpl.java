@@ -130,4 +130,21 @@ public class RecordServiceImpl implements RecordService {
 		return listVO;
 	}
 
+	@Override
+	public ArrayList<RecordVO> adminRecordSearch(String searchWord) {	
+		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
+		ArrayList<RecordVO> listID = adminRecordIDSearch(searchWord);	
+		listVO.addAll(listID);
+		ArrayList<RecordVO> listCPH = adminRecordCPHSearch(searchWord);
+		listVO.addAll(listCPH);
+		ArrayList<RecordVO> listParking = adminRecordParkingSearch(searchWord);
+		listVO.addAll(listParking);
+		ArrayList<RecordVO> listStreet = adminRecordStreetSearch(searchWord);
+		listVO.addAll(listStreet);
+		ArrayList<RecordVO> listArea = adminRecordAreaSearch(searchWord);
+		listVO.addAll(listArea);
+		
+		return listVO;
+	}
+
 }
