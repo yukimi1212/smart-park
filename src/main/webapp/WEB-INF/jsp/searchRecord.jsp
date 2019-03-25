@@ -191,6 +191,7 @@
 			else{
 				var param = encode64(user_id);
 				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+				window.location.href=url;
 			}		
 		}
 	}

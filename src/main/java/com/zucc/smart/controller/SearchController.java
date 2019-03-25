@@ -78,7 +78,7 @@ public class SearchController {
     	log.info("/search/record/user/" + user_id + "-----" + searchWord);
     	
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-		list = recordService.userRecordSearch(searchWord);		
+		list = recordService.userRecordSearch(searchWord, user_id);		
 		return list;
     }
     

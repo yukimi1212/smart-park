@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zucc.smart.mapper.VehicleMapper">
+
+	<resultMap id="VehicleMap" type="com.zucc.smart.domain.Vehicle">
+		<result column="cph" property="cph" />
+		<result column="cartype" property="cartype" />
+		<result column="user_id" property="user_id" />
+	</resultMap>
+
+	<select id="getUserVehicle" parameterType="java.lang.String" resultMap="VehicleMap" useCache="false">
+    	select *
+    	FROM vehicle
+    	where user_id = #{user_id}
+    </select>     
+   
+</mapper>

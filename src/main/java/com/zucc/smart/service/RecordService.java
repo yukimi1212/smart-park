@@ -7,11 +7,11 @@ import com.zucc.smart.valueObject.RecordVO;
 
 public interface RecordService {
 
-	ArrayList<RecordVO> getUserRecord();
+	ArrayList<RecordVO> getUserRecord(String user_id);
 
 	ArrayList<RecordVO> getAdminRecord();
 
-	ArrayList<RecordVO> userRecordSearch(String searchWord);
+	ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id);
 	
 	ArrayList<RecordVO> changeToVO(ArrayList<Record> list);
 
@@ -26,5 +26,11 @@ public interface RecordService {
 	ArrayList<RecordVO> adminRecordAreaSearch(String searchWord);
 	
 	ArrayList<RecordVO> adminRecordSearch(String searchWord);
+
+	ArrayList<Record> userRecordParkingSearch(String searchWord, String cph);
+
+	ArrayList<Record> userRecordStreetSearch(String searchWord, String cph);
+
+	ArrayList<Record> userRecordAreaSearch(String searchWord, String cph);
 
 }

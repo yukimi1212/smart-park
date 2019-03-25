@@ -128,7 +128,6 @@ public class UserController {
     	searchWord = word[0];
     	String source = word[1];
     	log.info("/user/"+ user_id + "/" + searchWord + "/" + source);
-    	System.out.println(user_id_obj + "***" + searchWord);
     	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);

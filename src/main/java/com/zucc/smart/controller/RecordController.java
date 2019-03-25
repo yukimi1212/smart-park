@@ -38,7 +38,7 @@ public class RecordController {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/record/"+ user_id + "/form");
         ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-        list = recordService.getUserRecord();
+        list = recordService.getUserRecord(user_id);
     	return list;
     }
     

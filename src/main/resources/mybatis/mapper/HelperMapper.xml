@@ -26,4 +26,5 @@
     	FROM parking
     	where parkcode = #{parkcode}
     </select>
+    
 </mapper>

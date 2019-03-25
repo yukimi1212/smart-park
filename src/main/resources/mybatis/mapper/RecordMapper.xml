@@ -18,7 +18,14 @@
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     </select>
+    
+    <select id="getUserRecord" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where cph = #{cph};
+    </select>
 
+	<!-- 管理员 -->
 	<select id="searchRecordByID" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
@@ -47,6 +54,37 @@
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where businesscode = #{searchWord};
+    </select>
+     
+    <!-- 用户 -->
+    <select id="searchUserRecordByID" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where ID like #{searchWord} and cph = #{cph};
+    </select>
+	
+	<select id="searchUserRecordByCPH" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where CPH like #{searchWord} and cph = #{cph};
+    </select>
+    
+    <select id="searchUserRecordByParking" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where parkcode = #{searchWord} and cph = #{cph};
+    </select>
+    
+    <select id="searchUserRecordByStreet" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where streetcode = #{searchWord} and cph = #{cph};
+    </select>
+    
+    <select id="searchUserRecordByArea" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where businesscode = #{searchWord} and cph = #{cph};
     </select>
     
 </mapper>

@@ -189,6 +189,7 @@
 			else{
 				var param = encode64(user_id);
 				var url = "http://localhost:8080/user/" + param + "/" + sWord + "&record";
+				window.location.href=url;
 			}		
 		}
 	}
@@ -199,38 +200,23 @@
 	
 	function showForm(){
 		var user_id = $("#user_id").html();
-		$.ajax({
-   			type:'GET',
-     		url:'http://localhost:8080/record/form',
-     		async:true,
-     		data:{
-     		},
-     		success:function(result){
-//     			alert(JSON.stringify(result));
-     	    	showData(result);
-     	    	display();
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
-/* 		if(user_id == "admin"){
+		
+ 		if(user_id == "admin"){
 			$.ajax({
-	   			type:'GET',
-	     		url:'http://localhost:8080/record/form',
-	     		async:true,
-	     		data:{
-	     		},
-	     		success:function(result){
-	     	    	showData(result);
-	     	    	display();
-	     		},
-	     		error:function(error){
-	     			var jsonData = JSON.stringify(error);
-	     	    	alert(jsonData)
-	     		}
-	 		})
+   				type:'GET',
+     			url:'http://localhost:8080/record/form',
+     			async:true,
+     			data:{
+     			},
+     			success:function(result){
+     	    		showData(result);
+     	    		display();
+     			},
+     			error:function(error){
+     				var jsonData = JSON.stringify(error);
+     	    		alert(jsonData)
+     			}
+ 			})
 		}
 		else{
 			var param = encode64(user_id);
@@ -249,7 +235,7 @@
 	     	    	alert(jsonData)
 	     		}
 	 		})
-		} */
+		} 
 	}
 	
 	function returnForm() {

@@ -227,10 +227,12 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
 					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jumpToRecord()">
 						<i class="fa fa-laptop"></i>
+						</a>
 					</div>
-					<h3>历史记录</h3>
-					<p>查看个人历史停车记录。</p>
+					<h3>停车记录</h3>
+					<p>查看历史停车记录。</p>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
@@ -390,6 +392,13 @@
 	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.open(url);  
+	}
+	
+	function jumpToRecord() {
+		var user_id = document.getElementById("user_id").innerHTML;
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.open(url);
 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
