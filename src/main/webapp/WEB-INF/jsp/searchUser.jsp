@@ -66,7 +66,13 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
-
+					
+					<li class="nav-item">
+                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
+                            <i class="icon icon-graph"></i> 停车记录
+                        </a>
+                    </li>
+					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
@@ -101,14 +107,8 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
-                            <i class="icon icon-graph"></i> 停车记录统计
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link active">
-                            <i class="icon icon-graph"></i> 用户统计
+                            <i class="icon icon-puzzle"></i> 用户管理
                         </a>
                     </li>
                     
@@ -249,15 +249,31 @@
 
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th><th>拥有车辆</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td><td>";
+			str = str + "<a href=\"javascript:void(0)\" onclick=\"checkVehicle(this)\">查看</a>" + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "用户信息";
 		$("#tab").append(str); 
 	}
 
+	function checkVehicle(id) {
+		var user_id = $("#user_id").html();
+		if(user_id == "admin"){
+		    var rows = id.parentNode.parentNode.rowIndex;
+			user_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/admin/" + param + "/vehicle";
+			window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/vehicle";
+			window.location.href=url;	
+		}	
+	}
 	
 	function getRecord() {
 		var user_id = $("#user_id").html();

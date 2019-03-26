@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zucc.smart.domain.Parking;
+import com.zucc.smart.domain.Vehicle;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.RecordService;
 import com.zucc.smart.service.UserService;
+import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
@@ -36,6 +38,9 @@ public class SearchController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	VehicleService vehicleService;
     
     @RequestMapping(value = "/form/user/{user_id}", method = RequestMethod.GET)
     public ArrayList<Parking> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
@@ -84,6 +89,26 @@ public class SearchController {
     	
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
 		list = recordService.userRecordSearch(searchWord, user_id);		
+		return list;
+    }
+    
+    @RequestMapping(value = "/vehicle/user/{user_id}", method = RequestMethod.GET)
+    public ArrayList<Vehicle> getUserVehicle(@PathVariable("user_id") String user_id_obj, String searchWord) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/search/vehicle/user/" + user_id);
+    	
+    	ArrayList<Vehicle> list = new ArrayList<Vehicle>();
+		list = vehicleService.getUserVehicle(user_id);		
+		return list;
+    }
+    
+    @RequestMapping(value = "/vehicle/admin", method = RequestMethod.GET)
+    public ArrayList<Vehicle> getUserVehicleAdmin(String searchWord, String check_id) {
+    	check_id = new String (Decode.decode(check_id));
+    	log.info("/search/vehicle/admin ----- " + check_id);
+    	
+    	ArrayList<Vehicle> list = new ArrayList<Vehicle>();
+		list = vehicleService.getUserVehicle(check_id);		
 		return list;
     }
     

@@ -74,20 +74,19 @@
                     </li>
 					
                     <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
-                        
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="returnForm()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="returnForm()" class="nav-link">
                                     <i class="icon icon-target"></i> 所有统计
                                 </a>
                             </li>
-                            
+                        
                             <li class="nav-item">
-                                <a href="#"  class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
                                     <i class="icon icon-target"></i> 类型统计
                                 </a>
                             </li>
@@ -106,12 +105,13 @@
 
                         </ul>
                     </li>
-                    
-                    <li class="nav-item" id="userRecord">
-                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link active">
                             <i class="icon icon-puzzle"></i> 用户管理
                         </a>
                     </li>
+                    
                    
                 </ul>
             </nav>
@@ -119,7 +119,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="可按编号/名称进行搜索" size="18px">
+    			<input type="text" id="searchWord" value="" placeholder="用户ID/用户名" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
@@ -146,10 +146,10 @@
                 <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
                 <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
                 <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
-                <a>&nbsp&nbsp转到&nbsp;</a>
+                <a  id="btnTo" >&nbsp&nbsp转到&nbsp;</a>
                 <input id="changePage" type="text" size="1" maxlength="4"/>
-                <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>
+                <a id="page">页&nbsp;</a>
+                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>				
             </div>
         </div>
     </div>
@@ -172,78 +172,153 @@
 	var page;            //总页数
 	var begin;
 	var end;
-
+    
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
-			getType();
+			returnUser();
 		else{
 			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&type";
+		    var param = encode64(user_id);
+			var url = "http://localhost:8080/admin/" + sWord + "/user";
 	        window.location.href=url;
-		}		
-	}
-	
-	window.onload = function(){
-		var user_id = $("#user_id").html();
-		
-		var param = encode64(user_id);
-		$.ajax({
-   			type:'GET',
-     		url:'http://localhost:8080/park/' + param + '/type',
-     		async:true,
-     		data:{
-     		},
-     		success:function(result){
-     	    	showData(result);
-     	    	display();
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
+		}
 	}
 
-	function showData(data) {
-		$("#tab").html("");
-		var str = "<thead><tr><th>停车场类型编号</th><th>类型名</th><th>拥有停车场数量</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].typecode + "</td><td>" + data[i].typename + "</td><td>" + data[i].amount + "</td></tr>"; 
+	
+	$(document).ready(function(){  
+		showForm();
+	});
+	
+	function showForm(){
+		var user_id = $("#user_id").html();
+		if(user_id == "admin"){
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/admin/user',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
 		}
-		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "按类型统计";
-		$("#tab").append(str); 
+		else{
+			document.getElementById("search").style.display="none";
+			document.getElementById("btn0").style.display="none";
+			document.getElementById("sjzl").style.display="none";
+			document.getElementById("btn1").style.display="none";
+			document.getElementById("btn2").style.display="none";
+			document.getElementById("btn3").style.display="none";
+			document.getElementById("btn4").style.display="none";
+			document.getElementById("btnTo").style.display="none";
+			document.getElementById("changePage").style.display="none";
+			document.getElementById("page").style.display="none";
+			document.getElementById("btn5").style.display="none";
+			         
+			var param = encode64(user_id);
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/' + param + '/user',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}
+	    
+		
 	}
 	
 	function returnForm() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
 	}
- 	
+	
+	function returnUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
+		window.location.href=url;
+	}
+	
 	function getType(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/type";
         window.location.href=url;
 	}
-	
+ 	
 	function getArea(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/area";
 		window.location.href=url;
 	}
 	
 	function getStreet() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
+	
+	function showData(data) {
+		var user_id = $("#user_id").html();
+		$("#tab").html("");
+		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th><th>拥有车辆";
+		if(user_id == "admin")
+			str = str + "</th></tr></thead><tbody>";
+		else
+			str = str + "</th><th>操作</th></tr></thead><tbody>"
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td><td>";
+			str = str + "<a href=\"javascript:void(0)\" onclick=\"checkVehicle(this)\">查看</a>"; 
+			if(user_id == "admin")
+				str = str + "</td></tr>";
+			else	
+				str = str + "</td><td>" + "<a href=\"javascript:void(0)\" onclick=\"alterUser()\">修改</a>" + "</td></tr>";
+			
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "用户信息";
+		$("#tab").append(str); 
+	}
+	
+	function alterUser() {
+		
+	}
+	
+	function checkVehicle(id) {
+		var user_id = $("#user_id").html();
+		if(user_id == "admin"){
+		    var rows = id.parentNode.parentNode.rowIndex;
+			user_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/admin/" + param + "/vehicle";
+			window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/vehicle";
+			window.location.href=url;	
+		}	
+	}
 	
 	function getRecord() {
 		var user_id = $("#user_id").html();
@@ -252,6 +327,7 @@
 		window.location.href=url;
 	}
 	
+	
 	function getUser() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -259,91 +335,89 @@
 		window.location.href=url;
 	}
 	
+	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
     	var url = "http://localhost:8080/user/" + param + "/home";
-    	window.location.href=url;
+    	window.open(url);  
 	}
-	
 	
 	function display() {
-	    len =$("#tab tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
+    	len =$("#tab tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
 
-	    page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
-
-	    curPage=1;    					// 设置当前为第一页
-	    displayPage();					//显示第一页
-	    
-	    document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";    	// 显示当前多少页
-	    document.getElementById("sjzl").innerHTML="&nbsp&nbsp&nbsp数据总量 " + len + "&nbsp&nbsp&nbsp";        		// 显示数据量	    	    
-	    
-	    $("#btn1").click(function firstPage(){		// 首页
-	        curPage=1;
-	        direct = 0;
-	        displayPage();
-	    });
-	    $("#btn2").click(function frontPage(){		// 上一页
-	        direct=-1;
-	        displayPage();
-	    });
-	    $("#btn3").click(function nextPage(){		// 下一页
-	        direct=1;
-	        displayPage();
-	    });
-	    $("#btn4").click(function lastPage(){		// 尾页
-	        curPage=page;
-	        direct = 0;
-	        displayPage();
-	    });
-	    $("#btn5").click(function changePage(){		// 转页
-	        curPage=document.getElementById("changePage").value * 1;
-	        if (!/^[1-9]\d*$/.test(curPage)) {
-	            alert("请输入正整数");
-	            return ;
-	        }
-	        if (curPage > page) {
-	            alert("超出数据页面");
-	            return ;
-	        }
-	        direct = 0;
-	        displayPage();
-	    });
+    	page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
+    	curPage=1;    // 设置当前为第一页
+    	displayPage();//显示第一页
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";    // 显示当前多少页
+   		document.getElementById("sjzl").innerHTML="&nbsp&nbsp&nbsp数据总量 " + len + "&nbsp&nbsp&nbsp";        // 显示数据量       
+    
+    	$("#btn1").click(function firstPage(){    // 首页
+        	curPage=1;
+        	direct = 0;
+        	displayPage();
+    	});	
+    	$("#btn2").click(function frontPage(){    // 上一页
+    	    direct=-1;
+    	    displayPage();
+    	});
+    	$("#btn3").click(function nextPage(){    // 下一页
+    	    direct=1;
+       		displayPage();
+    	});
+    	$("#btn4").click(function lastPage(){    // 尾页
+       		curPage=page;
+        	direct = 0;
+        	displayPage();
+    	});
+    	$("#btn5").click(function changePage(){    // 转页
+    	    curPage=document.getElementById("changePage").value * 1;
+    	    if (!/^[1-9]\d*$/.test(curPage)) {
+    	        alert("请输入正整数");
+    	        return ;
+    	    }
+    	    if (curPage > page) {
+       	    	alert("超出数据页面");
+            	return ;
+        	}
+        	direct = 0;
+        	displayPage();
+    	});
 	}
 
-		function displayPage(){
-	    	if(curPage <=1 && direct==-1){
-	        	direct=0;
-	        	alert("已经是第一页了");
-	        	return;
-	    	} else if (curPage >= page && direct==1) {
-	       		direct=0;
-	        	alert("已经是最后一页了");
-	        	return ;
-	    	}
-	    
-	    	lastPage = curPage;
-	   
-	    	// 修复当len=1时，curPage计算得0的bug
-	    	if (len > pageSize) {
-	        	curPage = ((curPage + direct + len) % len);
-	    	} else {
-	        	curPage = 1;
-	    	}
-	    
-	    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";        // 显示当前多少页
-	    	begin=(curPage-1)*pageSize + 1;		// 起始记录号
-	    	end = begin + 1*pageSize - 1;    	// 末尾记录号
-	     
-	    	if(end > len ) 
-	    		end=len;
-	    	$("#tab tr").hide();    			// 首先，设置这行为隐藏
-	    	$("#tab tr").each(function(i){    	// 然后，通过条件判断决定本行是否恢复显示
-	        	if((i>=begin && i<=end) || i==0 )	//显示begin<=x<=end的记录
-	            	$(this).show();
-	    	});
-	 	}
-		
+	function displayPage(){
+    	if(curPage <=1 && direct==-1){
+        	direct=0;
+        	alert("已经是第一页了");
+        	return;
+    	} else if (curPage >= page && direct==1) {
+       		direct=0;
+        	alert("已经是最后一页了");
+        	return ;
+    	}
+    
+    	lastPage = curPage;
+    	
+    	// 修复当len=1时，curPage计算得0的bug
+    	if (len > pageSize) {
+        	curPage = ((curPage + direct + len) % len);
+    	} else {
+        	curPage = 1;
+    	}
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";        // 显示当前多少页
+    	begin=(curPage-1)*pageSize + 1;// 起始记录号
+    	end = begin + 1*pageSize - 1;    // 末尾记录号
+     
+    	if(end > len ) 
+    		end=len;
+    	$("#tab tr").hide();    // 首先，设置这行为隐藏
+    	$("#tab tr").each(function(i){    // 然后，通过条件判断决定本行是否恢复显示
+        	if((i>=begin && i<=end) || i==0 )//显示begin<=x<=end的记录
+            	$(this).show();
+    	});
+ 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 

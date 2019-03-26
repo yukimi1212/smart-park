@@ -204,7 +204,7 @@
 			<!-- What We Do -->
 			<div class="clean-what-we-do">
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft">
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jump()">
 						<i class="fa fa-html5"></i>
@@ -214,17 +214,7 @@
 					<p>实时定位搜索附近停车场；输入目的地搜索停车场。</p>
 				</div>
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
-					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jump()">
-						<i class="fa fa-css3"></i>
-						</a>
-					</div>
-					<h3>停车场统计</h3>
-					<p>统计了各个停车场的数据，可按地区按类型查询停车场的相关信息。</p>
-				</div>
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jump()">
 						<i class="fa fa-laptop"></i>
@@ -242,6 +232,16 @@
 					</div>
 					<h3>分析统计</h3>
 					<p>综合各种数据，对停车场，车位利用率等信息进行统计分析。</p>
+				</div>
+				
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-user"></i>
+						</a>
+					</div>
+					<h3>个人信息</h3>
+					<p>查看，修改个人信息。</p>
 				</div>
 		 
 			</div>

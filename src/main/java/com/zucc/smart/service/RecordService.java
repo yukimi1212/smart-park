@@ -41,4 +41,6 @@ public interface RecordService {
 	
 	UserVO changeToUserVO(User user);
 
+	ArrayList<UserVO> getUserInfoList(String user_id);
+
 }

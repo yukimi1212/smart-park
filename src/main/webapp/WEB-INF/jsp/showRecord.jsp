@@ -66,7 +66,13 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
-
+				
+					<li class="nav-item">
+                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link active">
+                            <i class="icon icon-graph"></i> 停车记录
+                        </a>
+                    </li>
+					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
@@ -100,15 +106,9 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link active">
-                            <i class="icon icon-graph"></i> 停车记录统计
-                        </a>
-                    </li>
-                    
                     <li class="nav-item" id="userRecord">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
-                            <i class="icon icon-graph"></i> 用户统计
+                            <i class="icon icon-puzzle"></i> 用户管理
                         </a>
                     </li>
                    
@@ -208,7 +208,6 @@
 		var user_id = $("#user_id").html();
 		
  		if(user_id == "admin"){
- 			document.getElementById("userRecord").style.display="inline";
 			$.ajax({
    				type:'GET',
      			url:'http://localhost:8080/record/form',
@@ -226,7 +225,6 @@
  			})
 		}
 		else{
-			document.getElementById("userRecord").style.display="none";
 			var param = encode64(user_id);
 			$.ajax({
 	   			type:'GET',

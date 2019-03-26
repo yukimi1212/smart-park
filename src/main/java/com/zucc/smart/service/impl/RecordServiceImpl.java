@@ -70,9 +70,7 @@ public class RecordServiceImpl implements RecordService {
 		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
 		ArrayList<Record> listAll = new ArrayList<Record>();
 		for(int i=0; i<listAllCPH.size(); i++) {
-			String cph = listAllCPH.get(i).getCph();
-			System.out.println(cph);
-			
+			String cph = listAllCPH.get(i).getCph();			
 			ArrayList<Record> listID = recordMapper.searchUserRecordByID("%"+searchWord+"%", cph);
 			ArrayList<Record> listCPH = recordMapper.searchUserRecordByCPH("%"+searchWord+"%", cph);
 			ArrayList<Record> listParking = userRecordParkingSearch(searchWord,cph);
@@ -82,9 +80,7 @@ public class RecordServiceImpl implements RecordService {
 			listAll.addAll(listCPH);
 			listAll.addAll(listParking);
 			listAll.addAll(listStreet);
-			listAll.addAll(listArea);
-			System.out.println(listAll.size());
-			
+			listAll.addAll(listArea);			
 		}
 		listVO = changeToRecordVO(listAll);
 		return listVO;
@@ -210,7 +206,8 @@ public class RecordServiceImpl implements RecordService {
 		ArrayList<User> list = userMapper.getAllUser();
 		ArrayList<UserVO> listVO = new ArrayList<UserVO>();
 		for(int i=0; i<list.size(); i++) {
-			UserVO userVO = changeToUserVO(list.get(i));
+			UserVO userVO = new UserVO();
+			userVO = changeToUserVO(list.get(i));
 			listVO.add(userVO);
 		}
 		
@@ -250,6 +247,19 @@ public class RecordServiceImpl implements RecordService {
 			listVO.add(recordVO);
 		}
 		
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<UserVO> getUserInfoList(String user_id) {
+		log.info("getUserInfoList: " + user_id);
+		ArrayList<User> list = userMapper.getUserById(user_id);
+		ArrayList<UserVO> listVO = new ArrayList<UserVO>();
+		for(int i=0; i<list.size(); i++) {
+			UserVO userVO = new UserVO();
+			userVO = changeToUserVO(list.get(i));
+			listVO.add(userVO);
+		}
 		return listVO;
 	}
 

@@ -36,4 +36,13 @@ public class AdminController {
     	map.put("searchWord", searchWord);
     	return "searchUser";
     }
+    
+    @RequestMapping(value = {"/", "/{check_id}/vehicle"})
+    public String getUserVehicle(@PathVariable("check_id") String check_id, Map<String, Object> map) throws IOException {
+    	log.info("/admin/" + check_id + "/vehicle");
+    	map.put("user_id", "admin");
+    	map.put("user_name", "管理");
+    	map.put("check_id", check_id);
+    	return "showVehicle";
+    }
 }

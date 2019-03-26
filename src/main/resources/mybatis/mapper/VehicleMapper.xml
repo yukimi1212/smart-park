@@ -20,6 +20,18 @@
     	FROM smart_park.vehicle 
     	where user_id = #{user_id}
     </select> 
-       
+    
+    <delete id="deleteVehicle" parameterType="java.lang.String">
+		DELETE
+		FROM vehicle
+		where cph = #{cph}
+	</delete>   
+	
+	<insert id="addVehicle" parameterType="java.lang.String">
+		INSERT INTO vehicle
+		(cph, cartype, user_id)
+		values
+		(#{cph}, #{cartype}, #{user_id})
+	</insert>    
    
 </mapper>

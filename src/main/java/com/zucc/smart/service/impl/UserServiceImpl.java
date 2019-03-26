@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zucc.smart.domain.User;
+import com.zucc.smart.domain.Vehicle;
 import com.zucc.smart.mapper.UserMapper;
 import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.UserService;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserById(String user_id) {
 		log.info("getUserById: " + user_id);
-		User user = userMapper.getUserById(user_id);
+		User user = (userMapper.getUserById(user_id)).get(0);
 		return user;
 	}
 

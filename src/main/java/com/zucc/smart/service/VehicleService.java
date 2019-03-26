@@ -1,13 +1,11 @@
-package com.zucc.smart.mapper;
+package com.zucc.smart.service;
 
 import java.util.ArrayList;
 
 import com.zucc.smart.domain.Vehicle;
 
-public interface VehicleMapper {
+public interface VehicleService {
 	ArrayList<Vehicle> getUserVehicle(String user_id);
-	
-	int getVehicleCount(String user_id);
 
 	void deleteVehicle(String cph);
 

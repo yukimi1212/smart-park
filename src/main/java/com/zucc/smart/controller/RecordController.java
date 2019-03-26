@@ -65,5 +65,14 @@ public class RecordController {
     	listVO = recordService.getAdminUserList();
     	return listVO;
     }
+    
+    @RequestMapping(value = {"/", "/{user_id}/user"}, method = RequestMethod.GET)
+    public ArrayList<UserVO> getUserInfoList(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/record/" + user_id + "/user");
+    	ArrayList<UserVO> listVO = new ArrayList<UserVO>();
+    	listVO = recordService.getUserInfoList(user_id);
+    	return listVO;
+    }
 
 }

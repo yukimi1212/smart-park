@@ -3,6 +3,7 @@ package com.zucc.smart.service;
 import java.util.ArrayList;
 
 import com.zucc.smart.domain.User;
+import com.zucc.smart.domain.Vehicle;
 import com.zucc.smart.valueObject.UserVO;
 
 public interface UserService {

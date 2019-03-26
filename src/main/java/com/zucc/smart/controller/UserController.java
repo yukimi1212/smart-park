@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.User;
 import com.zucc.smart.service.UserService;
+import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.service.impl.build7daysTxt;
 
@@ -33,6 +34,9 @@ public class UserController {
 
 	 @Autowired
 	 UserService userService;
+	 
+	 @Autowired
+	 VehicleService vehicleService;
 
     @RequestMapping(value = {"/", "/{user_id}/map"})
     public String getMap(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
@@ -118,7 +122,7 @@ public class UserController {
     	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
-        return "record";
+        return "showRecord";
     }
     
     @RequestMapping(value = {"/", "/{user_id}/user"})
@@ -128,7 +132,53 @@ public class UserController {
     	String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
-        return "user";
+        return "showUser";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/vehicle"})
+    public String getUserVehicle(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/vehicle");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+        return "showVehicle";
+    }
+    
+	
+	  @RequestMapping(value = {"/", "/{user_id}/addV"}) 
+	  public String getVehicleInfo(@PathVariable("user_id") String user_id_obj, Map<String, Object>map) throws IOException { 
+		  String user_id = new String(Decode.decode(user_id_obj)); 
+		  log.info("/user/"+ user_id + "/addV");
+		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
+		  map.put("user_name",user_name); 
+		  map.put("user_id", user_id); 
+		  return "addVehicle"; 
+	  }
+	  
+	  @RequestMapping(value = {"/", "/{user_id}/add"}) 
+	  public String addVehicle(@PathVariable("user_id") String user_id_obj, String cph, String cartype, Map<String, Object>map) throws IOException { 
+		  String user_id = new String(Decode.decode(user_id_obj)); 
+		  log.info("/user/"+ user_id + "/add ----- " + cph + "   " + cartype);
+		  vehicleService.addVehicle(cph, cartype, user_id);
+		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
+		  map.put("user_name",user_name); 
+		  map.put("user_id", user_id); 
+		  return "showVehicle"; 
+	  }
+	 
+    
+    @RequestMapping(value = {"/", "/{user_id}/delete"})
+    public String deleteVehicle(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String[] n = user_id_obj.split("&car&");
+    	String user_id = new String (Decode.decode(n[0]));
+    	String cph = n[1];
+    	log.info("/user/"+ user_id + "/vehicle ----- cph：" + cph);
+    	vehicleService.deleteVehicle(cph);
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+        return "showVehicle";
     }
     
     @RequestMapping(value = {"/", "/{user_id}/{searchWord}"})
