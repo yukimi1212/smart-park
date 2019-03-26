@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.Record;
+import com.zucc.smart.domain.User;
 import com.zucc.smart.domain.Vehicle;
 import com.zucc.smart.mapper.HelperMapper;
 import com.zucc.smart.mapper.ParkingMapper;
 import com.zucc.smart.mapper.RecordMapper;
+import com.zucc.smart.mapper.UserMapper;
 import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.RecordService;
 import com.zucc.smart.valueObject.RecordVO;
+import com.zucc.smart.valueObject.UserVO;
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -34,6 +37,9 @@ public class RecordServiceImpl implements RecordService {
 	@Autowired
 	VehicleMapper vehicleMapper;
 	
+	@Autowired
+	UserMapper userMapper;
+	
 	@Override
 	public ArrayList<RecordVO> getUserRecord(String user_id) {
 		log.info("getUserRecord: " + user_id);
@@ -45,7 +51,7 @@ public class RecordServiceImpl implements RecordService {
 			list = recordMapper.getUserRecord(cph);
 			listAll.addAll(list);
 		}
-		ArrayList<RecordVO> listVO = changeToVO(listAll);
+		ArrayList<RecordVO> listVO = changeToRecordVO(listAll);
 		return listVO;
 	}
 
@@ -53,7 +59,7 @@ public class RecordServiceImpl implements RecordService {
 	public ArrayList<RecordVO> getAdminRecord() {
 		log.info("getAdminRecord: admin");
 		ArrayList<Record> list = recordMapper.getAllRecord();
-		ArrayList<RecordVO> listVO = changeToVO(list);
+		ArrayList<RecordVO> listVO = changeToRecordVO(list);
 		return listVO;
 	}
 
@@ -80,7 +86,7 @@ public class RecordServiceImpl implements RecordService {
 			System.out.println(listAll.size());
 			
 		}
-		listVO = changeToVO(listAll);
+		listVO = changeToRecordVO(listAll);
 		return listVO;
 	}
 
@@ -88,7 +94,7 @@ public class RecordServiceImpl implements RecordService {
 	public ArrayList<RecordVO> adminRecordIDSearch(String searchWord) {
 		log.info("adminRecordIDSearch: " + searchWord);
 		ArrayList<Record> list = recordMapper.searchRecordByID("%"+searchWord+"%");
-		ArrayList<RecordVO> listVO = changeToVO(list);
+		ArrayList<RecordVO> listVO = changeToRecordVO(list);
 		return listVO;		
 	}
 	
@@ -96,7 +102,7 @@ public class RecordServiceImpl implements RecordService {
 	public ArrayList<RecordVO> adminRecordCPHSearch(String searchWord) {
 		log.info("adminRecordCPHSearch: " + searchWord);
 		ArrayList<Record> list = recordMapper.searchRecordByCPH("%"+searchWord+"%");
-		ArrayList<RecordVO> listVO = changeToVO(list);
+		ArrayList<RecordVO> listVO = changeToRecordVO(list);
 		return listVO;		
 	}
 
@@ -109,7 +115,7 @@ public class RecordServiceImpl implements RecordService {
 		for(int i=0; i<listParking.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchRecordByParking(listParking.get(i).getParkcode());
 			ArrayList<RecordVO> listVOTemp = new ArrayList<RecordVO>();
-			listVOTemp = changeToVO(list);
+			listVOTemp = changeToRecordVO(list);
 			listVO.addAll(listVOTemp);
 		}		
 		return listVO;
@@ -159,7 +165,7 @@ public class RecordServiceImpl implements RecordService {
 		for(int i=0; i<listStreet.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchRecordByStreet(listStreet.get(i).getStreetcode());
 			ArrayList<RecordVO> listVOTemp = new ArrayList<RecordVO>();
-			listVOTemp = changeToVO(list);
+			listVOTemp = changeToRecordVO(list);
 			listVO.addAll(listVOTemp);
 		}		
 		return listVO;
@@ -173,14 +179,60 @@ public class RecordServiceImpl implements RecordService {
 		for(int i=0; i<listArea.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchRecordByArea(listArea.get(i).getBusinesscode());
 			ArrayList<RecordVO> listVOTemp = new ArrayList<RecordVO>();
-			listVOTemp = changeToVO(list);
+			listVOTemp = changeToRecordVO(list);
 			listVO.addAll(listVOTemp);
 		}		
 		return listVO;
 	}
+
+	@Override
+	public ArrayList<RecordVO> adminRecordSearch(String searchWord) {	
+		log.info("adminRecordSearch: " + searchWord);
+		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
+		ArrayList<RecordVO> listID = adminRecordIDSearch(searchWord);	
+		listVO.addAll(listID);
+		ArrayList<RecordVO> listCPH = adminRecordCPHSearch(searchWord);
+		listVO.addAll(listCPH);
+		ArrayList<RecordVO> listParking = adminRecordParkingSearch(searchWord);
+		listVO.addAll(listParking);
+		ArrayList<RecordVO> listStreet = adminRecordStreetSearch(searchWord);
+		listVO.addAll(listStreet);
+		ArrayList<RecordVO> listArea = adminRecordAreaSearch(searchWord);
+		listVO.addAll(listArea);
+		
+		return listVO;
+	}
+
 	
 	@Override
-	public ArrayList<RecordVO> changeToVO(ArrayList<Record> list) {
+	public ArrayList<UserVO> getAdminUserList() {
+		log.info("getAdminUserList：");
+		ArrayList<User> list = userMapper.getAllUser();
+		ArrayList<UserVO> listVO = new ArrayList<UserVO>();
+		for(int i=0; i<list.size(); i++) {
+			UserVO userVO = changeToUserVO(list.get(i));
+			listVO.add(userVO);
+		}
+		
+		return listVO;
+	}
+	
+	@Override
+	public UserVO changeToUserVO(User user) {
+		UserVO userVO = new UserVO();
+		userVO.setUser_id(user.getUser_id());
+		userVO.setUser_name(user.getUser_name());
+		userVO.setUser_age(user.getUser_age());
+		userVO.setUser_gender(user.getUser_gender());
+		userVO.setUser_phone(user.getUser_phone());
+		userVO.setRegistration_time(user.getRegistration_time());
+		int num = vehicleMapper.getVehicleCount(user.getUser_id());
+		userVO.setVehicle_num(num);
+		return userVO;
+	}
+	
+	@Override
+	public ArrayList<RecordVO> changeToRecordVO(ArrayList<Record> list) {
 		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
 		for(int i=0; i<list.size(); i++) {
 			RecordVO recordVO = new RecordVO();
@@ -197,23 +249,6 @@ public class RecordServiceImpl implements RecordService {
 			recordVO.setParkname(parkname);
 			listVO.add(recordVO);
 		}
-		
-		return listVO;
-	}
-
-	@Override
-	public ArrayList<RecordVO> adminRecordSearch(String searchWord) {	
-		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
-		ArrayList<RecordVO> listID = adminRecordIDSearch(searchWord);	
-		listVO.addAll(listID);
-		ArrayList<RecordVO> listCPH = adminRecordCPHSearch(searchWord);
-		listVO.addAll(listCPH);
-		ArrayList<RecordVO> listParking = adminRecordParkingSearch(searchWord);
-		listVO.addAll(listParking);
-		ArrayList<RecordVO> listStreet = adminRecordStreetSearch(searchWord);
-		listVO.addAll(listStreet);
-		ArrayList<RecordVO> listArea = adminRecordAreaSearch(searchWord);
-		listVO.addAll(listArea);
 		
 		return listVO;
 	}

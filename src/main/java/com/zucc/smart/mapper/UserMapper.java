@@ -1,6 +1,8 @@
 package com.zucc.smart.mapper;
 
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zucc.smart.domain.User;
@@ -15,5 +17,9 @@ public interface UserMapper {
 	void saveUser(User user);
 	
 	void deleteUser(String user_id);
+	
+	ArrayList<User> getAllUser();
+
+	ArrayList<User> searchUser(String searchWord);
 
 }

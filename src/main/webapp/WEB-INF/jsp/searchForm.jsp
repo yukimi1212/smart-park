@@ -105,6 +105,12 @@
                             <i class="icon icon-graph"></i> 停车记录统计
                         </a>
                     </li>
+                    
+                    <li class="nav-item" id="userRecord">
+                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
+                            <i class="icon icon-graph"></i> 用户统计
+                        </a>
+                    </li>
                    
                 </ul>
             </nav>
@@ -169,6 +175,11 @@
 	window.onload = function(){
 		var searchWord = "%" + $("#searchWord").val() + "%";
 		var user_id = $("#user_id").html();
+		if(user_id == "admin")
+			document.getElementById("userRecord").style.display="inline";		
+		else
+			document.getElementById("userRecord").style.display="none";
+		
 		var param = encode64(user_id);
 		$.ajax({
    			type:'GET',
@@ -233,6 +244,13 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
+	function getUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
 	

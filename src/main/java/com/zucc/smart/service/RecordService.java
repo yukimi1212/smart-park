@@ -3,7 +3,9 @@ package com.zucc.smart.service;
 import java.util.ArrayList;
 
 import com.zucc.smart.domain.Record;
+import com.zucc.smart.domain.User;
 import com.zucc.smart.valueObject.RecordVO;
+import com.zucc.smart.valueObject.UserVO;
 
 public interface RecordService {
 
@@ -13,7 +15,7 @@ public interface RecordService {
 
 	ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id);
 	
-	ArrayList<RecordVO> changeToVO(ArrayList<Record> list);
+	
 
 	ArrayList<RecordVO> adminRecordIDSearch(String searchWord);	
 
@@ -32,5 +34,11 @@ public interface RecordService {
 	ArrayList<Record> userRecordStreetSearch(String searchWord, String cph);
 
 	ArrayList<Record> userRecordAreaSearch(String searchWord, String cph);
+
+	ArrayList<UserVO> getAdminUserList();
+
+	ArrayList<RecordVO> changeToRecordVO(ArrayList<Record> list);
+	
+	UserVO changeToUserVO(User user);
 
 }

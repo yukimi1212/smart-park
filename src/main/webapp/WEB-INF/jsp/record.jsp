@@ -105,6 +105,12 @@
                             <i class="icon icon-graph"></i> 停车记录统计
                         </a>
                     </li>
+                    
+                    <li class="nav-item" id="userRecord">
+                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
+                            <i class="icon icon-graph"></i> 用户统计
+                        </a>
+                    </li>
                    
                 </ul>
             </nav>
@@ -202,6 +208,7 @@
 		var user_id = $("#user_id").html();
 		
  		if(user_id == "admin"){
+ 			document.getElementById("userRecord").style.display="inline";
 			$.ajax({
    				type:'GET',
      			url:'http://localhost:8080/record/form',
@@ -219,6 +226,7 @@
  			})
 		}
 		else{
+			document.getElementById("userRecord").style.display="none";
 			var param = encode64(user_id);
 			$.ajax({
 	   			type:'GET',
@@ -280,7 +288,7 @@
 			str = str + "<tr><td>" + data[i].id + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "所有停车场信息";
+		document.getElementById("name").innerHTML = "停车记录";
 		$("#tab").append(str); 
 	}
 
@@ -289,6 +297,13 @@
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
+	function getUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
 	

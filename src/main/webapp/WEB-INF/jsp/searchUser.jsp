@@ -68,7 +68,7 @@
                     <li class="nav-title">数据展示</li>
 
                     <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -80,7 +80,7 @@
                             </li>
                         
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
                                     <i class="icon icon-target"></i> 类型统计
                                 </a>
                             </li>
@@ -106,11 +106,12 @@
                         </a>
                     </li>
                     
-                    <li class="nav-item" id="userRecord">
-                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link active">
                             <i class="icon icon-graph"></i> 用户统计
                         </a>
                     </li>
+                    
                    
                 </ul>
             </nav>
@@ -118,7 +119,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value=${searchWord } size="18px">
+    			<input type="text" id="searchWord" value="${searchWord }" placeholder="用户ID/用户名" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
@@ -172,18 +173,30 @@
 	var begin;
 	var end;
     
-	window.onload = function(){
+	function doSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnUser();
+		else{
+			var user_id = $("#user_id").html();
+		    var param = encode64(user_id);
+			var url = "http://localhost:8080/admin/" + sWord + "/user";
+	        window.location.href=url;
+		}
+	}
+
+	
+	$(document).ready(function(){  
+		showForm();
+	});
+	
+	function showForm(){
 		var searchWord = $("#searchWord").val();
 		var user_id = $("#user_id").html();
-		if(user_id == "admin")
-			document.getElementById("userRecord").style.display="inline";		
-		else
-			document.getElementById("userRecord").style.display="none";
-		
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		$.ajax({
    			type:'GET',
-     		url:'http://localhost:8080/search/type/user/' + param,
+     		url:'http://localhost:8080/search/user/admin',
      		async:true,
      		data:{
      			'searchWord':searchWord
@@ -199,46 +212,53 @@
  		})
 	}
 	
-	function doSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getType();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&type";
-	        window.location.href=url;
-		}		
-	}
-	
 	function returnForm() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
 	}
 	
+	function returnUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
+		window.location.href=url;
+	}
+	
 	function getType(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/type";
         window.location.href=url;
 	}
  	
 	function getArea(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/area";
 		window.location.href=url;
 	}
 	
 	function getStreet() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
 
+	function showData(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "用户信息";
+		$("#tab").append(str); 
+	}
+
+	
 	function getRecord() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -246,16 +266,6 @@
 		window.location.href=url;
 	}
 	
-	function showData(data) {
-		$("#tab").html("");
-		var str = "<thead><tr><th>停车场类型编号</th><th>类型名</th><th>拥有停车场数量</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].typecode + "</td><td>" + data[i].typename + "</td><td>" + data[i].amount + "</td></tr>"; 
-		}
-		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "按类型统计";
-		$("#tab").append(str); 
-	}
 	
 	function getUser() {
 		var user_id = $("#user_id").html();
@@ -264,9 +274,10 @@
 		window.location.href=url;
 	}
 	
+	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
     	var url = "http://localhost:8080/user/" + param + "/home";
     	window.open(url);  
 	}

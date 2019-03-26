@@ -1,5 +1,7 @@
 package com.zucc.smart.service.impl;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zucc.smart.domain.User;
 import com.zucc.smart.mapper.UserMapper;
+import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.UserService;
+import com.zucc.smart.valueObject.UserVO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,6 +22,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;    
    
+    @Autowired
+    VehicleMapper vehicleMapper;
+    
     @Transactional
 	@Override
 	public User checkUser(String user_id, String user_pwd) {
@@ -39,6 +46,26 @@ public class UserServiceImpl implements UserService {
 		log.info("getUserById: " + user_id);
 		User user = userMapper.getUserById(user_id);
 		return user;
+	}
+
+	@Override
+	public ArrayList<UserVO> userSearch(String searchWord) {
+		log.info("userSearch：By admin");
+		ArrayList<UserVO> listVO = new ArrayList<UserVO>();
+		ArrayList<User> list = userMapper.searchUser("%" + searchWord + "%");
+		for(int i=0; i<list.size(); i++) {
+			UserVO userVO = new UserVO();
+			userVO.setUser_id(list.get(i).getUser_id());
+			userVO.setUser_name(list.get(i).getUser_name());
+			userVO.setUser_age(list.get(i).getUser_age());
+			userVO.setUser_gender(list.get(i).getUser_gender());
+			userVO.setUser_phone(list.get(i).getUser_phone());
+			userVO.setRegistration_time(list.get(i).getRegistration_time());
+			int num = vehicleMapper.getVehicleCount(list.get(i).getUser_id());
+			userVO.setVehicle_num(num);
+			listVO.add(userVO);
+		}
+		return listVO;
 	}
 
 }

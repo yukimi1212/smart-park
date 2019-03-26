@@ -3,7 +3,9 @@ package com.zucc.smart.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.Record;
+import com.zucc.smart.domain.User;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.RecordService;
 import com.zucc.smart.service.impl.Decode;
@@ -20,6 +23,7 @@ import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
 import com.zucc.smart.valueObject.RecordVO;
 import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.valueObject.UserVO;
 
 
 @RestController
@@ -51,6 +55,15 @@ public class RecordController {
         ArrayList<RecordVO> list = new ArrayList<RecordVO>();
         list = recordService.getAdminRecord();
     	return list;
+    }
+    
+    
+    @RequestMapping(value = {"/", "/admin/user"}, method = RequestMethod.GET)
+    public ArrayList<UserVO> getUserList(Map<String, Object> map) throws IOException {
+    	log.info("/record/admin/user");
+    	ArrayList<UserVO> listVO = new ArrayList<UserVO>();
+    	listVO = recordService.getAdminUserList();
+    	return listVO;
     }
 
 }

@@ -17,14 +17,23 @@ public class AdminController {
 
 	
     @RequestMapping(value = {"/", "/{searchWord}/record"})
-    public String gotoParkingRecord(@PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
+    public String searchRecord(@PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
 //    	String[] s = searchWord.split("&");
 //    	log.info("/admin/" + s[1] + "/record ----- property：" + s[0]);
     	log.info("/admin/" + searchWord + "/record");
     	map.put("user_id", "admin");
-    	map.put("user_name", "管理员");
-    	map.put("property", "property");
+    	map.put("user_name", "管理");
+//    	map.put("property", "property");
     	map.put("searchWord", searchWord);
     	return "searchRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{searchWord}/user"})
+    public String searchUser(@PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
+    	log.info("/admin/" + searchWord + "/user");
+    	map.put("user_id", "admin");
+    	map.put("user_name", "管理");
+    	map.put("searchWord", searchWord);
+    	return "searchUser";
     }
 }

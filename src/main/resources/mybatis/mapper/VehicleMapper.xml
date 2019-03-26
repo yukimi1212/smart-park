@@ -13,6 +13,13 @@
     	select *
     	FROM vehicle
     	where user_id = #{user_id}
-    </select>     
+    </select> 
+    
+    <select id="getVehicleCount" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false">
+    	SELECT count(*) 
+    	FROM smart_park.vehicle 
+    	where user_id = #{user_id}
+    </select> 
+       
    
 </mapper>

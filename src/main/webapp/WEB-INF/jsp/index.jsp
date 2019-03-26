@@ -205,7 +205,7 @@
 			<!-- What We Do -->
 			<div class="clean-what-we-do">
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft">
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" id="map">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToMap()">
 						<i class="fa fa-html5"></i>
@@ -213,6 +213,16 @@
 					</div>
 					<h3>地图搜索</h3>
 					<p>实时定位搜索附近停车场；输入目的地搜索停车场。</p>
+				</div>
+				
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" id="user">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jumpToUser()">
+						<i class="fa fa-user"></i>
+						</a>
+					</div>
+					<h3>用户管理</h3>
+					<p>管理所有已注册用户。</p>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
@@ -333,30 +343,25 @@
 </body>
 
 <script type="text/javascript">  
+
+	window.onload = function(){
+		var user_id = document.getElementById("user_id").innerHTML;
+		if(user_id == "admin"){
+			document.getElementById("map").style.display="none";
+			document.getElementById("user").style.display="inline";
+		}
+		else{
+			document.getElementById("map").style.display="inline";
+			document.getElementById("user").style.display="none";
+		}
+	}
+	
+		
 	function jumpToMap(){
 		var user_id = document.getElementById("user_id").innerHTML;
 	    var param = encode64(user_id);
         var uurl = "http://localhost:8080/user/" + param + "/map"; 
         window.open(uurl); 
-    
-       /*  var uurl = "http://localhost:8080/user/";
-        $.ajax({
-            type:'GET',
-            url:'http://localhost:8080/login/decode',
-            async:true,
-            data:{
-            	'user_name':user_name
-            },
-            success:function(result){
-                var jsonData = JSON.stringify(result);
-                var n = jsonData.split("\"");
-                window.open(uurl + n[1] + "/map");
-            },
-            error:function(error){
-            	var jsonData = JSON.stringify(error);
-                alert(jsonData);
-            }
-        }) */
     }	
 	
 	function jumpToOpen(){
@@ -364,27 +369,6 @@
 	    var param = encode64(user_id);
         var uurl = "http://localhost:8080/user/" + param + "/analysis";
         window.open(uurl);  
-      
-     	/* var uurl = "http://localhost:8080/user/";
-     	$.ajax({
-       		type:'GET',
-         	url:'http://localhost:8080/login/decode',
-         	async:true,
-         	data:{
-         		'user_name':user_name
-         	},
-         	success:function(result){
-         	    var jsonData = JSON.stringify(result);
-         	    alert(jsonData)
-         	   	var n = jsonData.split("\"");
-         	   	alert(n[1])
-             	window.open(uurl + n[1] + "/analysis");
-         	},
-         	error:function(error){
-         		var jsonData = JSON.stringify(error);
-            	alert(jsonData);
-         	}
-     	}) */
     }	
 	
 	function jumpToParking() {
@@ -401,8 +385,14 @@
 		window.open(url);
 	}
 	
+	function jumpToUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
+		window.location.href=url;
+	}
+	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
-
 	function encode64(input) {  
 		var output = "";  
 		var chr1, chr2, chr3 = "";  
@@ -425,7 +415,6 @@
     		chr1 = chr2 = chr3 = "";  
     		enc1 = enc2 = enc3 = enc4 = "";  
 		} while (i < input.length);  
-
 		return output;  
 	}  
 </script>

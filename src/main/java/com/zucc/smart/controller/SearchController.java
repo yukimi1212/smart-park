@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.RecordService;
+import com.zucc.smart.service.UserService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
 import com.zucc.smart.valueObject.RecordVO;
 import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.valueObject.UserVO;
 
 
 @RestController
@@ -31,6 +33,9 @@ public class SearchController {
 	
 	@Autowired
 	RecordService recordService;
+	
+	@Autowired
+	UserService userService;
     
     @RequestMapping(value = "/form/user/{user_id}", method = RequestMethod.GET)
     public ArrayList<Parking> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
@@ -79,6 +84,15 @@ public class SearchController {
     	
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
 		list = recordService.userRecordSearch(searchWord, user_id);		
+		return list;
+    }
+    
+    @RequestMapping(value = "/user/admin", method = RequestMethod.GET)
+    public ArrayList<UserVO> getUserSearch(String searchWord) {
+    	log.info("/search/user/admin" + "-----" + searchWord);
+    	
+    	ArrayList<UserVO> list = new ArrayList<UserVO>();
+		list = userService.userSearch(searchWord);		
 		return list;
     }
     

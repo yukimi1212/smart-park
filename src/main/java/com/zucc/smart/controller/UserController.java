@@ -121,6 +121,16 @@ public class UserController {
         return "record";
     }
     
+    @RequestMapping(value = {"/", "/{user_id}/user"})
+    public String getUserList(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/user");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+        return "user";
+    }
+    
     @RequestMapping(value = {"/", "/{user_id}/{searchWord}"})
     public String doSearch(@PathVariable("user_id") String user_id_obj, @PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));

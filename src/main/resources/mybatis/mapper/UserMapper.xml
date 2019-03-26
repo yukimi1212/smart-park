@@ -14,6 +14,11 @@
 		<result column="user_identity" property="user_identity" />
 	</resultMap>
 
+	<select id="getAllUser" resultMap="UserMap" useCache="false">
+    	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity 
+    	FROM user  
+    </select>
+    
 	<select id="checkUser" resultMap="UserMap" useCache="false">
     	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity 
     	FROM user  
@@ -39,34 +44,11 @@
 		where user_id = #{user_id}
 	</delete>
 	
-<!--<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
-    	insert into user (user_id, user_name, user_pwd, 
-    	<trim suffixOverrides=",">
-			<if test="user_gender != null and user_gender != ''">
-		      user_gender,
-		    </if>
-			<if test="user_age != null and user_age != ''">
-		      user_age,
-		    </if>
-		    <if test=" user_phone != null and user_phone != ''">
-		      user_phone,
-		    </if>
-		</trim>   
-		)VALUES(
-		#{user_id}, #{user_name}, #{user_pwd},
-		<trim suffixOverrides=",">
-			<if test="user_gender != null and user_gender != ''">
-		  		#{user_gender},
-			</if>
-			<if test="user_age != null and user_age != ''">
-		  		#{user_age},
-			</if>
-			<if test="user_phone != null and user_phone != ''">
-		  		#{user_phone},
-			</if>
-		</trim>
-		)
-    </insert>
- -->        
-   
+	<select id="searchUser" parameterType="java.lang.String" resultMap="UserMap" useCache="false">
+		SELECT user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity
+		FROM user
+		where user_id like #{searchWord} or user_name like #{searchWord}
+	</select>
+	
+	
 </mapper>

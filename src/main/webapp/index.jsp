@@ -10,22 +10,35 @@
 <!-- PAGE TITLE -->
 <title>Home</title>
 
+<!-- ===================================
+	FAVICON ICON
+==================================== -->
 <link rel="shortcut icon" href="images/ico/favicon.png">
 
-
+<!-- ===================================
+	NORMALIZE CSS
+==================================== -->
 <link rel="stylesheet" href="css/normalize.css">
 
-
+<!-- ===================================
+	BOOTSTRAP 
+==================================== -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 
-
+<!-- ===================================
+	GOOGLE FONTS
+==================================== -->
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Raleway:600,700,400,300' rel='stylesheet' type='text/css'>
 
-
+<!-- ===================================
+	FONTS ICON
+==================================== -->
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 
-
+<!-- ===================================
+	PLUGIN
+==================================== -->
 <link rel="stylesheet" href="css/magnific-popup.css">
 <link rel="stylesheet" href="css/slider-pro.css">
 <link rel="stylesheet" href="css/owl.carousel.css">
@@ -33,11 +46,23 @@
 <link rel="stylesheet" href="css/owl.transitions.css">
 <link rel="stylesheet" href="css/animate.css">
 
-
+<!-- ===================================
+	MAIN STYLESHEET
+==================================== -->
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/responsive.css" />
 <link rel="stylesheet" href="css/color-green.css" id="colors" />
 
+
+
+<!--[if lt IE 9]>
+	<script src="js/html5shiv.min.js"></script>
+	<script src="js/respond.min.js"></script>
+	<script type="text/javascript" src="js/selectivizr-min.js"></script>
+	<script src="http://s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.5-min.js"></script>
+	<script src="http://css3-mediaqueries-js.googlecode.com/files/css3-mediaqueries.js"></script>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+<![endif]-->
 </head>
 
 <body>
@@ -68,28 +93,26 @@
 			<!-- navbar-collapse start-->
 			<div id="nav-menu" class="navbar-collapse collapse" role="navigation">
 				<ul class="nav navbar-nav clean-menu-wrapper">
-					<li>
-						<a href="#clean-slider">主页</a>		
+					<li class="active">
+						<a href="#clean-slider">主页</a>
 					</li>
 					<li>
-						<a href="#about">主要功能</a>	
-					</li>					
-					
+						<a href="#about">主要功能</a>
+					</li>
 					<li class="dropdown">
                 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-<!--                     		<img src="images/user.PNG" alt="用户登录"  height="50" width="50"/>	-->
-                    		<span>游客</span> 
+                    		<span>游客</span>
                     		<b class="caret"></b>
                 		</a>
 
                 		<ul class="dropdown-menu">
-                			<li class="divider"></li>
+                    		<li class="divider"></li>
                     			<li><center><a href="login.jsp">登录</a></center></li>
                     		<li class="divider"></li>
                     			<li><center><a href="registration.jsp">注册</a></center></li>
                 		</ul>
             		</li>
-				</ul>	
+				</ul>
 			</div>
 			<!-- navbar-collapse end-->
 
@@ -109,7 +132,7 @@
 		<div class="sp-slide clean-main-slides">
 			<div class="clean-img-overlay"></div>
 
-			<img class="sp-image" src="images/slider/3.jpg" alt="Slider 1"/>
+			<img class="sp-image" src="images/slider/1.jpg" alt="Slider 1"/>
 
 			<h1 class="sp-layer clean-slider-text-big"
 			data-position="center" data-show-transition="right" data-hide-transition="right" data-show-delay="1500" data-hide-delay="200">
@@ -144,7 +167,7 @@
 		<div class="sp-slide clean-main-slides">
 			<div class="clean-img-overlay"></div>
 
-			<img class="sp-image" src="images/slider/1.jpg" alt="Slider 3"/>
+			<img class="sp-image" src="images/slider/3.jpg" alt="Slider 3"/>
 
 			<h1 class="sp-layer clean-slider-text-big"
 			data-position="center" data-show-transition="right" data-hide-transition="right" data-show-delay="1500" data-hide-delay="200">
@@ -166,7 +189,7 @@
 <!-- ===================================
 	ABOUT SECTION
 ==================================== -->
-<section class="clean-section-wrapper background-one" id="about">
+<section id="about" class="clean-section-wrapper background-one">
 	<div class="container">
 		<div class="row">
 
@@ -183,8 +206,8 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToMap()">
-						<i class="fa fa-search"></i>
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-html5"></i>
 						</a>
 					</div>
 					<h3>地图搜索</h3>
@@ -193,8 +216,8 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToParking()">
-						<i class="fa fa-edit"></i>
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-css3"></i>
 						</a>
 					</div>
 					<h3>停车场统计</h3>
@@ -203,7 +226,7 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceIn" data-wow-delay=".5s">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToRecord()">
+						<a href="javascript:void(0)" onclick="jump()">
 						<i class="fa fa-laptop"></i>
 						</a>
 					</div>
@@ -213,11 +236,11 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToOpen()">
-						<i class="fa fa-bar-chart"></i>
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-support"></i>
 						</a>
 					</div>
-					<h3>数据分析</h3>
+					<h3>分析统计</h3>
 					<p>综合各种数据，对停车场，车位利用率等信息进行统计分析。</p>
 				</div>
 		 
@@ -253,8 +276,8 @@
 						</div>
 						<p class="clean-client-info">游客</p><br>
 						<p>您好，欢迎来到智能停车管理系统，</p>
-						<p>城市停车场智能化管理，数据录入，分类整理，实时展示，统计分析。</p>
-						<p>查看相关功能，请先<a href="login.jsp"><span style="color:green; font-weight:bold;">登录</span></a></p>
+						<p>城市停车场智能化管理，数据录入，分类整理，实时展示，统计分析。</p>	
+						<a href="login.jsp"><h4>登录</h4></a>
 					</div>
 					<!-- Slides End -->
 				</div>
@@ -310,53 +333,10 @@
 </body>
 
 <script type="text/javascript">  
-	function jumpToMap() {
+	function jump(){
 		alert("请登录！");
 		window.location.href="#info";
     }	
-	
-	function jumpToOpen() {
-		alert("请登录！");
-		window.location.href="#info";
-    }
-	
-	function jumpToParking() {	
-		alert("请登录！");
-		window.location.href="#info";
-	}
-	
-	function jumpToRecord {
-		alert("请登录！");
-		window.location.href="#info";
-	}
-
-	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
-
-	function encode64(input) {  
-		var output = "";  
-		var chr1, chr2, chr3 = "";  
-		var enc1, enc2, enc3, enc4 = "";  
-		var i = 0;  
-		do {  
-    		chr1 = input.charCodeAt(i++);  
-    		chr2 = input.charCodeAt(i++);  
-    		chr3 = input.charCodeAt(i++);  
-    		enc1 = chr1 >> 2;  
-    		enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);  
-    		enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);  
-    		enc4 = chr3 & 63;  
-    		if (isNaN(chr2)) {  
-        		enc3 = enc4 = 64;  
-    		} else if (isNaN(chr3)) {  
-        		enc4 = 64;  
-    		}  
-    		output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);  
-    		chr1 = chr2 = chr3 = "";  
-    		enc1 = enc2 = enc3 = enc4 = "";  
-		} while (i < input.length);  
-
-		return output;  
-	} 
 	
 </script>
 </html>
