@@ -8,11 +8,29 @@
     	FROM street
     	where streetcode = #{streetcode}
     </select>
+    
+    <select id="getStreetCode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select streetcode
+    	FROM street
+    	where streetname = #{streetname}
+    </select>
 
 	<select id="getAreaName" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select areaname
     	FROM area
     	where businesscode = #{businesscode}
+    </select>
+    
+    <select id="getBusinesscode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select businesscode
+    	FROM area
+    	where areaname = #{areaname}
+    </select>
+    
+    <select id="getTypecode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select typecode
+    	FROM parkingtype
+    	where typename = #{typename}
     </select>
     
     <select id="getAreaNameByStreetcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
@@ -25,6 +43,26 @@
     	select distinct parkname
     	FROM parking
     	where parkcode = #{parkcode}
+    </select>
+    
+    <select id="getParkingnameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct parkname
+    	FROM parking
+    </select>
+    
+     <select id="getTypenameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct typename
+    	FROM parkingtype
+    </select>
+    
+     <select id="getStreetnameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct streetname
+    	FROM street
+    </select>
+    
+     <select id="getAreanameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct areaname
+    	FROM area
     </select>
     
 </mapper>

@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
+import com.zucc.smart.valueObject.ParkingVO;
 import com.zucc.smart.valueObject.StreetVO;
 
 public interface ParkingService {
-	ArrayList<Parking> getAllParking();
+	ArrayList<ParkingVO> getAllParking();
 	
 	ArrayList<String> getBusinesscode();
 
@@ -18,7 +19,7 @@ public interface ParkingService {
 	
 	ArrayList<StreetVO> getStreet();
 
-	ArrayList<Parking> parkingSearch(String searchWord);
+	ArrayList<ParkingVO> parkingSearch(String searchWord);
 
 	ArrayList<ParkingTypeVO> typeSearch(String searchWord);
 

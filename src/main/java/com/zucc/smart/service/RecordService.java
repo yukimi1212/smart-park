@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import com.zucc.smart.domain.Record;
 import com.zucc.smart.domain.User;
+import com.zucc.smart.valueObject.AreaVO;
+import com.zucc.smart.valueObject.ParkingTypeVO;
 import com.zucc.smart.valueObject.RecordVO;
+import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.valueObject.TimeVO;
 import com.zucc.smart.valueObject.UserVO;
 
 public interface RecordService {
@@ -42,5 +46,15 @@ public interface RecordService {
 	UserVO changeToUserVO(User user);
 
 	ArrayList<UserVO> getUserInfoList(String user_id);
+
+	ArrayList<ParkingTypeVO> getRecordType();
+
+	ArrayList<AreaVO> getRecordArea();
+
+	ArrayList<StreetVO> getRecordStreet();
+
+	ArrayList<TimeVO> getRecordTime();
+
+	ArrayList<TimeVO> getTimeSearch(String searchWord, String source);
 
 }

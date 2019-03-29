@@ -1,6 +1,7 @@
 package com.zucc.smart.controller;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zucc.smart.domain.User;
+import com.zucc.smart.service.DataManageService;
 import com.zucc.smart.service.UserService;
 
 
@@ -24,9 +26,15 @@ public class LoginController {
     @Autowired
     UserService userService;
    
+    @Autowired
+    DataManageService dataManageService;
+    
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String loginUser(String user_id, String user_pwd) {
+    public String loginUser(String user_id, String user_pwd) throws IOException {
         log.info("/login/user/" + user_id);
+        
+//        dataManageService.updateRecord();
+        
     	String str = "";
         if(user_id == "")
         	str = "|用户名为空|";

@@ -1,6 +1,7 @@
 package com.zucc.smart.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.zucc.smart.domain.Record;
 
@@ -32,6 +33,27 @@ public interface RecordMapper {
 	ArrayList<Record> searchUserRecordByStreet(String searchWord, String cph);
 
 	ArrayList<Record> searchUserRecordByArea(String searchWord, String cph);
+	
+	
+	/* 统计分析 */
+	ArrayList<HashMap<String, Object>> getRecordTypeCount();
 
+	ArrayList<HashMap<String, Object>> getRecordStreetCount();
+
+	ArrayList<HashMap<String, Object>> getRecordAreaCount();
+
+	String getDealtime(String id);
+
+	void updateRecord(String id, String newDealtime);
+
+	int getRecordTimeCount(String str);
+
+	ArrayList<HashMap<String, Object>> getRecordAreaTimeCount(String str);
+
+	int getRecordTimeCountForParking(String str, String parkcode);
+	
+	int getRecordTimeCountForStreet(String str, String streetcode);
+	
+	int getRecordTimeCountForArea(String str, String businesscode);
 	
 }

@@ -227,11 +227,11 @@
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToOpen()">
+						<a href="javascript:void(0)" onclick="jumpToParking()">
 						<i class="fa fa-support"></i>
 						</a>
 					</div>
-					<h3>分析统计</h3>
+					<h3>统计分析</h3>
 					<p>综合各种数据，对停车场，车位利用率等信息进行统计分析。</p>
 				</div>
 				
@@ -361,14 +361,7 @@
 	    var param = encode64(user_id);
         var uurl = "http://localhost:8080/user/" + param + "/map"; 
         window.open(uurl); 
-    }	
-	
-	function jumpToOpen(){
-		var user_id = document.getElementById("user_id").innerHTML;
-	    var param = encode64(user_id);
-        var uurl = "http://localhost:8080/user/" + param + "/analysis";
-        window.open(uurl);  
-    }	
+    }
 	
 	function jumpToParking() {
 		var user_id = document.getElementById("user_id").innerHTML;
@@ -388,7 +381,7 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/user";
-		window.location.href=url;
+		window.open(url);
 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  

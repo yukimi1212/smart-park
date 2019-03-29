@@ -16,6 +16,7 @@ import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
+import com.zucc.smart.valueObject.ParkingVO;
 import com.zucc.smart.valueObject.StreetVO;
 
 
@@ -28,13 +29,13 @@ public class ParkingController {
 	ParkingService parkingService;
     
     @RequestMapping(value = "/{user_id}/form", method = RequestMethod.GET)
-    public ArrayList<Parking> getParkingForm(@PathVariable("user_id") String user_id_obj) {
+    public ArrayList<ParkingVO> getParkingForm(@PathVariable("user_id") String user_id_obj) {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/park/"+ user_id + "/form");
-        ArrayList<Parking> list = new ArrayList<Parking>();
-        list = parkingService.getAllParking();
+        ArrayList<ParkingVO> listVO = new ArrayList<ParkingVO>();
+        listVO = parkingService.getAllParking();
 //        System.out.println("list.size()：" +  list.size());
-    	return list;
+    	return listVO;
     }
     
     @RequestMapping(value = "/{user_id}/type", method = RequestMethod.GET)

@@ -10,10 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zucc.smart.domain.User;
 import com.zucc.smart.domain.Vehicle;
+import com.zucc.smart.mapper.HelperMapper;
+import com.zucc.smart.mapper.ParkingMapper;
+import com.zucc.smart.mapper.RecordMapper;
 import com.zucc.smart.mapper.UserMapper;
 import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.UserService;
+import com.zucc.smart.valueObject.TimeVO;
 import com.zucc.smart.valueObject.UserVO;
+import com.zucc.smart.valueObject.WordsVO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +30,15 @@ public class UserServiceImpl implements UserService {
    
     @Autowired
     VehicleMapper vehicleMapper;
+    
+    @Autowired
+    HelperMapper helperMapper;
+    
+    @Autowired
+    ParkingMapper parkingMapper;
+    
+    @Autowired
+    RecordMapper recordMapper;
     
     @Transactional
 	@Override
@@ -66,6 +80,47 @@ public class UserServiceImpl implements UserService {
 			userVO.setVehicle_num(num);
 			listVO.add(userVO);
 		}
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<WordsVO> getAvailableTags() {
+		log.info("getAvailableTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getParkingnameTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("park");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		list = helperMapper.getTypenameTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("type");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		list = helperMapper.getStreetnameTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("street");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		list = helperMapper.getAreanameTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("area");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+	
 		return listVO;
 	}
 

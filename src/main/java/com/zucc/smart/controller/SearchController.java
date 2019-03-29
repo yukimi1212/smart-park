@@ -20,9 +20,12 @@ import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
+import com.zucc.smart.valueObject.ParkingVO;
 import com.zucc.smart.valueObject.RecordVO;
 import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.valueObject.TimeVO;
 import com.zucc.smart.valueObject.UserVO;
+import com.zucc.smart.valueObject.WordsVO;
 
 
 @RestController
@@ -43,13 +46,13 @@ public class SearchController {
 	VehicleService vehicleService;
     
     @RequestMapping(value = "/form/user/{user_id}", method = RequestMethod.GET)
-    public ArrayList<Parking> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
+    public ArrayList<ParkingVO> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/search/form/user/" + user_id + "-----" + searchWord);
     	
-    	ArrayList<Parking> list = new ArrayList<Parking>();
-		list = parkingService.parkingSearch(searchWord);		
-		return list;
+    	ArrayList<ParkingVO> listVO = new ArrayList<ParkingVO>();
+		listVO = parkingService.parkingSearch(searchWord);		
+		return listVO;
     }
 
     @RequestMapping(value = "/type/user/{user_id}", method = RequestMethod.GET)
@@ -119,6 +122,40 @@ public class SearchController {
     	ArrayList<UserVO> list = new ArrayList<UserVO>();
 		list = userService.userSearch(searchWord);		
 		return list;
+    }
+    
+    @RequestMapping(value = "/{user_id}/tags", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableTags(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/search/" + user_id + "/tags");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableTags();		
+		return list;
+    }
+    
+    
+    @RequestMapping(value = "/{searchWord}/time", method = RequestMethod.GET)
+    public ArrayList<TimeVO> getRecordTimeSearch(@PathVariable("searchWord") String searchWord, String source) {
+    	log.info("/search/" + searchWord + "/time ----- " + source);   	
+    	ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
+		listVO = recordService.getTimeSearch(searchWord, source);
+
+		return listVO;
+    }
+    
+    @RequestMapping(value = "/{searchWord}/check", method = RequestMethod.GET)
+    public String checkTags(@PathVariable("searchWord") String searchWord) {
+    	log.info("/search/" + searchWord + "/check");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableTags();
+		String result = "null";
+		for(int i=0; i<list.size(); i++) {
+			if(searchWord.equals(list.get(i).getValue())) {
+				result = list.get(i).getSource();
+				break;
+			}
+		}
+		return result;
     }
     
     @RequestMapping(value = "/record/admin", method = RequestMethod.GET)

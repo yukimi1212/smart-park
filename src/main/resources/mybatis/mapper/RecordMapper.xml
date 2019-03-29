@@ -17,6 +17,7 @@
 	<select id="getAllRecord" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
+    	order by inserttime;
     </select>
     
     <select id="getUserRecord" resultMap="RecordMap" useCache="false">
@@ -87,4 +88,74 @@
     	where businesscode = #{searchWord} and cph = #{cph};
     </select>
     
+    <select id="getRecordTypeCount" resultType="java.util.HashMap" useCache="false"> 
+		select typecode, count(typecode) 
+		from record 
+		group by typecode
+	</select>
+	
+	
+	
+	<!-- 按类别/街道/城区统计数量 -->
+	<select id="getRecordStreetCount" resultType="java.util.HashMap" useCache="false"> 
+		select streetcode, count(streetcode) 
+		from record 
+		group by streetcode
+	</select>
+	
+	<select id="getRecordAreaCount" resultType="java.util.HashMap" useCache="false"> 
+		select businesscode, count(businesscode) 
+		from record 
+		group by businesscode
+	</select>
+	
+	<select id="getRecordAreaTimeCount" resultType="java.lang.Integer" useCache="false"> 
+		select businesscode,count(*) 
+		from record 
+		where inserttime like #{str} group by businesscode;
+	</select>
+	
+	
+	
+	<!-- 按时段统计数量 -->	
+	<select id="getRecordTimeCount" resultType="java.lang.Integer" useCache="false"> 
+		select count(*) 
+		from record 
+		where inserttime like #{str}
+	</select>
+	
+	<select id="getRecordTimeCountForParking" resultType="java.lang.Integer" useCache="false"> 
+		select count(*) 
+		from record 
+		where inserttime like #{str} and parkcode = #{parkcode}
+	</select>
+	
+	<select id="getRecordTimeCountForArea" resultType="java.lang.Integer" useCache="false"> 
+		select count(*) 
+		from record 
+		where inserttime like #{str} and businesscode = #{businesscode}
+	</select>
+	
+	<select id="getRecordTimeCountForStreet" resultType="java.lang.Integer" useCache="false"> 
+		select count(*) 
+		from record 
+		where inserttime like #{str} and streetcode = #{streetcode}
+	</select>
+	
+	
+	
+	<select id="getDealtime" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
+		select dealtime
+		from record 
+		where id = #{id}
+	</select>
+	
+	<update id="updateRecord" parameterType="java.lang.String">
+        update record
+        <set>
+            dealtime = #{newDealtime}
+        </set>
+        where id = #{id}
+	</update>
+  
 </mapper>

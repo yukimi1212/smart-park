@@ -19,6 +19,7 @@ import com.zucc.smart.mapper.ParkingTypeMapper;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
+import com.zucc.smart.valueObject.ParkingVO;
 import com.zucc.smart.valueObject.StreetVO;
 
 @Service
@@ -36,10 +37,11 @@ public class ParkingServiceImpl implements ParkingService {
     HelperMapper helperMapper;
 	
 	@Override
-	public ArrayList<Parking> getAllParking() {
+	public ArrayList<ParkingVO> getAllParking() {
 		log.info("getAllParking: ");
         ArrayList<Parking> list = parkingMapper.getAllParking();
-        return list;
+        ArrayList<ParkingVO> listVO = changeToParkingVO(list);
+        return listVO;
 	}
 
 	@Override
@@ -120,12 +122,12 @@ public class ParkingServiceImpl implements ParkingService {
 	}
 
 	@Override
-	public ArrayList<Parking> parkingSearch(String searchWord) {
+	public ArrayList<ParkingVO> parkingSearch(String searchWord) {
 		log.info("parkingSearch：" + searchWord);
 		searchWord = "%"+searchWord+"%";
 		ArrayList<Parking> list = parkingMapper.parkingSearch(searchWord);
-		
-		return list;
+		ArrayList<ParkingVO> listVO = changeToParkingVO(list);
+		return listVO;
 	}
 
 	@Override
@@ -197,6 +199,25 @@ public class ParkingServiceImpl implements ParkingService {
             listVO.add(areaVO);
 		}
 		
+		return listVO;
+	}
+	
+	public ArrayList<ParkingVO> changeToParkingVO(ArrayList<Parking> list){
+		ArrayList<ParkingVO> listVO = new ArrayList<ParkingVO>();
+		for(int i=0; i<list.size(); i++) {
+			ParkingVO parkingVO = new ParkingVO();
+			parkingVO.setParkcode(list.get(i).getParkcode());
+			parkingVO.setParkname(list.get(i).getParkname());
+			parkingVO.setStreetcode(list.get(i).getStreetcode());
+			parkingVO.setStreetname(list.get(i).getStreetname());
+			parkingVO.setBusinesscode(list.get(i).getBusinesscode());
+			parkingVO.setAreaname(list.get(i).getAreaname());
+			parkingVO.setParking_amount(list.get(i).getParking_amount());
+			parkingVO.setParking_rest(list.get(i).getParking_rest());
+			String typename = parkingTypeMapper.getTypeName(list.get(i).getTypecode());
+			parkingVO.setTypename(typename);
+			listVO.add(parkingVO);
+		}
 		return listVO;
 	}
 

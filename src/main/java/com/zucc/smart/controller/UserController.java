@@ -23,7 +23,8 @@ import com.zucc.smart.domain.User;
 import com.zucc.smart.service.UserService;
 import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
-import com.zucc.smart.service.impl.build7daysTxt;
+import com.zucc.smart.service.impl.TxtGetting;
+import com.zucc.smart.valueObject.WordsVO;
 
 import net.sf.json.JSONObject;
 
@@ -46,17 +47,39 @@ public class UserController {
     	log.info("/user/"+ user_id +"/map");
         return "map";
     }
-    
-    @RequestMapping(value = {"/", "/{user_id}/analysis"})
+
+/*    
+    @RequestMapping(value = {"/", "/{user_id}/chart"})
     public String getOpenFlashChart(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/user/"+ user_id + "/analysis");
+    	log.info("/user/"+ user_id + "/chart");
         double[] data1 = new double[]{4,8,9,3,2,6,8,6,3,7,3,5};
         build7daysTxt.alertBar1(data1);
         String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
         map.put("user_id", user_id);
         return "analysisTest";
+    }
+*/    
+    
+    @RequestMapping(value = {"/", "/{user_id}/chartArea"})
+    public String getChartArea(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/chartArea");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        return "chartArea";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/chartTime"})
+    public String getChartTime(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/chartTime");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        return "chartTime";
     }
     
     @RequestMapping(value = {"/", "/{user_id}/home"})
@@ -193,7 +216,9 @@ public class UserController {
     	map.put("user_id", user_id);
     	map.put("searchWord", searchWord);
     	
-    	if(source.equals("form"))
+    	if(source.equals("time"))
+    		return "searchTime";
+    	else if(source.equals("form"))
     		return "searchForm";
     	else if(source.equals("type"))
     		return "searchType";

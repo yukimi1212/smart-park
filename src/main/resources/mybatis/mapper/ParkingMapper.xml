@@ -80,21 +80,46 @@
 		where BUSINESSCODE like #{searchWord} or areaname like #{searchWord}
 	</select>
 	
-	<select id="searchParkNameByParkCode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+	<select id="searchParkcodeByParkname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct parkcode
 		from parking 
 		where parkname like #{searchWord}
 	</select>
 	
-	<select id="searchStreetNameByStreetCode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+	<select id="searchStreetcodeByStreetname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct streetcode
 		from parking 
 		where streetname like #{searchWord}
 	</select>
 	
-	<select id="searchAreaNameByBusinesscode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+	<select id="searchBusinesscodeByAreaname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct BUSINESSCODE
 		from parking 
 		where areaname like #{searchWord}
 	</select>
+	
+	<select id="getTypeCode" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false">
+		select typecode
+		from parking 
+		where parkcode = #{parkcode}
+	</select>
+	
+	<select id="checkParkcode" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false">
+		select count(*)
+		from parking 
+		where parkcode = #{parkcode}
+	</select>
+	
+	<select id="getParkcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+		select parkcode
+		from parking 
+		where parkname = #{parkname}
+	</select>
+	
+	<select id="getParkcodeByTypecode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select *
+		from parking 
+		where typecode = #{typecode}
+	</select>
+	
 </mapper>

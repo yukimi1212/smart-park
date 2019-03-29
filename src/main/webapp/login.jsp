@@ -41,7 +41,7 @@
 		</form> 
       </div>
 
-      <script src="js/jquery-1.11.1.min.js"></script>
+      <script src="js/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
       <script src="js/respond.min.js"></script>
 	<script src="js/jquery.form.js" type="text/javascript"></script>  

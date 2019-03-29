@@ -43,6 +43,7 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
                 </a>					
@@ -106,9 +107,29 @@
                         </ul>
                     </li>
                     
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 区域类型
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 不同时段
+                                </a>
+                            </li>
+                        </ul>
+                    </li> 
+                    
                     <li class="nav-item" id="userRecord">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
-                            <i class="icon icon-puzzle"></i> 用户管理
+                            <i class="icon icon-puzzle"></i><sapn id="user">个人信息</sapn>
                         </a>
                     </li>
                    
@@ -208,7 +229,10 @@
 		var user_id = $("#user_id").html();
 		
  		if(user_id == "admin"){
-			$.ajax({
+ 			$("user").empty();
+ 			document.getElementById("user").innerText = "用户管理";
+			
+ 			$.ajax({
    				type:'GET',
      			url:'http://localhost:8080/record/form',
      			async:true,
@@ -304,6 +328,20 @@
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
+	
+	function getChartArea(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartArea";
+        window.location.href=url;
+    }	
+	
+	function getChartTime(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartTime";
+        window.location.href=url;
+    }
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();

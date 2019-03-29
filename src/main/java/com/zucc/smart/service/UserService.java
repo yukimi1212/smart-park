@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.zucc.smart.domain.User;
 import com.zucc.smart.domain.Vehicle;
+import com.zucc.smart.valueObject.TimeVO;
 import com.zucc.smart.valueObject.UserVO;
+import com.zucc.smart.valueObject.WordsVO;
 
 public interface UserService {
 	User checkUser(String user_id, String user_pwd);
@@ -14,4 +16,7 @@ public interface UserService {
 	boolean addUser(User user);
 
 	ArrayList<UserVO> userSearch(String searchWord);
+
+	ArrayList<WordsVO> getAvailableTags();
+
 }

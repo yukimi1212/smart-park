@@ -43,6 +43,7 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
                 </a>					
@@ -106,13 +107,31 @@
                         </ul>
                     </li>
                     
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 区域类型
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 不同时段
+                                </a>
+                            </li>
+                        </ul>
+                    </li> 
                     
                     <li class="nav-item" id="userRecord">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
-                            <i class="icon icon-puzzle"></i> 用户管理
+                            <i class="icon icon-puzzle"></i><sapn id="user">个人信息</sapn>
                         </a>
-                    </li>
-                    
+                    </li>                      
                    
                 </ul>
             </nav>
@@ -193,7 +212,10 @@
 	
 	function showForm(){
 		var user_id = $("#user_id").html();
-		
+		if(user_id == "admin"){
+			$("user").empty();
+			document.getElementById("user").innerText = "用户管理";
+		}
 	    var param = encode64(user_id);
 		$.ajax({
    			type:'GET',
@@ -242,9 +264,9 @@
 
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型编号</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typecode + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "所有停车场信息";
@@ -266,6 +288,20 @@
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
+	
+	function getChartArea(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartArea";
+        window.location.href=url;
+    }	
+	
+	function getChartTime(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartTime";
+        window.location.href=url;  
+    }
 	
 	
 	function jumpToIndex() {

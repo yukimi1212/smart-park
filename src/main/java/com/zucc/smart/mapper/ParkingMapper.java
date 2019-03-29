@@ -36,10 +36,18 @@ public interface ParkingMapper {
 
 	ArrayList<HashMap<String, String>> searchArea(String searchWord);
 
-	ArrayList<Parking> searchParkNameByParkCode(String searchWord);
+	ArrayList<Parking> searchParkcodeByParkname(String searchWord);
 
-	ArrayList<Parking> searchStreetNameByStreetCode(String string);
+	ArrayList<Parking> searchStreetcodeByStreetname(String string);
 	
-	ArrayList<Parking> searchAreaNameByBusinesscode(String string);
+	ArrayList<Parking> searchBusinesscodeByAreaname(String string);
+
+	int getTypeCode(String parkcode);
+
+	int checkParkcode(String parkcode);
+	
+	String getParkcode(String parkname);
+
+	ArrayList<Parking> getParkcodeByTypecode(String typecode);
 
 }

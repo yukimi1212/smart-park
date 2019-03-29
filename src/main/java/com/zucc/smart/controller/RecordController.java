@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
 import com.zucc.smart.valueObject.RecordVO;
 import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.valueObject.TimeVO;
 import com.zucc.smart.valueObject.UserVO;
 
 
@@ -59,7 +61,7 @@ public class RecordController {
     
     
     @RequestMapping(value = {"/", "/admin/user"}, method = RequestMethod.GET)
-    public ArrayList<UserVO> getUserList(Map<String, Object> map) throws IOException {
+    public ArrayList<UserVO> getUserList() throws IOException {
     	log.info("/record/admin/user");
     	ArrayList<UserVO> listVO = new ArrayList<UserVO>();
     	listVO = recordService.getAdminUserList();
@@ -67,11 +69,47 @@ public class RecordController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/user"}, method = RequestMethod.GET)
-    public ArrayList<UserVO> getUserInfoList(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public ArrayList<UserVO> getUserInfoList(@PathVariable("user_id") String user_id_obj) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/record/" + user_id + "/user");
     	ArrayList<UserVO> listVO = new ArrayList<UserVO>();
     	listVO = recordService.getUserInfoList(user_id);
+    	return listVO;
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/type"}, method = RequestMethod.GET)
+    public ArrayList<ParkingTypeVO> getRecordType(@PathVariable("user_id") String user_id_obj) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/record/" + user_id + "/type");
+    	ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
+    	listVO = recordService.getRecordType();
+    	return listVO;
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/area"}, method = RequestMethod.GET)
+    public ArrayList<AreaVO> getRecordArea(@PathVariable("user_id") String user_id_obj) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/record/" + user_id + "/area");
+    	ArrayList<AreaVO> listVO = new ArrayList<AreaVO>();
+    	listVO = recordService.getRecordArea();
+    	return listVO;
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/street"}, method = RequestMethod.GET)
+    public ArrayList<StreetVO> getRecordStreet(@PathVariable("user_id") String user_id_obj) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/record/" + user_id + "/street");
+    	ArrayList<StreetVO> listVO = new ArrayList<StreetVO>();
+    	listVO = recordService.getRecordStreet();
+    	return listVO;
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/time"}, method = RequestMethod.GET)
+    public ArrayList<TimeVO> getRecordTime(@PathVariable("user_id") String user_id_obj) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/record/" + user_id + "/time");
+    	ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
+    	listVO = recordService.getRecordTime();
     	return listVO;
     }
 

@@ -75,7 +75,7 @@
                     </li>
 					
                     <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -93,7 +93,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link">
                                     <i class="icon icon-target"></i> 城区统计
                                 </a>
                             </li>
@@ -108,13 +108,13 @@
                     </li>
                     
                     <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
+                        <a href="#" class="nav-link nav-dropdown-toggle active">
                             <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
+                                <a href="#" class="nav-link active">
                                     <i class="icon icon-clock"></i> 区域类型
                                 </a>
                             </li>
@@ -125,52 +125,56 @@
                                 </a>
                             </li>
                         </ul>
-                    </li> 
-                    
-                    <li class="nav-item" id="userRecord">
+                    </li>  
+                   
+                  	<li class="nav-item">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
-                            <i class="icon icon-puzzle"></i><sapn id="user">个人信息</sapn>
+                            <i class="icon icon-puzzle"></i> <sapn id="user">个人信息</sapn>
                         </a>
                     </li>
-                   
+                    
                 </ul>
             </nav>
         </div>
 		
         <div class="content">   
-        	<div id="search">
-    			<input type="text" id="searchWord" value=${searchWord } size="18px">
-    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
-  			</div><br>
-  			
-            <div class="row">             
-                <div class="col-md-12">
+        	<div class="row">
+                <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header bg-light" id="name">
-                            	
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="tab">
-                                    
-                                </table>
-                            </div>
-                        </div>
+                        <div class="card-header bg-light">
+                            	按类型
+                        </div>				
+						<div class="card-body">
+                            <canvas id="chartType" width="100%" height="50"></canvas>
+                        </div>		 
                     </div>
                 </div>
-                
-                <a id="btn0"></a>		
- 				<a id="sjzl"></a>&nbsp;
-                <a  href="#" id="btn1">首页</a>
-                <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
-                <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
-                <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
-                <a>&nbsp&nbsp转到&nbsp;</a>
-                <input id="changePage" type="text" size="1" maxlength="4"/>
-                <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                           	 按区域
+                        </div>                        
+				 		<div class="card-body">
+                            <canvas id="chartArea" width="100%" height="50"></canvas>
+                        </div>	 	
+                    </div>
+                </div>
             </div>
+            
+             <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            	按街道
+                        </div>						
+                	    <div class="card-body">
+                            <canvas id="chartStreet" width="100%" height="50"></canvas>
+                        </div>		 
+                    </div>
+                </div>
+            </div> 			
+      
         </div>
     </div>
 </div>
@@ -193,8 +197,7 @@
 	var begin;
 	var end;
     
-	window.onload = function(){
-		var searchWord = $("#searchWord").val();
+	window.onload = function(){	
 		var user_id = $("#user_id").html();
 		if(user_id == "admin"){
 			$("user").empty();
@@ -203,14 +206,42 @@
 		var param = encode64(user_id);
 		$.ajax({
    			type:'GET',
-     		url:'http://localhost:8080/search/area/user/' + param,
+     		url:'http://localhost:8080/record/' + param + '/type',
      		async:true,
      		data:{
-     			'searchWord':searchWord
      		},
      		success:function(result){
-     	    	showData(result);
-     	    	display();
+     			getTypeChart(result);
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+ 		
+		$.ajax({
+   			type:'GET',
+     		url:'http://localhost:8080/record/' + param + '/area',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     			getAreaChart(result);
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
+ 		
+ 		$.ajax({
+   			type:'GET',
+     		url:'http://localhost:8080/record/' + param + '/street',
+     		async:true,
+     		data:{
+     		},
+     		success:function(result){
+     			getStreetChart(result);
      		},
      		error:function(error){
      			var jsonData = JSON.stringify(error);
@@ -219,56 +250,180 @@
  		})
 	}
 	
-	function doSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getArea();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&area";
-	        window.location.href=url;
-		}		
+	function getTypeChart(list) {
+		var ctx = document.getElementById("chartType").getContext('2d');
+		var labels = [];
+		var data = [];
+		for (var i = 1; i < list.length; i++) {
+	        labels.push(list[i].typename);
+	        data.push(list[i].amount);
+	    }
+		
+		var myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '记录数',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(244, 88, 70, 0.5)',
+                        'rgba(33, 150, 243, 0.5)',
+                        'rgba(253, 178, 68, 0.5)',
+                        'rgba(42, 185, 127, 0.5)'
+                    ],
+                    borderColor: [
+                        '#F45846',
+                        '#2196F3',
+                        '#fdb244',
+                        '#2ab97f'
+                        
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+	}
+	
+	function getAreaChart(list) {
+		var ctx = document.getElementById("chartArea").getContext('2d');
+		var labels = [];
+		var data = [];
+		for (var i = 0; i < list.length; i++) {
+	        labels.push(list[i].areaname);
+	        data.push(list[i].amount);
+	    }
+		
+		var myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '记录数',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(244, 88, 70, 0.5)',
+                        'rgba(33, 150, 243, 0.5)',
+                        'rgba(0, 188, 212, 0.5)',
+                        'rgba(42, 185, 127, 0.5)',
+                        'rgba(156, 39, 176, 0.5)',
+                        'rgba(253, 178, 68, 0.5)' 
+                    ],
+                    borderColor: [
+                        '#F45846',
+                        '#2196F3',
+                        '#00BCD4',
+                        '#2ab97f',
+                        '#9C27B0',
+                        '#fdb244'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+	}
+	
+	function getStreetChart(list) {
+		var ctx = document.getElementById("chartStreet").getContext('2d');
+		var labels = [];
+		var data = [];
+		var backgroundColor = [];
+		var borderColor = [];
+		var backColor = ['rgba(244, 88, 70, 0.5)','rgba(33, 150, 243, 0.5)','rgba(0, 188, 212, 0.5)','rgba(42, 185, 127, 0.5)','rgba(156, 39, 176, 0.5)','rgba(253, 178, 68, 0.5)'];
+		var bordColor = ['#F45846','#2196F3','#00BCD4','#2ab97f','#9C27B0','#fdb244'];
+		
+		for (var i = 0; i < list.length; i++) {
+	        labels.push(list[i].streetname);
+	        data.push(list[i].amount);
+	        backgroundColor.push(backColor[i%6]);
+	        borderColor.push(bordColor[i%6]);
+	    }
+		
+		var myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '记录数',
+                    data: data,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 	}
 	
 	function returnForm() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
 	}
 	
+	function returnUser() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/user";
+		window.location.href=url;
+	}
+	
 	function getType(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/type";
         window.location.href=url;
 	}
  	
 	function getArea(){
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/area";
 		window.location.href=url;
 	}
 	
 	function getStreet() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
-
-	function showData(data) {
-	 	$("#tab").html("");
-		var str = "<thead><tr><th>城区编号</th><th>城区名</th><th>拥有停车场数量</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].businesscode + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
-		}
-		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "按城区统计";
-		$("#tab").append(str);
-	}
 	
 	function getRecord() {
 		var user_id = $("#user_id").html();
@@ -277,19 +432,13 @@
 		window.location.href=url;
 	}
 	
+	
 	function getUser() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;
-    }	
 	
 	function getChartTime(){
 		var user_id = $("#user_id").html();
@@ -300,86 +449,10 @@
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();
-		var param = encode64(user_id);
+	    var param = encode64(user_id);
     	var url = "http://localhost:8080/user/" + param + "/home";
     	window.open(url);  
 	}
-	
-	function display() {
-    	len =$("#tab tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
-
-    	page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
-    	curPage=1;    // 设置当前为第一页
-    	displayPage();//显示第一页
-    
-    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";    // 显示当前多少页
-   		document.getElementById("sjzl").innerHTML="&nbsp&nbsp&nbsp数据总量 " + len + "&nbsp&nbsp&nbsp";        // 显示数据量       
-    
-    	$("#btn1").click(function firstPage(){    // 首页
-        	curPage=1;
-        	direct = 0;
-        	displayPage();
-    	});	
-    	$("#btn2").click(function frontPage(){    // 上一页
-    	    direct=-1;
-    	    displayPage();
-    	});
-    	$("#btn3").click(function nextPage(){    // 下一页
-    	    direct=1;
-       		displayPage();
-    	});
-    	$("#btn4").click(function lastPage(){    // 尾页
-       		curPage=page;
-        	direct = 0;
-        	displayPage();
-    	});
-    	$("#btn5").click(function changePage(){    // 转页
-    	    curPage=document.getElementById("changePage").value * 1;
-    	    if (!/^[1-9]\d*$/.test(curPage)) {
-    	        alert("请输入正整数");
-    	        return ;
-    	    }
-    	    if (curPage > page) {
-       	    	alert("超出数据页面");
-            	return ;
-        	}
-        	direct = 0;
-        	displayPage();
-    	});
-	}
-
-	function displayPage(){
-    	if(curPage <=1 && direct==-1){
-        	direct=0;
-        	alert("已经是第一页了");
-        	return;
-    	} else if (curPage >= page && direct==1) {
-       		direct=0;
-        	alert("已经是最后一页了");
-        	return ;
-    	}
-    
-    	lastPage = curPage;
-    	
-    	// 修复当len=1时，curPage计算得0的bug
-    	if (len > pageSize) {
-        	curPage = ((curPage + direct + len) % len);
-    	} else {
-        	curPage = 1;
-    	}
-    
-    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";        // 显示当前多少页
-    	begin=(curPage-1)*pageSize + 1;// 起始记录号
-    	end = begin + 1*pageSize - 1;    // 末尾记录号
-     
-    	if(end > len ) 
-    		end=len;
-    	$("#tab tr").hide();    // 首先，设置这行为隐藏
-    	$("#tab tr").each(function(i){    // 然后，通过条件判断决定本行是否恢复显示
-        	if((i>=begin && i<=end) || i==0 )//显示begin<=x<=end的记录
-            	$(this).show();
-    	});
- 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 
