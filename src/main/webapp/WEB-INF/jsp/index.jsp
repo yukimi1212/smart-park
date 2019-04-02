@@ -225,7 +225,7 @@
 					<p>查看历史停车记录。</p>
 				</div>
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToParking()">
 						<i class="fa fa-support"></i>

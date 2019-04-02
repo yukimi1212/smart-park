@@ -275,16 +275,24 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public ArrayList<ParkingTypeVO> getRecordType() {
 		log.info("getRecordType: ");
+		long start,end;
+		start = System.currentTimeMillis();
+		
 		ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
 		ArrayList<Record> listRecord = recordMapper.getAllRecord();
 		int[] typeAmount = {0,0,0,0,0};
 		int typecode = 0;
 		for(int i=0; i<listRecord.size(); i++) {
 			String parkcode = listRecord.get(i).getParkcode();
-			if(parkingMapper.checkParkcode(parkcode) != 0)
-				typecode = parkingMapper.getTypeCode(parkcode);
+			ArrayList<Parking> parkingList = parkingMapper.getTypeCode(parkcode);
+			if (parkingList.size() != 0)
+				typecode = Integer.parseInt(parkingList.get(0).getTypecode());
 			typeAmount[typecode]++;
 		}
+		
+		end = System.currentTimeMillis();  
+		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
+		
 		for(int j=0; j<typeAmount.length; j++) {
 			ParkingTypeVO typeVO = new ParkingTypeVO();
 			typeVO.setTypecode(j+"");
@@ -292,6 +300,9 @@ public class RecordServiceImpl implements RecordService {
 			typeVO.setAmount(typeAmount[j]);
 			listVO.add(typeVO);
 		}
+		
+		end = System.currentTimeMillis();  
+		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		return listVO;
 	}
 	
@@ -421,6 +432,10 @@ public class RecordServiceImpl implements RecordService {
 			}
 		}
 		else {
+			
+			long start,end;
+			start = System.currentTimeMillis();
+			
 			String typecode = helperMapper.getTypecode(searchWord);
 			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
 			
@@ -438,12 +453,15 @@ public class RecordServiceImpl implements RecordService {
 					parkcode = parkingList.get(p).getParkcode();
 					int amount = recordMapper.getRecordTimeCountForParking(str,parkcode);
 					timeVO.setAmount(timeVO.getAmount() + amount);
-					System.out.println("str：" + str + "  parkcode：" + parkcode);
+//					System.out.println("str：" + str + "  parkcode：" + parkcode);
 				}
 				
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + timeVO.getAmount());
 			}
+			
+			end = System.currentTimeMillis();  
+			System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		}
 		
 		return listVO;

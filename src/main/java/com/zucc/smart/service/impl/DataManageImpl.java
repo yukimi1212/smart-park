@@ -24,7 +24,7 @@ public class DataManageImpl implements DataManageService{
 	public void updateRecord() throws IOException {
 		log.info("updateRecord: ");
 		ArrayList<String> listID = new ArrayList<String>();
-		listID = TxtGetting.getID();
+		listID = ErrorIDManage.getID();
 		for(int i=0; i<listID.size(); i++) {
 			String oldDealtime = recordMapper.getDealtime(listID.get(i));
 			String[] year = oldDealtime.split(" ");

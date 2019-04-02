@@ -46,6 +46,7 @@
                 	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
+                    <span id="search_id" style="display:none">${search_id }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -139,7 +140,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="ID/车牌/停车场/所属街道/所属城区" size="18px">
+    			<input type="text" id="searchWord" value="${search_name }" placeholder="ID/车牌/停车场/所属街道/所属城区" size="18px">
      			<button class="button" type="submit" onclick="doSearch()">搜索</button>
 	    		<!-- <div class="btn-group">
  					<button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">搜索<span class="caret"></span></button>
@@ -226,9 +227,9 @@
 	});
 	
 	function showForm(){
-		var user_id = $("#user_id").html();
+		var search_id = $("#search_id").html();
 		
- 		if(user_id == "admin"){
+ 		if(search_id == "admin"){
  			$("user").empty();
  			document.getElementById("user").innerText = "用户管理";
 			
@@ -249,7 +250,7 @@
  			})
 		}
 		else{
-			var param = encode64(user_id);
+			var param = encode64(search_id);
 			$.ajax({
 	   			type:'GET',
 	     		url:'http://localhost:8080/record/' + param + '/form',

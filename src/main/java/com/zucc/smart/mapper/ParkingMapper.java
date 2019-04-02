@@ -42,9 +42,7 @@ public interface ParkingMapper {
 	
 	ArrayList<Parking> searchBusinesscodeByAreaname(String string);
 
-	int getTypeCode(String parkcode);
-
-	int checkParkcode(String parkcode);
+	ArrayList<Parking> getTypeCode(String parkcode);
 	
 	String getParkcode(String parkname);
 

@@ -307,21 +307,29 @@
 		$("#tab").html("");
 		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th><th>拥有车辆";
 		if(user_id == "admin")
-			str = str + "</th></tr></thead><tbody>";
+			str = str + "</th><th>停车记录</th></tr></thead><tbody>";
 		else
 			str = str + "</th><th>操作</th></tr></thead><tbody>"
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td><td>";
-			str = str + "<a href=\"javascript:void(0)\" onclick=\"checkVehicle(this)\">查看</a>"; 
+			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time;
+			str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"checkVehicle(this)\">查看</a>"; 
 			if(user_id == "admin")
-				str = str + "</td></tr>";
+				str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\">查看</a></td></tr>";
 			else	
-				str = str + "</td><td>" + "<a href=\"javascript:void(0)\" onclick=\"alterUser()\">修改</a>" + "</td></tr>";
+				str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"alterUser()\">修改</a>" + "</td></tr>";
 			
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "用户信息";
 		$("#tab").append(str); 
+	}
+	
+	function showRecord(id) {
+		var rows = id.parentNode.parentNode.rowIndex;
+		var search_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		var param = encode64(search_id);
+		var url = "http://localhost:8080/user/" + param + "/record&";
+		window.open(url);		
 	}
 	
 	function alterUser() {

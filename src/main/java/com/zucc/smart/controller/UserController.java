@@ -23,7 +23,7 @@ import com.zucc.smart.domain.User;
 import com.zucc.smart.service.UserService;
 import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
-import com.zucc.smart.service.impl.TxtGetting;
+import com.zucc.smart.service.impl.ErrorIDManage;
 import com.zucc.smart.valueObject.WordsVO;
 
 import net.sf.json.JSONObject;
@@ -46,21 +46,7 @@ public class UserController {
     	map.put("user_name", user_name);
     	log.info("/user/"+ user_id +"/map");
         return "map";
-    }
-
-/*    
-    @RequestMapping(value = {"/", "/{user_id}/chart"})
-    public String getOpenFlashChart(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
-    	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/user/"+ user_id + "/chart");
-        double[] data1 = new double[]{4,8,9,3,2,6,8,6,3,7,3,5};
-        build7daysTxt.alertBar1(data1);
-        String user_name = (userService.getUserById(user_id)).getUser_name();
-    	map.put("user_name", user_name);
-        map.put("user_id", user_id);
-        return "analysisTest";
-    }
-*/    
+    } 
     
     @RequestMapping(value = {"/", "/{user_id}/chartArea"})
     public String getChartArea(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
@@ -143,8 +129,22 @@ public class UserController {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/record");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("search_name", user_name);
+    	map.put("search_id", user_id);
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
+        return "showRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{search_id}/record&"})
+    public String getUserParkingRecord(@PathVariable("search_id") String search_id_obj, Map<String, Object> map) throws IOException {
+    	String search_id = new String (Decode.decode(search_id_obj));
+    	log.info("/user/admin/record ----- " + search_id);
+    	String search_name = (userService.getUserById(search_id)).getUser_name();
+    	map.put("search_name", search_name);
+    	map.put("search_id", search_id);
+    	map.put("user_name", "管理");
+    	map.put("user_id", "admin");
         return "showRecord";
     }
     
@@ -215,10 +215,8 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", searchWord);
-    	
-    	if(source.equals("time"))
-    		return "searchTime";
-    	else if(source.equals("form"))
+
+    	if(source.equals("form"))
     		return "searchForm";
     	else if(source.equals("type"))
     		return "searchType";

@@ -299,13 +299,13 @@
 	function showData(data) {
 		var user_id = $("#user_id").html();
 		$("#tab").html("");
-		var str = "<thead><tr><th>车牌号</th><th>车辆类型";
+		var str = "<thead><tr><th>车牌号</th><th>车辆类型</th><th>停车记录";
 		if(user_id == "admin")
 			str = str + "</th></tr></thead><tbody>";
 		else	
 			str = str + "</th><th>操作</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].cph + "</td><td>" + data[i].cartype;
+			str = str + "<tr><td>" + data[i].cph + "</td><td>" + data[i].cartype + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\">查看</a>";
 			
 			if(user_id == "admin")
 				str = str + "</td></tr>";
@@ -325,7 +325,23 @@
 		var url = "http://localhost:8080/user/" + param + cph + "/delete";
 		window.location.href=url;
 	}
-
+	
+	function showRecord(id) {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+		var rows = id.parentNode.parentNode.rowIndex;
+		var cph = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		if(user_id == "admin"){
+			var url = "http://localhost:8080/admin/" + cph + "/record";
+	        window.location.href=url;
+		}
+		else{
+			var param = encode64(user_id);
+			var url = "http://localhost:8080/user/" + param + "/" + cph + "&record";
+			window.location.href=url;
+		}		
+	}
+	
 	function addVehicle(id) {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);

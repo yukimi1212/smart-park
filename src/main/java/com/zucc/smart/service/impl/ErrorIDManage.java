@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class TxtGetting {
+public class ErrorIDManage {
 
     public static ArrayList<String> getID() throws IOException {
 

@@ -17,7 +17,7 @@
 	<select id="getAllRecord" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
-    	order by inserttime;
+    	order by parkcode asc;
     </select>
     
     <select id="getUserRecord" resultMap="RecordMap" useCache="false">

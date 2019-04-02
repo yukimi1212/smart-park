@@ -150,7 +150,7 @@
                         <div class="card-header bg-light">
                             	分时段（8：00 - 18：00）<sapn id="sum"></sapn>
                         </div>						
-                	    <div class="card-body">
+                	    <div class="card-body" id="card-body">
                             <canvas id="chartTime" width="100%" height="30"></canvas>
                         </div>		 
                     </div>
@@ -173,7 +173,7 @@
 
 <script type="text/javascript">  
 
-	function checkSearchWord() {
+/* 	function checkSearchWord() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
 			getChartTime();
@@ -184,30 +184,81 @@
        		window.location.href=url;
 		}		
 	}
-    
+ */   
+ 
+ function checkSearchWord() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			getChartTime();
+		else{
+			var user_id = $("#user_id").html();
+			var param = encode64(user_id);
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/search/' + sWord + '/check',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     			if(result != "null")
+	     				doSearch(sWord,result);
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}		
+	}
+
+	function doSearch(sWord,source){
+		$.ajax({
+				type:'GET',
+	 		url:'http://localhost:8080/search/' + sWord + '/time',
+	 		async:true,
+	 		data:{
+	 			'source':source
+	 		},
+	 		success:function(result){
+	 			getTimeChart(result);
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	}
+	
 	window.onload = function(){	
 		auto();
-		var user_id = $("#user_id").html();
-		if(user_id == "admin"){
-			$("user").empty();
-			document.getElementById("user").innerText = "用户管理";
+		var sWord = $("#searchWord").val();
+		if(sWord == "") {
+			var user_id = $("#user_id").html();
+			if(user_id == "admin"){
+				$("user").empty();
+				document.getElementById("user").innerText = "用户管理";
+			}
+			var param = encode64(user_id);
+				$.ajax({
+					type:'GET',
+	 				url:'http://localhost:8080/record/' + param + '/time',
+	 				async:true,
+	 				data:{
+	 				},
+	 				success:function(result){
+	 					getTimeChart(result);
+	 				},
+	 				error:function(error){
+	 					var jsonData = JSON.stringify(error);
+	 	    			alert(jsonData)
+	 				}
+				})	
 		}
-		var param = encode64(user_id);
-			$.ajax({
-				type:'GET',
- 				url:'http://localhost:8080/record/' + param + '/time',
- 				async:true,
- 				data:{
- 				},
- 				success:function(result){
- 					getTimeChart(result);
- 				},
- 				error:function(error){
- 					var jsonData = JSON.stringify(error);
- 	    			alert(jsonData)
- 				}
-			})	
+		else{
+			checkSearchWord();
 		}
+		
+	}
 
 function auto() {
 	var user_id = $("#user_id").html();
@@ -239,6 +290,9 @@ function auto() {
 function getTimeChart(list) {
 	$("sum").empty();
 	document.getElementById("sum").innerHTML = "&nbsp&nbsp总记录数：" + list[0].amount;
+	$('#chartTime').remove();
+	$('#card-body').append('<canvas id="chartTime" width="100%" height="30"></canvas>');
+	
 	var ctx = document.getElementById("chartTime").getContext('2d');
 	var labels = [];
 	var data = [];
