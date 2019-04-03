@@ -438,7 +438,7 @@ public class RecordServiceImpl implements RecordService {
 			
 			String typecode = helperMapper.getTypecode(searchWord);
 			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
-			
+
 			String parkcode, first;
 			for(int i=7; i<20; i++) {
 				if(i<10)
@@ -453,13 +453,12 @@ public class RecordServiceImpl implements RecordService {
 					parkcode = parkingList.get(p).getParkcode();
 					int amount = recordMapper.getRecordTimeCountForParking(str,parkcode);
 					timeVO.setAmount(timeVO.getAmount() + amount);
-//					System.out.println("str：" + str + "  parkcode：" + parkcode);
 				}
 				
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + timeVO.getAmount());
 			}
-			
+
 			end = System.currentTimeMillis();  
 			System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		}

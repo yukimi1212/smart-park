@@ -139,7 +139,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value=${searchWord } placeholder="青云街" size="18px">
+    			<input type="text" id="searchWord" value=${searchWord } placeholder="可按各编号/停车场/街道/城区名进行搜索" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
@@ -276,7 +276,7 @@
 	
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>区域编号</th><th>停车场名</th><th>街道名</th><th>所属区域</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
 		}

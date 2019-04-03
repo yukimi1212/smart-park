@@ -122,7 +122,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link active">
                                     <i class="icon icon-clock"></i> 不同时段
                                 </a>
                             </li>

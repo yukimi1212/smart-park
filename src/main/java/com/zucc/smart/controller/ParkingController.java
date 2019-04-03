@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zucc.smart.domain.Map;
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.impl.Decode;
@@ -65,6 +66,16 @@ public class ParkingController {
     	ArrayList<StreetVO> list = new ArrayList<StreetVO>();
         
         list = parkingService.getStreet();
+    	return list;
+    }
+    
+    @RequestMapping(value = "/{user_id}/map", method = RequestMethod.GET)
+    public ArrayList<Map> getParkingMap(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/park/"+ user_id + "/map");
+    	ArrayList<Map> list = new ArrayList<Map>();
+        
+        list = parkingService.getParkingMap();
     	return list;
     }
 

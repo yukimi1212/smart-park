@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import com.zucc.smart.domain.Map;
 import java.util.Set;
 
 import com.zucc.smart.domain.Parking;
@@ -219,6 +219,23 @@ public class ParkingServiceImpl implements ParkingService {
 			listVO.add(parkingVO);
 		}
 		return listVO;
+	}
+
+	@Override
+	public ArrayList<Map> getParkingMap() {
+		log.info("getParkingMap：");
+		ArrayList<Map> maplist = new ArrayList<Map>();
+		ArrayList<Parking> parkinglist = parkingMapper.getAllParking();
+		for(int i=0; i<parkinglist.size(); i++) {
+			Map map = new Map();
+			map.setLng(parkinglist.get(i).getLng());
+			map.setLat(parkinglist.get(i).getLat());
+			map.setTitle(parkinglist.get(i).getParkname());
+			map.setCon(parkinglist.get(i).getStreetname() + "," + parkinglist.get(i).getAreaname());
+			map.setBranch(parkinglist.get(i).getParkname());
+			maplist.add(map);
+		}
+		return maplist;
 	}
 
 }

@@ -2,7 +2,7 @@ package com.zucc.smart.service;
 
 import java.util.ArrayList;
 
-import com.zucc.smart.domain.Parking;
+import com.zucc.smart.domain.Map;
 import com.zucc.smart.valueObject.AreaVO;
 import com.zucc.smart.valueObject.ParkingTypeVO;
 import com.zucc.smart.valueObject.ParkingVO;
@@ -26,4 +26,6 @@ public interface ParkingService {
 	ArrayList<StreetVO> streetSearch(String searchWord);
 
 	ArrayList<AreaVO> AreaSearch(String searchWord);
+
+	ArrayList<Map> getParkingMap();
 }

@@ -47,5 +47,13 @@ public interface ParkingMapper {
 	String getParkcode(String parkname);
 
 	ArrayList<Parking> getParkcodeByTypecode(String typecode);
+	
+	ArrayList<Parking> getParkcodeForLat(String lat);
+	
+	ArrayList<Parking> getParkcodeForLng(String lng);
+	
+	void updateLng(String lng, String parkcode);
+	
+	void updateLat(String lat, String parkcode);
 
 }

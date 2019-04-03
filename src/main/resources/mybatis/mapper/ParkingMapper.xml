@@ -116,4 +116,34 @@
 		where typecode = #{typecode}
 	</select>
 	
+	<select id="getParkcodeForLng" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select *
+		from parking 
+		where lng = #{lng}
+		limit 1
+	</select>
+	
+	<select id="getParkcodeForLat" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select *
+		from parking 
+		where lat = #{lat}
+		limit 1
+	</select>
+	
+	<update id="updateLng" parameterType="java.lang.String">
+        update parking
+        <set>
+            lng = #{lng}
+        </set>
+        where parkcode = #{parkcode}
+	</update>
+	
+	<update id="updateLat" parameterType="java.lang.String">
+        update parking
+        <set>
+            lat = #{lat}
+        </set>
+        where parkcode = #{parkcode}
+	</update>
+	
 </mapper>

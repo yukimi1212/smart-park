@@ -42,9 +42,10 @@ public class UserController {
     @RequestMapping(value = {"/", "/{user_id}/map"})
     public String getMap(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
     	String user_id = new String (Decode.decode(user_id_obj));
-    	String user_name = (userService.getUserById(user_id)).getUser_name();
-    	map.put("user_name", user_name);
     	log.info("/user/"+ user_id +"/map");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_id", user_id);
+    	map.put("user_name", user_name);
         return "map";
     } 
     

@@ -10,6 +10,9 @@ public class Parking {
 	private String typecode;
 	private int parking_amount;
 	private int parking_rest;
+	private String lng;
+	private String lat;
+	
 	public String getParkcode() {
 		return parkcode;
 	}
@@ -64,5 +67,17 @@ public class Parking {
 	}
 	public void setParking_rest(int parking_rest) {
 		this.parking_rest = parking_rest;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
 	}
 }

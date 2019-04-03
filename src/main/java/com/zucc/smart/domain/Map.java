@@ -18,6 +18,52 @@ import org.json.JSONObject;
  * @since 2013-7-16 需要添加java-json.jar才能运行
  */
 public class Map {
+	
+	private String lng;
+	private String lat;
+	private String title;
+	private String con;
+	private String branch;
+
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCon() {
+		return con;
+	}
+
+	public void setCon(String con) {
+		this.con = con;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
 
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
