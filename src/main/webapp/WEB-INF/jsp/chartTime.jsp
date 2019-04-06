@@ -141,7 +141,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="指定停车场/街道/区域/停车场类型"  size="18px">
+    			<input type="text" id="searchWord" value="" placeholder="指定停车场/街道/城区/类型"  size="18px">
     			<button class="button" type="submit" onclick="checkSearchWord()">搜索</button>
   			</div><br>
              <div class="row mt-4">
@@ -202,6 +202,8 @@
 	     		success:function(result){
 	     			if(result != "null")
 	     				doSearch(sWord,result);
+	     			else
+	     				alert("请输入完整正确的停车场/街道/城区/类型名称！")
 	     		},
 	     		error:function(error){
 	     			var jsonData = JSON.stringify(error);

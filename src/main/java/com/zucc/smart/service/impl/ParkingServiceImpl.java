@@ -224,8 +224,6 @@ public class ParkingServiceImpl implements ParkingService {
 	@Override
 	public ArrayList<Map> getParkingMap() {
 		log.info("getParkingMap：");
-		long start,end;
-		start = System.currentTimeMillis();
 		
 		ArrayList<Map> maplist = new ArrayList<Map>();
 		ArrayList<Parking> parkinglist = parkingMapper.getAllParking();
@@ -239,8 +237,6 @@ public class ParkingServiceImpl implements ParkingService {
 			maplist.add(map);
 		}
 		
-		end = System.currentTimeMillis();  
-		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		return maplist;
 	}
 

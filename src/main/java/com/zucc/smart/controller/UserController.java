@@ -4,29 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.User;
 import com.zucc.smart.service.UserService;
 import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
-import com.zucc.smart.service.impl.ErrorIDManage;
-import com.zucc.smart.vObject.WordsVO;
 
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/user")

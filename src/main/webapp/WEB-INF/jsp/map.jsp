@@ -30,7 +30,7 @@ body {
 <body>
 
 
-	<input type="text" id="cityName" value="天行国际" />
+	<input type="text" id="areaName" value="西湖" />
 	<input type="button" onclick="setCity()" value="查找" />
 	<span id="user_id" style="display:none">${user_id }</span>
 	
@@ -38,6 +38,7 @@ body {
 </body>
 
 <script type="text/javascript">	
+
 	window.onload = function(){	
 //		buildMap();
 		var user_id = $("#user_id").html();
@@ -50,7 +51,6 @@ body {
      		data:{
      		},
      		success:function(list){
-//     			getMyPoints(list);
      			getMap(list);
      		},
      		error:function(error){
@@ -60,28 +60,39 @@ body {
  		})
 	}
 	
-	function getMyPoints(list) {
-		for (var i = 0; i < 5; i++) {
-			var str =  "{x:" + list[i].lat + ",y:" + list[i].lng + ",title:\"" + list[i].title + "\",con:\"" + list[i].con + "\",branch:\"" + list[i].branch + "\"}";
-			myPoints.push(str);
-		}		
-	}
+	function initMap(){
+        createMap();//创建地图
+        setMapEvent();//设置地图事件
+    }
 	
-	function getMap(list){		
+	//创建地图函数
+	function createMap(){
 		var map = new BMap.Map("container"); //在container容器中创建一个地图,参数container为div的id属性;
-
 		var point = new BMap.Point(120.2, 30.25); //创建点坐标
 		map.centerAndZoom(point, 18); //初始化地图，设置中心点坐标和地图级别
-		var opts = {anchor:BMAP_ANCHOR_BOTTOM_RIGHT};//设置定位按钮位置
+        window.map = map;//将map变量存储在全局
+        window.point = point;
+    }
+	
+	//地图事件设置函数：
+    function setMapEvent(){
+        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地图
+        map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+        
+        var opts = {anchor:BMAP_ANCHOR_BOTTOM_RIGHT};//设置定位按钮位置
 		map.addControl(new BMap.GeolocationControl(opts));//将定位控件添加到地图上
 		
-		map.enableScrollWheelZoom(); //激活滚轮调整大小功能
-	    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
 		map.addControl(new BMap.NavigationControl()); //添加控件：缩放地图的控件，默认在左上角；
 		map.addControl(new BMap.MapTypeControl()); //添加控件：地图类型控件，默认在右上方；
 		map.addControl(new BMap.ScaleControl()); //添加控件：地图显示比例的控件，默认在左下方；
 		map.addControl(new BMap.OverviewMapControl()); //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl    
-
+    }
+	
+	function getMap(list){		
+		initMap();
 		
 		//设置缩放按钮位置及类型
 //		var ove={anchor:BMAP_ANCHOR_TOP_RIGHT,type:BMAP_NAVIGATION_CONTROL_ZOOM}
@@ -122,6 +133,24 @@ body {
 	}		
 	
 	
+	
+	function setCity() {
+		var areaname = document.getElementById("areaName").value;
+		// 创建地址解析器实例     
+		var myGeo = new BMap.Geocoder();      
+		// 将地址解析结果显示在地图上，并调整地图视野    
+		myGeo.getPoint(areaname, function(point){      
+		    if (point) {      
+		        map.centerAndZoom(point, 16);      
+		        map.addOverlay(new BMap.Marker(point));      
+		    }      
+		 }, 
+		"杭州市");
+	}
+	
+	
+
+
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 
 	function encode64(input) {  
