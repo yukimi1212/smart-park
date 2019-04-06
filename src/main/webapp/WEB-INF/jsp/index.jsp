@@ -347,7 +347,6 @@
 	window.onload = function(){
 		var user_id = document.getElementById("user_id").innerHTML;
 		if(user_id == "admin"){
-			document.getElementById("map").style.display="none";
 			document.getElementById("info").style.display="none";
 		}
 		else{

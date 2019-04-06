@@ -1,4 +1,4 @@
-package com.zucc.smart.valueObject;
+package com.zucc.smart.vObject;
 
 public class StreetVO {
 	private String streetcode;

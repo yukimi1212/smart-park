@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.zucc.smart.domain.Parking;
-import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.vObject.StreetVO;
 
 public interface ParkingMapper {
 	ArrayList<Parking> getAllParking();

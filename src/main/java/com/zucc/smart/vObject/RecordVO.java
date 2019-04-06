@@ -1,4 +1,4 @@
-package com.zucc.smart.valueObject;
+package com.zucc.smart.vObject;
 
 public class RecordVO {
 	private String id;

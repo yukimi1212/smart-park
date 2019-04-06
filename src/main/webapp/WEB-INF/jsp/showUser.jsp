@@ -333,7 +333,10 @@
 	}
 	
 	function alterUser() {
-		
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/alter";
+		window.location.href=url;
 	}
 	
 	function checkVehicle(id) {

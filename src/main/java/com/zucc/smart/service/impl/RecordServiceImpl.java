@@ -19,12 +19,12 @@ import com.zucc.smart.mapper.RecordMapper;
 import com.zucc.smart.mapper.UserMapper;
 import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.RecordService;
-import com.zucc.smart.valueObject.AreaVO;
-import com.zucc.smart.valueObject.ParkingTypeVO;
-import com.zucc.smart.valueObject.RecordVO;
-import com.zucc.smart.valueObject.StreetVO;
-import com.zucc.smart.valueObject.TimeVO;
-import com.zucc.smart.valueObject.UserVO;
+import com.zucc.smart.vObject.AreaVO;
+import com.zucc.smart.vObject.ParkingTypeVO;
+import com.zucc.smart.vObject.RecordVO;
+import com.zucc.smart.vObject.StreetVO;
+import com.zucc.smart.vObject.TimeVO;
+import com.zucc.smart.vObject.UserVO;
 
 @Service
 public class RecordServiceImpl implements RecordService {

@@ -50,5 +50,14 @@
 		where user_id like #{searchWord} or user_name like #{searchWord}
 	</select>
 	
+	<update id="alterUser" parameterType="java.lang.String">
+        update user
+        <set>
+            user_gender = #{user_gender},
+            user_age = #{user_age},
+            user_phone = #{user_phone},
+        </set>
+        where user_id = #{user_id}
+	</update>
 	
 </mapper>

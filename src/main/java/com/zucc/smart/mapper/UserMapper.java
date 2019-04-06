@@ -22,4 +22,6 @@ public interface UserMapper {
 
 	ArrayList<User> searchUser(String searchWord);
 
+	void alterUser(String user_id, String user_gender, String user_age, String user_phone);
+
 }

@@ -3,10 +3,10 @@ package com.zucc.smart.service;
 import java.util.ArrayList;
 
 import com.zucc.smart.domain.Map;
-import com.zucc.smart.valueObject.AreaVO;
-import com.zucc.smart.valueObject.ParkingTypeVO;
-import com.zucc.smart.valueObject.ParkingVO;
-import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.vObject.AreaVO;
+import com.zucc.smart.vObject.ParkingTypeVO;
+import com.zucc.smart.vObject.ParkingVO;
+import com.zucc.smart.vObject.StreetVO;
 
 public interface ParkingService {
 	ArrayList<ParkingVO> getAllParking();

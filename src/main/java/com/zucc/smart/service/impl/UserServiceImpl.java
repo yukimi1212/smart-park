@@ -16,9 +16,9 @@ import com.zucc.smart.mapper.RecordMapper;
 import com.zucc.smart.mapper.UserMapper;
 import com.zucc.smart.mapper.VehicleMapper;
 import com.zucc.smart.service.UserService;
-import com.zucc.smart.valueObject.TimeVO;
-import com.zucc.smart.valueObject.UserVO;
-import com.zucc.smart.valueObject.WordsVO;
+import com.zucc.smart.vObject.TimeVO;
+import com.zucc.smart.vObject.UserVO;
+import com.zucc.smart.vObject.WordsVO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -122,6 +122,12 @@ public class UserServiceImpl implements UserService {
 		}
 	
 		return listVO;
+	}
+
+	@Override
+	public void alterUser(String user_id, String user_gender, String user_age, String user_phone) {
+		log.info("alterUser：");
+		userMapper.alterUser(user_id, user_gender, user_age, user_phone);
 	}
 
 }

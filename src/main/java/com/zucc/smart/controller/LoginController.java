@@ -38,7 +38,7 @@ public class LoginController {
         log.info("/login/user/" + user_id);
         
 //        dataManageService.updateRecord();
-        bulidLngAndLat.bulidLngAndLat();
+//        bulidLngAndLat.bulidLngAndLat();
         
     	String str = "";
         if(user_id == "")

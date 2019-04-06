@@ -17,10 +17,10 @@ import com.zucc.smart.mapper.HelperMapper;
 import com.zucc.smart.mapper.ParkingMapper;
 import com.zucc.smart.mapper.ParkingTypeMapper;
 import com.zucc.smart.service.ParkingService;
-import com.zucc.smart.valueObject.AreaVO;
-import com.zucc.smart.valueObject.ParkingTypeVO;
-import com.zucc.smart.valueObject.ParkingVO;
-import com.zucc.smart.valueObject.StreetVO;
+import com.zucc.smart.vObject.AreaVO;
+import com.zucc.smart.vObject.ParkingTypeVO;
+import com.zucc.smart.vObject.ParkingVO;
+import com.zucc.smart.vObject.StreetVO;
 
 @Service
 public class ParkingServiceImpl implements ParkingService {
@@ -224,6 +224,9 @@ public class ParkingServiceImpl implements ParkingService {
 	@Override
 	public ArrayList<Map> getParkingMap() {
 		log.info("getParkingMap：");
+		long start,end;
+		start = System.currentTimeMillis();
+		
 		ArrayList<Map> maplist = new ArrayList<Map>();
 		ArrayList<Parking> parkinglist = parkingMapper.getAllParking();
 		for(int i=0; i<parkinglist.size(); i++) {
@@ -235,6 +238,9 @@ public class ParkingServiceImpl implements ParkingService {
 			map.setBranch(parkinglist.get(i).getParkname());
 			maplist.add(map);
 		}
+		
+		end = System.currentTimeMillis();  
+		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		return maplist;
 	}
 

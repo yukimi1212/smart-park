@@ -43,8 +43,12 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
+                    <span id="user_gender" style="display:none">${user_gender }</span> 
+                    <span id="user_age" style="display:none">${user_age }</span>
+                    <span id="user_phone" style="display:none">${user_phone }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -105,10 +109,31 @@
 
                         </ul>
                     </li>
+                    
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 区域类型
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
+                                    <i class="icon icon-clock"></i> 不同时段
+                                </a>
+                            </li>
+                        </ul>
+                    </li> 
+                    
 
                     <li class="nav-item">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link active">
-                            <i class="icon icon-puzzle"></i> 用户管理
+                            <i class="icon icon-puzzle"></i> <sapn id="user">个人信息</sapn>
                         </a>
                     </li>
                     
@@ -118,18 +143,15 @@
         </div>
 		
         <div class="content">   
-<!--         	<div id="search">
+        	<div id="search">
     			<input type="text" id="searchWord" value="" placeholder="用户ID/用户名" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
-  			</div><br> -->
+  			</div><br>
   			
             <div class="row">             
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-light" id="name">
-                            	
-                        </div>
-                        <div class="card-header bg-left" id="return">
                             	
                         </div>
 
@@ -143,16 +165,16 @@
                     </div>
                 </div>
                 
-<!--                 <a id="btn0"></a>		
+                <a id="btn0"></a>		
  				<a id="sjzl"></a>&nbsp;
                 <a  href="#" id="btn1">首页</a>
                 <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
                 <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
                 <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
-                <a>&nbsp&nbsp转到&nbsp;</a>
+                <a  id="btnTo" >&nbsp&nbsp转到&nbsp;</a>
                 <input id="changePage" type="text" size="1" maxlength="4"/>
-                <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a> 		-->
+                <a id="page">页&nbsp;</a>
+                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>				
             </div>
         </div>
     </div>
@@ -176,10 +198,77 @@
 	var begin;
 	var end;
     
+	function doSearch() {
+		var sWord = $("#searchWord").val();
+		if(sWord == "")
+			returnUser();
+		else{
+			var user_id = $("#user_id").html();
+		    var param = encode64(user_id);
+			var url = "http://localhost:8080/admin/" + sWord + "/user";
+	        window.location.href=url;
+		}
+	}
+
+	
 	$(document).ready(function(){  
-		showData();
+		showForm();
 	});
 	
+	function showForm(){
+		var user_id = $("#user_id").html();
+		if(user_id == "admin"){
+			$("user").empty();
+			document.getElementById("user").innerText = "用户管理";
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/admin/user',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}
+		else{
+			document.getElementById("search").style.display="none";
+			document.getElementById("btn0").style.display="none";
+			document.getElementById("sjzl").style.display="none";
+			document.getElementById("btn1").style.display="none";
+			document.getElementById("btn2").style.display="none";
+			document.getElementById("btn3").style.display="none";
+			document.getElementById("btn4").style.display="none";
+			document.getElementById("btnTo").style.display="none";
+			document.getElementById("changePage").style.display="none";
+			document.getElementById("page").style.display="none";
+			document.getElementById("btn5").style.display="none";
+			         
+			var param = encode64(user_id);
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/' + param + '/user',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}
+	    
+		
+	}
 	
 	function returnForm() {
 		var user_id = $("#user_id").html();
@@ -214,44 +303,43 @@
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
-	}
+	} 
 	
-	
-	function deleteVehicle(id) {
+	function showData(data) {
 		var user_id = $("#user_id").html();
-		var rows = id.parentNode.parentNode.rowIndex;
-		var cph = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
-	    var param = encode64(user_id);
-		alert("user_id：" + user_id + "  param：" + param + "  cph：" + cph);
-		var url = "http://localhost:8080/user/" + param + cph + "/delete";
-		window.location.href=url;
-	}
-	
-	function showData() {
+		var user_name = $("#user_name").html();
+		var user_gender = $("#user_gender").html();
+		var user_age = $("#user_age").html();
+		var user_phone = $("#user_phone").html();
 		$("#tab").html("");
-		var str = "<thead><tr><th>车牌号</th><th>车辆类型</th><th>操作</th></tr></thead><tbody>";
-		str = str + "<tr><td><input type=\"text\" id=\"cph\" /></td><td><input type=\"text\" id=\"cartype\" /></td><td>";
-		str = str + "<a href=\"javascript:void(0)\" onclick=\"addVehicle()\">添加</a>" +"</td></tr>"; 
+		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>操作</th></tr></thead><tbody>";
+		
+		str = str + "<tr><td>" + user_id + "</td><td>" + user_name + "</td><td>" + "<input type=\"text\" id=\"alter_gender\" value=" + user_gender + "/></td><td>" + "<input type=\"text\" id=\"alter_age\" value= " + user_age + "/></td><td>" + "<input type=\"text\" id=\"alter_phone\" value= " + user_phone + "/>";
+		str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"alterUser(this)\">确认修改</a>" + "</td></tr>"; 			
+		
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "添加车辆信息 &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"checkVehicle()\">返回</a>";
-		$("#tab").append(str);	
-	}	
+		document.getElementById("name").innerHTML = "用户信息";
+		$("#tab").append(str); 
+	}
 	
-	function addVehicle() {
+	function alterUser(id) {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-		var cph = document.getElementById("cph").value;  
-		var cartype = document.getElementById("cartype").value;
+	    var user_gender = ((document.getElementById("alter_gender").value).split("/"))[0];
+	    var user_age = ((document.getElementById("alter_age").value).split("/"))[0];
+	    var user_phone = ((document.getElementById("alter_phone").value).split("/"))[0];
+		alert(user_gender);
 		$.ajax({
    			type:'GET',
-     		url:'http://localhost:8080/user/' + param + "/add",
+     		url:'http://localhost:8080/user/' + param + "/alterU",
      		async:true,
      		data:{
-     			'cph':cph,
-     			'cartype':cartype
+     			'user_gender':user_gender,
+     			'user_age':user_age,
+     			'user_phone':user_phone
      		},
      		success:function(){
-     			var url = "http://localhost:8080/user/" + param + "/vehicle";
+     			var url = "http://localhost:8080/user/" + param + "/user";
      			window.location.href=url;
      		},
      		error:function(error){
@@ -261,6 +349,14 @@
  		})
 	}
 	
+	function showRecord(id) {
+		var rows = id.parentNode.parentNode.rowIndex;
+		var search_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		var param = encode64(search_id);
+		var url = "http://localhost:8080/user/" + param + "/record&";
+		window.open(url);		
+	}
+
 	function getRecord() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -268,13 +364,27 @@
 		window.location.href=url;
 	}
 	
-	function checkVehicle() {
+	
+	function getUser() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/vehicle";
+		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
 	
+	function getChartArea(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartArea";
+        window.location.href=url;
+    }	
+	
+	function getChartTime(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartTime";
+        window.location.href=url;
+    }
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();
@@ -282,6 +392,82 @@
     	var url = "http://localhost:8080/user/" + param + "/home";
     	window.open(url);  
 	}
+	
+	function display() {
+    	len =$("#tab tr").length - 1;    // 求这个表的总行数，剔除第一行介绍
+
+    	page=len % pageSize==0 ? len/pageSize : Math.floor(len/pageSize)+1;//根据记录条数，计算页数
+    	curPage=1;    // 设置当前为第一页
+    	displayPage();//显示第一页
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";    // 显示当前多少页
+   		document.getElementById("sjzl").innerHTML="&nbsp&nbsp&nbsp数据总量 " + len + "&nbsp&nbsp&nbsp";        // 显示数据量       
+    
+    	$("#btn1").click(function firstPage(){    // 首页
+        	curPage=1;
+        	direct = 0;
+        	displayPage();
+    	});	
+    	$("#btn2").click(function frontPage(){    // 上一页
+    	    direct=-1;
+    	    displayPage();
+    	});
+    	$("#btn3").click(function nextPage(){    // 下一页
+    	    direct=1;
+       		displayPage();
+    	});
+    	$("#btn4").click(function lastPage(){    // 尾页
+       		curPage=page;
+        	direct = 0;
+        	displayPage();
+    	});
+    	$("#btn5").click(function changePage(){    // 转页
+    	    curPage=document.getElementById("changePage").value * 1;
+    	    if (!/^[1-9]\d*$/.test(curPage)) {
+    	        alert("请输入正整数");
+    	        return ;
+    	    }
+    	    if (curPage > page) {
+       	    	alert("超出数据页面");
+            	return ;
+        	}
+        	direct = 0;
+        	displayPage();
+    	});
+	}
+
+	function displayPage(){
+    	if(curPage <=1 && direct==-1){
+        	direct=0;
+        	alert("已经是第一页了");
+        	return;
+    	} else if (curPage >= page && direct==1) {
+       		direct=0;
+        	alert("已经是最后一页了");
+        	return ;
+    	}
+    
+    	lastPage = curPage;
+    	
+    	// 修复当len=1时，curPage计算得0的bug
+    	if (len > pageSize) {
+        	curPage = ((curPage + direct + len) % len);
+    	} else {
+        	curPage = 1;
+    	}
+    
+    	document.getElementById("btn0").innerHTML="当前 " + curPage + "/" + page + " 页&nbsp&nbsp&nbsp每页15条 ";        // 显示当前多少页
+    	begin=(curPage-1)*pageSize + 1;// 起始记录号
+    	end = begin + 1*pageSize - 1;    // 末尾记录号
+     
+    	if(end > len ) 
+    		end=len;
+    	$("#tab tr").hide();    // 首先，设置这行为隐藏
+    	$("#tab tr").each(function(i){    // 然后，通过条件判断决定本行是否恢复显示
+        	if((i>=begin && i<=end) || i==0 )//显示begin<=x<=end的记录
+            	$(this).show();
+    	});
+ 	}
 	
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 
