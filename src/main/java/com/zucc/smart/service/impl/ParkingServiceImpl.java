@@ -220,7 +220,7 @@ public class ParkingServiceImpl implements ParkingService {
 		}
 		return listVO;
 	}
-
+/*
 	@Override
 	public ArrayList<Map> getParkingMap() {
 		log.info("getParkingMap：");
@@ -239,5 +239,30 @@ public class ParkingServiceImpl implements ParkingService {
 		
 		return maplist;
 	}
+*/
 
+	@Override
+	public ArrayList<Map> getParkingMap(String lng, String lat) {
+		log.info("getParkingMap：" + lng + "," + lat);
+		ArrayList<Map> maplist = new ArrayList<Map>();
+        double search_lng = Double.parseDouble(lng);
+        double up_lng = search_lng + 0.2;
+        double down_lng = search_lng - 0.2;
+        
+        double search_lat = Double.parseDouble(lat);
+        double up_lat = search_lat + 0.05;
+        double down_lat = search_lat - 0.05;
+        ArrayList<Parking> parkinglist = parkingMapper.getParkingSearch(up_lng + "", down_lng + "", up_lat + "", down_lat + "");
+        
+        for(int i=0; i<parkinglist.size(); i++) {
+			Map map = new Map();
+			map.setLng(parkinglist.get(i).getLng());
+			map.setLat(parkinglist.get(i).getLat());
+			map.setTitle(parkinglist.get(i).getParkname());
+			map.setCon(parkinglist.get(i).getStreetname() + "," + parkinglist.get(i).getAreaname());
+			map.setBranch(parkinglist.get(i).getParkname());
+			maplist.add(map);
+		}
+		return maplist;
+	}
 }

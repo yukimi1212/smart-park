@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.zucc.smart.domain.Parking;
-import com.zucc.smart.vObject.StreetVO;
 
 public interface ParkingMapper {
 	ArrayList<Parking> getAllParking();
@@ -55,5 +54,7 @@ public interface ParkingMapper {
 	void updateLng(String lng, String parkcode);
 	
 	void updateLat(String lat, String parkcode);
+
+	ArrayList<Parking> getParkingSearch(String up_lng, String down_lng, String up_lat, String down_lat);
 
 }

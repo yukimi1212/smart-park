@@ -26,6 +26,12 @@
 		FROM parking
 	</select>
 	
+	<select id="getParkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		SELECT *
+		FROM parking
+		where lng between #{down_lng} and #{up_lng} and lat between #{down_lat} and #{up_lat};
+	</select>
+	
 	<select id="getTypeCount" resultType="java.util.HashMap" useCache="false"> 
 		select typecode, count(typecode) 
 		from parking 

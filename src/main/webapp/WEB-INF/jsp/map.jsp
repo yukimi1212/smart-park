@@ -43,7 +43,8 @@ body {
 //		buildMap();
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-
+	    initMap();
+/*
 		$.ajax({
    			type:'GET',
      		url:'http://localhost:8080/park/' + param + '/map',
@@ -58,6 +59,7 @@ body {
      	    	alert(jsonData)
      		}
  		})
+*/ 		
 	}
 	
 	function initMap(){
@@ -69,7 +71,7 @@ body {
 	function createMap(){
 		var map = new BMap.Map("container"); //在container容器中创建一个地图,参数container为div的id属性;
 		var point = new BMap.Point(120.2, 30.25); //创建点坐标
-		map.centerAndZoom(point, 18); //初始化地图，设置中心点坐标和地图级别
+		map.centerAndZoom(point, 16); //初始化地图，设置中心点坐标和地图级别
         window.map = map;//将map变量存储在全局
         window.point = point;
     }
@@ -91,22 +93,15 @@ body {
 		map.addControl(new BMap.OverviewMapControl()); //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl    
     }
 	
-	function getMap(list){		
+	function getMap(list,point){		
 		initMap();
 		
-		//设置缩放按钮位置及类型
-//		var ove={anchor:BMAP_ANCHOR_TOP_RIGHT,type:BMAP_NAVIGATION_CONTROL_ZOOM}
-		
-		//添加缩放按钮
-//		map.addControl(new BMap.NavigationControl(ove));
-		
-		var marker = new BMap.Marker(point);
+		map.centerAndZoom(point, 16);      
+        map.addOverlay(new BMap.Marker(point)); 
 		
         var i = 0;
-        map.addOverlay(marker);
-        map.enableScrollWheelZoom(true);
-        
-        for (;i<825;i++) {
+        alert(list.length);
+        for (;i<list.length;i++) {
 //        	alert(list[i].lng + "," + list[i].lat);
             var points = new BMap.Point(list[i].lng,list[i].lat);//创建坐标点
             var opts = {
@@ -135,14 +130,30 @@ body {
 	
 	
 	function setCity() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
 		var areaname = document.getElementById("areaName").value;
 		// 创建地址解析器实例     
 		var myGeo = new BMap.Geocoder();      
 		// 将地址解析结果显示在地图上，并调整地图视野    
 		myGeo.getPoint(areaname, function(point){      
-		    if (point) {      
-		        map.centerAndZoom(point, 16);      
-		        map.addOverlay(new BMap.Marker(point));      
+		    if (point) {
+		    	$.ajax({
+		   			type:'GET',
+		     		url:'http://localhost:8080/search/' + param + '/map',
+		     		async:true,
+		     		data:{
+		     			'lng':point.lng,
+		     			'lat':point.lat
+		     		},
+		     		success:function(result){
+		     			getMap(result,point);
+		     		},
+		     		error:function(error){
+		     			var jsonData = JSON.stringify(error);
+		     	    	alert(jsonData)
+		     		}
+		 		})    
 		    }      
 		 }, 
 		"杭州市");

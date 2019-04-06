@@ -68,7 +68,7 @@ public class ParkingController {
         list = parkingService.getStreet();
     	return list;
     }
-    
+/*    
     @RequestMapping(value = "/{user_id}/map", method = RequestMethod.GET)
     public ArrayList<Map> getParkingMap(@PathVariable("user_id") String user_id_obj) {
     	String user_id = new String (Decode.decode(user_id_obj));
@@ -78,5 +78,5 @@ public class ParkingController {
         list = parkingService.getParkingMap();
     	return list;
     }
-
+*/
 }

@@ -27,5 +27,7 @@ public interface ParkingService {
 
 	ArrayList<AreaVO> AreaSearch(String searchWord);
 
-	ArrayList<Map> getParkingMap();
+//	ArrayList<Map> getParkingMap();
+
+	ArrayList<Map> getParkingMap(String lng, String lat);
 }

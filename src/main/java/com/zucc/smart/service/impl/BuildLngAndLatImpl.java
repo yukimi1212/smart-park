@@ -29,8 +29,8 @@ public class BuildLngAndLatImpl implements BuildLngAndLat{
 		HashSet<String> lngset = new HashSet<String>();
 		HashSet<String> latset = new HashSet<String>();
 
-		randomSet(118.35,120.5,825,lngset);
-		randomSet(29.183,30.55,825,latset);
+		randomSet(119.35,120.5,825,lngset);
+		randomSet(29.883,30.55,825,latset);
 		System.out.println(lngset.size());
 		System.out.println(latset.size());
 		int i = 0;
