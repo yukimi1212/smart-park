@@ -71,7 +71,9 @@
 	<select id="parkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
-		where parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} or parkname like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord} or typecode like #{searchWord};
+		where parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} 
+			or parkname like #{searchWord} or streetname like #{searchWord} 
+			or areaname like #{searchWord} or typecode like #{searchWord};
 	</select>
 	
 	<select id="searchStreet" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
@@ -151,5 +153,12 @@
         </set>
         where parkcode = #{parkcode}
 	</update>
+	
+	<insert id="addParking" parameterType="java.lang.String">
+		INSERT INTO parking
+		(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount, parking_rest, lng, lat)
+		values
+		(#{parkcode}, #{streetcode}, #{businesscode},#{parkname}, #{streetname}, #{areaname},#{typecode}, #{parking_amount}, #{parking_rest}, #{lng}, #{lat})
+	</insert>
 	
 </mapper>

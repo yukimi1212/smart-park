@@ -30,7 +30,8 @@ public class UserController {
 	 VehicleService vehicleService;
 
     @RequestMapping(value = {"/", "/{user_id}/map"})
-    public String getMap(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
+    public String getMap(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id +"/map");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -40,7 +41,8 @@ public class UserController {
     } 
     
     @RequestMapping(value = {"/", "/{user_id}/chartArea"})
-    public String getChartArea(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String getChartArea(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/chartArea");
         String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -50,7 +52,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/chartTime"})
-    public String getChartTime(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String getChartTime(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/chartTime");
         String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -60,7 +63,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/home"})
-    public String enterHome(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) {
+    public String enterHome(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) {
         String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/" + user_id + "/home");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -71,7 +75,8 @@ public class UserController {
     
     
     @RequestMapping(value = {"/", "/{user_id}/form"})
-    public String gotoParkingForm(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String gotoParkingForm(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/form");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -83,7 +88,8 @@ public class UserController {
 
     
     @RequestMapping(value = {"/", "/{user_id}/type"})
-    public String gotoParkingType(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String gotoParkingType(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/type");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -94,7 +100,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/area"})
-    public String gotoParkingArea(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String gotoParkingArea(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/area");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -105,7 +112,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/street"})
-    public String gotoParkingStreet(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String gotoParkingStreet(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/street");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -116,7 +124,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/record"})
-    public String gotoParkingRecord(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String gotoParkingRecord(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/record");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -128,7 +137,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{search_id}/record&"})
-    public String getUserParkingRecord(@PathVariable("search_id") String search_id_obj, Map<String, Object> map) throws IOException {
+    public String getUserParkingRecord(@PathVariable("search_id") String search_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String search_id = new String (Decode.decode(search_id_obj));
     	log.info("/user/admin/record ----- " + search_id);
     	String search_name = (userService.getUserById(search_id)).getUser_name();
@@ -140,7 +150,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/user"})
-    public String getUserList(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String getUserList(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/user");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -150,7 +161,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/vehicle"})
-    public String getUserVehicle(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String getUserVehicle(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/user/"+ user_id + "/vehicle");
     	String user_name = (userService.getUserById(user_id)).getUser_name();
@@ -160,18 +172,21 @@ public class UserController {
     }
     
 	
-	  @RequestMapping(value = {"/", "/{user_id}/addV"}) 
-	  public String addVehicle(@PathVariable("user_id") String user_id_obj, Map<String, Object>map) throws IOException { 
+	  @RequestMapping(value = {"/", "/{user_id}/add"}) 
+	  public String addVehicle(@PathVariable("user_id") String user_id_obj, 
+			  Map<String, Object>map) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/user/"+ user_id + "/addV");
+		  log.info("/user/"+ user_id + "/add");
 		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
 		  map.put("user_name",user_name); 
 		  map.put("user_id", user_id); 
 		  return "addVehicle"; 
 	  }
+
 	  
 	  @RequestMapping(value = {"/", "/{user_id}/alter"}) 
-	  public String alterUser(@PathVariable("user_id") String user_id_obj, Map<String, Object>map) throws IOException { 
+	  public String alterUser(@PathVariable("user_id") String user_id_obj, 
+			  Map<String, Object>map) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
 		  log.info("/user/"+ user_id + "/alterU");
 		  User user = userService.getUserById(user_id); 
@@ -183,19 +198,11 @@ public class UserController {
 		  return "alterUser"; 
 	  }
 	  
-	  @RequestMapping(value = {"/", "/{user_id}/add"}) 
-	  public String addVehicle(@PathVariable("user_id") String user_id_obj, String cph, String cartype, Map<String, Object>map) throws IOException { 
-		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/user/"+ user_id + "/add ----- " + cph + "   " + cartype);
-		  vehicleService.addVehicle(cph, cartype, user_id);
-		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
-		  map.put("user_name",user_name); 
-		  map.put("user_id", user_id); 
-		  return "showVehicle"; 
-	  }
+	  
 	  
 	  @RequestMapping(value = {"/", "/{user_id}/alterU"}) 
-	  public String alterUser(@PathVariable("user_id") String user_id_obj, String user_gender, String user_age, String user_phone, Map<String, Object>map) throws IOException { 
+	  public String alterUser(@PathVariable("user_id") String user_id_obj, String user_gender, 
+			  String user_age, String user_phone, Map<String, Object>map) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
 		  log.info("/user/"+ user_id + "/alterU ----- " + user_gender + "   " + user_age + "   " + user_phone);
 		  userService.alterUser(user_id, user_gender, user_age, user_phone);
@@ -207,7 +214,8 @@ public class UserController {
 	 
     
     @RequestMapping(value = {"/", "/{user_id}/delete"})
-    public String deleteVehicle(@PathVariable("user_id") String user_id_obj, Map<String, Object> map) throws IOException {
+    public String deleteVehicle(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
     	String[] n = user_id_obj.split("&car&");
     	String user_id = new String (Decode.decode(n[0]));
     	String cph = n[1];
@@ -220,7 +228,8 @@ public class UserController {
     }
     
     @RequestMapping(value = {"/", "/{user_id}/{searchWord}"})
-    public String doSearch(@PathVariable("user_id") String user_id_obj, @PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
+    public String doSearch(@PathVariable("user_id") String user_id_obj, 
+    		@PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
     	String user_id = new String (Decode.decode(user_id_obj));
     	String[] word = searchWord.split("&");
     	searchWord = word[0];

@@ -14,7 +14,7 @@ public interface UserMapper {
 
 	ArrayList<User> getUserById(String user_id);
 	
-	void saveUser(User user);
+	void addUser(User user);
 	
 	void deleteUser(String user_id);
 	
@@ -23,5 +23,4 @@ public interface UserMapper {
 	ArrayList<User> searchUser(String searchWord);
 
 	void alterUser(String user_id, String user_gender, String user_age, String user_phone);
-
 }

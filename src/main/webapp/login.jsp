@@ -55,22 +55,23 @@
 	    $(":submit").click(function () {
 	        var options = {
 	            url: "http://localhost:8080/login/user",
-	            success: function (data) {
-	                var n = data.split("|");	
+	            dataType:'json',
+	            success: function (result) {
+	            	var flag = result["flag"];
 	                $("span").empty();
-	                if(n[1] == "id为空"){
+	                if(flag == "id为空"){
 	                	document.getElementById("warning_id").innerHTML = "请输入id";
 	                }
-	                else if(n[1] == "密码为空"){
+	                else if(flag == "密码为空"){
 	                	document.getElementById("warning_pwd").innerHTML = "请输入密码";
 	                }	
-	                else if(n[1] == "不存在"){
+	                else if(flag == "不存在"){
 	                	document.getElementById("warning_id").innerHTML = "用户名或密码错误，请重新输入";
 	                	$("#user_id").val("");
                 		$("#user_pwd").val("");
 	                }	
 	                else{
-	                	var param = encode64(n[1]);
+	                	var param = encode64(flag);
 	                	window.location.href="http://localhost:8080/user/" + param + "/home";
 	                }
 	            }

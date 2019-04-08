@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User checkUser(String user_id, String user_pwd) {
         log.info("checkUser: " + user_id + " " + user_pwd);
-//        User user = userMapper.getUserById(user_id);
         User user = userMapper.checkUser(user_id, user_pwd);
         return user;
 	}
@@ -52,7 +51,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean addUser(User user) {
         log.info("addUser: " + user.getUser_id());
-        userMapper.saveUser(user);
+        userMapper.addUser(user);
         return true;
 	}
 

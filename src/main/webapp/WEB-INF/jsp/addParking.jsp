@@ -69,13 +69,13 @@
                     <li class="nav-title">数据展示</li>
 					
                     <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
+                        <a href="#" class="nav-link nav-dropdown-toggle active">
                             <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="returnForm()" class="nav-link">
+                                <a href="#"  class="nav-link active">
                                     <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
@@ -128,22 +128,17 @@
                     </li>
 
                     
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link active">
-                            <i class="icon icon-puzzle"></i><sapn id="user">用户管理</sapn>
+                    <li class="nav-item" id="userRecord">
+                        <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
+                            <i class="icon icon-puzzle"></i><sapn id="user">个人信息</sapn>
                         </a>
-                    </li>
-                    
+                    </li>                      
                    
                 </ul>
             </nav>
         </div>
 		
         <div class="content">   
-        	<div id="search">
-    			<input type="text" id="searchWord" value="${searchWord }" placeholder="用户ID/用户名" size="18px">
-    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
-  			</div><br>
   			
             <div class="row">             
                 <div class="col-md-12">
@@ -161,17 +156,7 @@
                         </div>
                     </div>
                 </div>
-                
-                <a id="btn0"></a>		
- 				<a id="sjzl"></a>&nbsp;
-                <a  href="#" id="btn1">首页</a>
-                <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
-                <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
-                <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
-                <a>&nbsp&nbsp转到&nbsp;</a>
-                <input id="changePage" type="text" size="1" maxlength="4"/>
-                <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>
+             
             </div>
         </div>
     </div>
@@ -186,66 +171,29 @@
 
 <script type="text/javascript">  
 
-	var pageSize = 15;    //每页显示的记录条数
- 	var curPage=0;        //当前页
- 	var lastPage;        //最后页
- 	var direct=0;        //方向
-	var len;            //总行数
-	var page;            //总页数
-	var begin;
-	var end;
     
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
-			returnUser();
+			returnForm();
 		else{
 			var user_id = $("#user_id").html();
 		    var param = encode64(user_id);
-			var url = "http://localhost:8080/admin/" + sWord + "/user";
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&form";
 	        window.location.href=url;
 		}
 	}
 
 	
 	$(document).ready(function(){  
-		showForm();
+		showData();
 	});
-	
-	function showForm(){
-		var searchWord = $("#searchWord").val();
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-		$.ajax({
-   			type:'GET',
-     		url:'http://localhost:8080/search/user/admin',
-     		async:true,
-     		data:{
-     			'searchWord':searchWord
-     		},
-     		success:function(result){
-     	    	showData(result);
-     	    	display();
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
-	}
 	
 	function returnForm() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
         window.location.href=url;
-	}
-	
-	function returnUser() {
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/user";
-		window.location.href=url;
 	}
 	
 	function getType(){
@@ -269,42 +217,73 @@
 		window.location.href=url;
 	} 
 
-	function showData(data) {
+	function showData() {
 		$("#tab").html("");
-		var str = "<thead><tr><th>用户ID</th><th>用户名</th><th>性别</th><th>年龄</th><th>联系电话</th><th>已登记车辆数</th><th>注册时间</th><th>拥有车辆</th><th>停车记录</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].user_id + "</td><td>" + data[i].user_name + "</td><td>" + data[i].user_gender + "</td><td>" + data[i].user_age + "</td><td>" + data[i].user_phone + "</td><td>" + data[i].vehicle_num + "</td><td>" + data[i].registration_time + "</td><td>";
-			str = str + "<a href=\"javascript:void(0)\" onclick=\"checkVehicle(this)\">查看</a>"; 
-			str = str+ "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\">查看</a>" + "</td></tr>";		
-		}
+		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th></tr></thead><tbody>";
+		
+		str = str + "<tr><td>" + "<input type=\"text\" id=\"parkcode\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"streetcode\" style=\"width:100px;\" />" 
+				  + "</td><td>" + "<input type=\"text\" id=\"businesscode\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"parkname\" style=\"width:100px;\" />" 
+				  + "</td><td>" + "<input type=\"text\" id=\"streetname\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"areaname\" style=\"width:100px;\" />" + "</td></tr>"
+				  
+				  + "<thead></th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th><th>经度</th><th>纬度</th><th>操作</th></tr></thead><tbody>"
+				  + "<tr><td>" + "<input type=\"text\" id=\"typename\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"parking_amount\" style=\"width:100px;\" />"
+				  + "</td><td>" + "<input type=\"text\" id=\"parking_rest\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"lng\" style=\"width:100px;\" />"
+				  + "</td><td>" + "<input type=\"text\" id=\"lat\" style=\"width:100px;\" />" + "</td><td>"; 
+		str = str + "<a href=\"javascript:void(0)\" onclick=\"addParking()\" >添加</a></td></tr>";
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "用户信息";
+		document.getElementById("name").innerHTML = "添加停车场";
+
 		$("#tab").append(str); 
 	}
 
-	function showRecord(id) {
-		var rows = id.parentNode.parentNode.rowIndex;
-		var search_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
-		var param = encode64(search_id);
-		var url = "http://localhost:8080/user/" + param + "/record&";
-		window.location.href=url;
+	function addParking() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var parkcode = document.getElementById("parkcode").value;  
+		var streetcode = document.getElementById("streetcode").value;
+		var businesscode = document.getElementById("businesscode").value;  
+		var parkname = document.getElementById("parkname").value;
+		var streetname = document.getElementById("streetname").value;  
+		var areaname = document.getElementById("areaname").value;
+		var typename = document.getElementById("typename").value;  
+		var parking_amount = document.getElementById("parking_amount").value;
+		var parking_rest = document.getElementById("parking_rest").value;
+		var lng = document.getElementById("lng").value;
+		var lat = document.getElementById("lat").value;
+		
+		$.ajax({
+   			type:'GET',
+     		url:'http://localhost:8080/park/admin/add',
+     		async:true,
+     		dataType:'json',
+     		data:{
+     			'parkcode':parkcode,
+     			'streetcode':streetcode,
+     			'businesscode':businesscode,
+     			'parkname':parkname,
+     			'streetname':streetname,
+     			'areaname':areaname,
+     			'typename':typename,
+     			'parking_amount':parking_amount,
+     			'parking_rest':parking_rest,
+     			'lng':lng,
+     			'lat':lat
+     		},
+     		success:function(result){
+     			var flag = result["flag"];
+     			alert(flag);
+     			if(flag == "true") {
+     				var url = "http://localhost:8080/user/" + param + "/form";
+     				window.location.href=url;
+     			}
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})
 	}
 	
-	function checkVehicle(id) {
-		var user_id = $("#user_id").html();
-		if(user_id == "admin"){
-		    var rows = id.parentNode.parentNode.rowIndex;
-			user_id = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/admin/" + param + "/vehicle";
-			window.location.href=url;
-		}
-		else{
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/vehicle";
-			window.location.href=url;	
-		}	
-	}
 	
 	function getRecord() {
 		var user_id = $("#user_id").html();
@@ -332,7 +311,7 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/chartTime";
-        window.location.href=url;
+        window.location.href=url;  
     }
 	
 	function jumpToIndex() {

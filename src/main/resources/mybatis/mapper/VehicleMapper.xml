@@ -32,6 +32,6 @@
 		(cph, cartype, user_id)
 		values
 		(#{cph}, #{cartype}, #{user_id})
-	</insert>    
-   
+	</insert>  
+	 
 </mapper>

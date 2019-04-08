@@ -3,7 +3,9 @@ package com.zucc.smart.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zucc.smart.domain.Map;
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.service.ParkingService;
+import com.zucc.smart.service.UserService;
+import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
 import com.zucc.smart.vObject.AreaVO;
 import com.zucc.smart.vObject.ParkingTypeVO;
@@ -28,6 +32,12 @@ public class ParkingController {
 
 	@Autowired
 	ParkingService parkingService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	VehicleService vehicleService;
     
     @RequestMapping(value = "/{user_id}/form", method = RequestMethod.GET)
     public ArrayList<ParkingVO> getParkingForm(@PathVariable("user_id") String user_id_obj) {
@@ -35,7 +45,6 @@ public class ParkingController {
     	log.info("/park/"+ user_id + "/form");
         ArrayList<ParkingVO> listVO = new ArrayList<ParkingVO>();
         listVO = parkingService.getAllParking();
-//        System.out.println("list.size()：" +  list.size());
     	return listVO;
     }
     
@@ -68,15 +77,66 @@ public class ParkingController {
         list = parkingService.getStreet();
     	return list;
     }
-/*    
-    @RequestMapping(value = "/{user_id}/map", method = RequestMethod.GET)
-    public ArrayList<Map> getParkingMap(@PathVariable("user_id") String user_id_obj) {
-    	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/park/"+ user_id + "/map");
-    	ArrayList<Map> list = new ArrayList<Map>();
-        
-        list = parkingService.getParkingMap();
-    	return list;
+    
+    @RequestMapping(value = {"/", "/{user_id}/add"}) 
+	  public String addVehicle(@PathVariable("user_id") String user_id_obj, 
+			  String cph, String cartype) throws IOException { 
+		  String user_id = new String(Decode.decode(user_id_obj)); 
+		  log.info("/park/"+ user_id + "/add ----- " + cph + "   " + cartype);
+		  String flag = "true";
+		  vehicleService.addVehicle(cph, cartype, user_id);
+		  
+		  String str = "{\"flag\":\"" + flag + "\"}";
+		  return str;
+	  }
+    
+    @RequestMapping(value = {"/", "/admin/add"}) 
+	  public String addParking(String parkcode, String streetcode, String businesscode, String parkname, 
+			  String streetname, String areaname, String typename, String parking_amount, String parking_rest,
+			  String lng, String lat) throws IOException { 
+		  log.info("/park/admin/add ----- " + parkcode + "   " + parkname);
+		  String flag = "true";
+		  double lng_obj;
+		  double lat_obj;
+		  if(parkcode == "" || !isInteger(parkcode))
+			  flag = "停车场编号输入错误";
+		  else if(streetcode == "" || !isInteger(streetcode))
+			  flag = "街道编号输入错误";
+		  else if(businesscode == "" || !isInteger(businesscode))
+			  flag = "城区编号输入错误";
+		  else if(parking_amount == "" || !isInteger(parking_amount))
+			  flag = "停车位总数输入错误";
+		  else if(parking_rest == "" || !isInteger(parking_rest))
+			  flag = "空余停车位输入错误";
+		  //119.35,120.5
+		  //29.883,30.55
+		  else if(!isDouble(lng))
+			  flag = "经度输入错误";
+		  else if(!isDouble(lat))
+			  flag = "纬度输入错误";
+		  if(flag.equals("true")) {
+			  lng_obj = Double.parseDouble(lng);
+			  lat_obj = Double.parseDouble(lat);
+			  if(lng_obj > 120.5 || lng_obj < 119.35)
+				  flag = "经度范围错误";
+			  else if(lat_obj > 30.55 || lat_obj < 29.883)
+				  flag = "纬度范围错误";
+		  }
+		  
+		  if(flag == "true")
+			  parkingService.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typename, parking_amount, parking_rest, lng, lat);
+		  
+		  String str = "{\"flag\":\"" + flag + "\"}";
+		  return str;
+	  }
+    
+    public static boolean isInteger(String str) {      	
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");  
+        return pattern.matcher(str).matches();  
     }
-*/
+    
+    public static boolean isDouble(String str) {
+    	Pattern pattern = Pattern.compile("[0-9]+[.]{0,1}[0-9]*[dD]{0,1}"); 
+    	return pattern.matcher(str).matches();
+    }
 }

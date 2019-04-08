@@ -220,8 +220,8 @@
 						<i class="fa fa-laptop"></i>
 						</a>
 					</div>
-					<h3>停车记录</h3>
-					<p>查看历史停车记录。</p>
+					<h3>信息查询与统计</h3>
+					<p>查询停车场信息，查询历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
 				</div>
 
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
@@ -230,8 +230,8 @@
 						<i class="fa fa-support"></i>
 						</a>
 					</div>
-					<h3>统计分析</h3>
-					<p>综合各种数据，对停车场，车位利用率等信息进行统计分析。</p>
+					<h3>数据录入</h3>
+					<p>录入相关信息。</p>
 				</div>
 				
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">

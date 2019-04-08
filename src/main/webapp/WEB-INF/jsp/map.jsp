@@ -89,10 +89,9 @@ body {
 
 	function showPosition(position){
   		x=position.coords.latitude; 
-  		y=position.coords.longitude;	
-	}
-
-	
+  		y=position.coords.longitude;
+//  		alert("showPosition: " + x + "," + y);
+	}	
 	
 	//地图事件设置函数：
     function setMapEvent(){

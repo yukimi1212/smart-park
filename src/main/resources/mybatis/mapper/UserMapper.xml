@@ -31,7 +31,7 @@
 		where user_id = #{user_id}
 	</select>
 	
-	<insert id="saveUser" parameterType="com.zucc.smart.domain.User">
+	<insert id="addUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user
 		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)
 		values

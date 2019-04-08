@@ -37,21 +37,21 @@ public class LoginController {
     public String loginUser(String user_id, String user_pwd) throws IOException {
         log.info("/login/user/" + user_id);
         
-//        dataManageService.updateRecord();
-//        bulidLngAndLat.bulidLngAndLat();
-        
-    	String str = "";
-        if(user_id == "")
-        	str = "|用户名为空|";
+    	String flag = "";
+
+        if(user_id == "") 
+        	flag = "id为空";       
         else if(user_pwd == "")
-        	str = "|密码为空|";
+        	flag = "密码为空";
         else {
         	User user = userService.checkUser(user_id, user_pwd);
         	if(user != null)
-        		str = "|" + user.getUser_id() + "|";
+        		flag = user.getUser_id();
         	else
-        		str = "|不存在|";
+        		flag = "不存在";
         }
+        
+        String str = "{\"flag\":\"" + flag + "\"}";
     	return str;
     }
     
@@ -60,28 +60,21 @@ public class LoginController {
     		@RequestParam("user_pwd") String user_pwd, @RequestParam("reuser_pwd") String reuser_pwd, @RequestParam("user_gender") String user_gender,
     		@RequestParam("user_age") String user_age, @RequestParam("user_phone") String user_phone) {
         log.info("/login/register/" + user_id + "---user_name：" + user_name);
-        String str = "";
-        if(user_id == "") {
-        	str = "|id为空|";
-        }
-        else if(user_name == "") {
-        	str = "|name为空|";
-        }
-        else if(user_pwd == "") {
-        	str = "|pwd为空|";
-        }
-        else if(userService.getUserById(user_id) != null) {
-        	str = "|id已存在|";
-        }
-        else if(user_pwd.compareTo(reuser_pwd) != 0) {
-        	str = "|pwd不一致|";
-        }
-        else if(user_age != "" && (!isInteger(user_age) || Integer.parseInt(user_age) > 100 || Integer.parseInt(user_age) < 0)) {
-        	str = "|age输入错误|";
-        }
-        else if(user_phone != "" && !isInteger(user_phone)) {
-        	str = "|phone输入错误|";
-        }
+        String flag = "";
+        if(user_id == "") 
+        	flag = "id为空";        
+        else if(user_name == "") 
+        	flag = "name为空";        
+        else if(user_pwd == "") 
+        	flag = "pwd为空";        
+        else if(userService.getUserById(user_id) != null) 
+        	flag = "id已存在";        
+        else if(user_pwd.compareTo(reuser_pwd) != 0) 
+        	flag = "pwd不一致";       
+        else if(user_age != "" && (!isInteger(user_age) || Integer.parseInt(user_age) > 100 || Integer.parseInt(user_age) < 0)) 
+        	flag = "age输入错误";        
+        else if(user_phone != "" && !isInteger(user_phone)) 
+        	flag = "phone输入错误";        
         else {
         	User adduser = new User();
             adduser.setUser_id(user_id);
@@ -90,16 +83,16 @@ public class LoginController {
             adduser.setUser_gender(user_gender);
             if(user_age != "")
             	adduser.setUser_age(Integer.parseInt(user_age));
-//            if(user_age != null)
-//            	adduser.setUser_age(Integer.parseInt(user_age));
             adduser.setUser_phone(user_phone);
             adduser.setUser_identity("user");
-        	boolean flag = userService.addUser(adduser);
-        	if(flag) {
+        	boolean addflag = userService.addUser(adduser);
+        	if(addflag) {
         		User user = userService.getUserById(user_id);
-        		str = "|" + user.getUser_id() + "|";
+        		flag = user.getUser_id();
         	}
         }
+        
+        String str = "{\"flag\":\"" + flag + "\"}";
         return str;
     }
     

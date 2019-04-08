@@ -265,4 +265,12 @@ public class ParkingServiceImpl implements ParkingService {
 		}
 		return maplist;
 	}
+
+	@Override
+	public void addParking(String parkcode, String streetcode, String businesscode, String parkname, String streetname,
+			String areaname, String typename, String parking_amount, String parking_rest, String lng, String lat) {
+		log.info("addParking：" + parkcode + "," + parkname);
+		String typecode = parkingTypeMapper.getTypeCode(typename);
+		parkingMapper.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount, parking_rest, lng, lat);
+	}
 }

@@ -8,7 +8,7 @@
     <meta name="description" content="Admin Template">
     <meta name="keywords" content="admin dashboard, admin, flat, flat ui, ui kit, app, web app, responsive">
     <link rel="shortcut icon" href="images/ico/favicon.png">
-    <title>登录</title>
+    <title>注册</title>
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
@@ -90,39 +90,33 @@
                     'user_age':user_age,
                     'user_phone':user_phone
                 }, 
-//                dataType:'json',
+                dataType:'json',
                 success:function(result){
-                	var user_name = JSON.stringify(result);
-                	var n = user_name.split("|");
-                	alert(n[1])
+                	var flag = result["flag"];              	
                 	$("span").empty();
-                	if(n[1] == "id为空"){
-                		document.getElementById("warning_id").innerHTML = "请输入id";                   	
-                	}
-                	else if(n[1] == "name为空"){
-                		document.getElementById("warning_name").innerHTML = "请输入用户名";
-                	}
-                	else if(n[1] == "pwd为空"){
-                		document.getElementById("warning_pwd").innerHTML = "请输入密码";
-                	}
-                	else if(n[1] == "id已存在"){
-                		document.getElementById("warning_id").innerHTML = "id已存在";
-                	}
-                	else if(n[1] == "age输入错误"){
+                	if(flag == "id为空")
+                		document.getElementById("warning_id").innerHTML = "请输入id";                   	              	
+                	else if(flag == "name为空")
+                		document.getElementById("warning_name").innerHTML = "请输入用户名";             	
+                	else if(flag == "pwd为空")
+                		document.getElementById("warning_pwd").innerHTML = "请输入密码";            	
+                	else if(flag == "id已存在")
+                		document.getElementById("warning_id").innerHTML = "id已存在";               	
+                	else if(flag == "age输入错误"){
                 		document.getElementById("warning_age").innerHTML = "年龄应为数字  0-100";
                 		$("#user_age").val("");
                 	}
-                	else if(n[1] == "phone输入错误"){
+                	else if(flag == "phone输入错误"){
                 		document.getElementById("warning_phone").innerHTML = "联系电话应为数字";
                 		$("#user_phone").val("");
                 	}
-                	else if(n[1] == "pwd不一致"){
+                	else if(flag == "pwd不一致"){
                 		document.getElementById("warning_pwd").innerHTML = "两次输入不一致，请重新输入";
                 		$("#user_pwd").val("");
                 		$("#reuser_pwd").val("");
                 	}
                 	else{
-                		var param = encode64(n[1]);
+                		var param = encode64(flag);
 	                	window.location.href="http://localhost:8080/user/" + param + "/home";
                 	}
  				},

@@ -68,22 +68,16 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
-				
-					<li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link active">
-                            <i class="icon icon-graph"></i> 停车记录
-                        </a>
-                    </li>
 					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" onclick="returnForm()"  class="nav-link">
-                                    <i class="icon icon-target"></i> 所有统计
+                                    <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
                         
@@ -108,25 +102,32 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item nav-dropdown">
+					 <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车记录信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getRecord()" class="nav-link active">
+                                    <i class="icon icon-graph"></i> 停车记录查询
+                                </a>
+                            </li>
+                        
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
-                                    <i class="icon icon-clock"></i> 区域类型
+                                <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 区域类型统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-clock"></i> 不同时段
+                                    <i class="icon icon-graph"></i> 不同时段统计
                                 </a>
                             </li>
                         </ul>
-                    </li> 
+                    </li>
+
                     
                     <li class="nav-item" id="userRecord">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
@@ -140,18 +141,8 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="${search_name }" placeholder="ID/车牌/停车场/所属街道/所属城区" size="18px">
+    			<input type="text" id="searchWord" value="${search_name }" placeholder="记录编号/车牌/停车场/所属街道/所属城区" size="18px">
      			<button class="button" type="submit" onclick="doSearch()">搜索</button>
-	    		<!-- <div class="btn-group">
- 					<button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">搜索<span class="caret"></span></button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="javascript:void(0)" onclick="doIDSearch()" style="font-size:16px">按ID</a></li>
-						<li><a href="javascript:void(0)" onclick="doCPHSearch()" style="font-size:16px">按车牌</a></li>
-						<li><a href="javascript:void(0)" onclick="doParkingSearch()" style="font-size:16px">按停车场</a></li>
-						<li><a href="javascript:void(0)" onclick="doStreetSearch()" style="font-size:16px">按所属街道</a></li>
-						<li><a href="javascript:void(0)" onclick="doAreaSearch()" style="font-size:16px">按所属城区</a></li>
-					</ul>
-				</div> -->
   			</div><br>
   			
             <div class="row">             
@@ -224,15 +215,12 @@
 	
 	$(document).ready(function(){  
 		showForm();
-	});
-	
+	});	
 	function showForm(){
-		var search_id = $("#search_id").html();
-		
+		var search_id = $("#search_id").html();		
  		if(search_id == "admin"){
  			$("user").empty();
- 			document.getElementById("user").innerText = "用户管理";
-			
+ 			document.getElementById("user").innerText = "用户管理";			
  			$.ajax({
    				type:'GET',
      			url:'http://localhost:8080/record/form',
@@ -306,7 +294,7 @@
 
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>ID</th><th>车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>停入时间</th><th>离开时间</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>记录编号</th><th>车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>驶入时间</th><th>驶离时间</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].id + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
 		}

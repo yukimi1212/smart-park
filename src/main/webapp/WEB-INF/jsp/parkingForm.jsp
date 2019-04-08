@@ -68,21 +68,15 @@
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
 					
-					<li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
-                            <i class="icon icon-graph"></i> 停车记录
-                        </a>
-                    </li>
-					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="#"  class="nav-link active">
-                                    <i class="icon icon-target"></i> 所有统计
+                                    <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
                         
@@ -107,25 +101,32 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item nav-dropdown">
+					 <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车记录信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 停车记录查询
+                                </a>
+                            </li>
+                        
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartArea()" class="nav-link">
-                                    <i class="icon icon-clock"></i> 区域类型
+                                <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 区域类型统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-clock"></i> 不同时段
+                                    <i class="icon icon-graph"></i> 不同时段统计
                                 </a>
                             </li>
                         </ul>
-                    </li> 
+                    </li>
+
                     
                     <li class="nav-item" id="userRecord">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
@@ -263,16 +264,28 @@
 	} 
 
 	function showData(data) {
+		var user_id = $("#user_id").html();
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th>" + 
+					"<th>所属城区</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode 
+			+ "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" 
+			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "所有停车场信息";
+		if(user_id == "admin")
+			document.getElementById("name").innerHTML = "所有停车场信息&nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"addParking()\">添加</a>";
+		else
+			document.getElementById("name").innerHTML = "所有停车场信息";
+
 		$("#tab").append(str); 
 	}
 
+	function addParking() {
+		var url = "http://localhost:8080/admin/add";
+		window.location.href=url;
+	}
 	
 	function getRecord() {
 		var user_id = $("#user_id").html();
@@ -302,7 +315,6 @@
         var url = "http://localhost:8080/user/" + param + "/chartTime";
         window.location.href=url;  
     }
-	
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();

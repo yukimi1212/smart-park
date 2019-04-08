@@ -10,4 +10,6 @@ public interface ParkingTypeMapper {
 	String getTypeName(String typecode);
 
 	ArrayList<ParkingType> searchType(String typecode);	
+	
+	String getTypeCode(String typename);
 }

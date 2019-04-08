@@ -215,24 +215,44 @@
 					<p>实时定位搜索附近停车场；输入目的地搜索停车场。</p>
 				</div>
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="adminRecord">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToRecord()">
+						<a href="javascript:void(0)" onclick="jumpToParking()">
 						<i class="fa fa-laptop"></i>
 						</a>
 					</div>
-					<h3>停车记录</h3>
-					<p>查看历史停车记录。</p>
+					<h3>信息查询与统计</h3>
+					<p>查询停车场信息，查询所有历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
 				</div>
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
+				
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="userRecord">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToParking()">
+						<i class="fa fa-laptop"></i>
+						</a>
+					</div>
+					<h3>信息查询与统计</h3>
+					<p>查询停车场信息，查看个人历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
+				</div>
+
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="userAdd">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="addVehicle()">
 						<i class="fa fa-support"></i>
 						</a>
 					</div>
-					<h3>统计分析</h3>
-					<p>综合各种数据，对停车场，车位利用率等信息进行统计分析。</p>
+					<h3>数据录入</h3>
+					<p>添加个人登记车辆。</p>
+				</div>
+				
+				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="adminAdd">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="addParking()">
+						<i class="fa fa-support"></i>
+						</a>
+					</div>
+					<h3>数据录入</h3>
+					<p>添加停车场信息。</p>
 				</div>
 				
 				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="info">
@@ -348,9 +368,13 @@
 		var user_id = document.getElementById("user_id").innerHTML;
 		if(user_id == "admin"){
 			document.getElementById("info").style.display="none";
+			document.getElementById("userRecord").style.display="none";
+			document.getElementById("userAdd").style.display="none";
 		}
 		else{
 			document.getElementById("user").style.display="none";
+			document.getElementById("adminRecord").style.display="none";
+			document.getElementById("adminAdd").style.display="none";
 		}
 	}
 	
@@ -361,6 +385,18 @@
         var uurl = "http://localhost:8080/user/" + param + "/map"; 
         window.open(uurl); 
     }
+	
+	function addVehicle() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/addV";
+		window.location.href=url;
+	}
+	
+	function addParking() {
+		var url = "http://localhost:8080/admin/add";
+		window.location.href=url;
+	}
 	
 	function jumpToParking() {
 		var user_id = document.getElementById("user_id").innerHTML;

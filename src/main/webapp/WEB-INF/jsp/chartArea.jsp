@@ -67,22 +67,15 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
-					
-					<li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
-                            <i class="icon icon-graph"></i> 停车记录
-                        </a>
-                    </li>
-					
-                    <li class="nav-item nav-dropdown ">
+					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" onclick="returnForm()" class="nav-link">
-                                    <i class="icon icon-target"></i> 所有统计
+                                    <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
                         
@@ -107,25 +100,32 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-clock"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+					 <li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 停车记录信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 停车记录查询
+                                </a>
+                            </li>
+                        
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
-                                    <i class="icon icon-clock"></i> 区域类型
+                                <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link active">
+                                    <i class="icon icon-graph"></i> 区域类型统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-clock"></i> 不同时段
+                                    <i class="icon icon-graph"></i> 不同时段统计
                                 </a>
                             </li>
                         </ul>
-                    </li>  
+                    </li>
+
                    
                   	<li class="nav-item">
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">

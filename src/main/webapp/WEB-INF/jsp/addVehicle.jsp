@@ -66,22 +66,15 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">数据展示</li>
-					
-					<li class="nav-item">
-                        <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
-                            <i class="icon icon-graph"></i> 停车记录
-                        </a>
-                    </li>
-					
-                    <li class="nav-item nav-dropdown ">
+					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" onclick="returnForm()" class="nav-link">
-                                    <i class="icon icon-target"></i> 所有统计
+                                    <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
                         
@@ -103,6 +96,32 @@
                                 </a>
                             </li>
 
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 停车记录信息 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 停车记录查询
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 区域类型统计
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 不同时段统计
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -142,17 +161,7 @@
                         </div>
                     </div>
                 </div>
-                
-<!--                 <a id="btn0"></a>		
- 				<a id="sjzl"></a>&nbsp;
-                <a  href="#" id="btn1">首页</a>
-                <a  href="#" id="btn2">&nbsp&nbsp上一页</a>
-                <a  href="#" id="btn3">&nbsp&nbsp下一页</a>
-                <a  href="#" id="btn4">&nbsp&nbsp尾页</a>&nbsp;
-                <a>&nbsp&nbsp转到&nbsp;</a>
-                <input id="changePage" type="text" size="1" maxlength="4"/>
-                <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a> 		-->
+
             </div>
         </div>
     </div>
@@ -166,15 +175,6 @@
 </body>
 
 <script type="text/javascript">  
-
-	var pageSize = 15;    //每页显示的记录条数
- 	var curPage=0;        //当前页
- 	var lastPage;        //最后页
- 	var direct=0;        //方向
-	var len;            //总行数
-	var page;            //总页数
-	var begin;
-	var end;
     
 	$(document).ready(function(){  
 		showData();
@@ -244,15 +244,20 @@
 		var cartype = document.getElementById("cartype").value;
 		$.ajax({
    			type:'GET',
-     		url:'http://localhost:8080/user/' + param + "/add",
+     		url:'http://localhost:8080/park/' + param + "/addV",
      		async:true,
+     		dataType:'json',
      		data:{
      			'cph':cph,
      			'cartype':cartype
      		},
-     		success:function(){
-     			var url = "http://localhost:8080/user/" + param + "/vehicle";
-     			window.location.href=url;
+     		success:function(result){
+     			var flag = result["flag"];
+     			alert(flag);
+     			if(flag == "true") {
+     				var url = "http://localhost:8080/user/" + param + "/vehicle";
+         			window.location.href=url;
+     			}	
      		},
      		error:function(error){
      			var jsonData = JSON.stringify(error);
