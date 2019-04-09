@@ -91,23 +91,30 @@ public class ParkingController {
 	  }
     
     @RequestMapping(value = {"/", "/admin/add"}) 
-	  public String addParking(String parkcode, String streetcode, String businesscode, String parkname, 
-			  String streetname, String areaname, String typename, String parking_amount, String parking_rest,
-			  String lng, String lat) throws IOException { 
+	  public String addParking(String parkcode, String parkname, String streetname,
+			   String areaname, String typename, String parking_amount, String lng, String lat) throws IOException { 
 		  log.info("/park/admin/add ----- " + parkcode + "   " + parkname);
 		  String flag = "true";
 		  double lng_obj;
 		  double lat_obj;
 		  if(parkcode == "" || !isInteger(parkcode))
 			  flag = "停车场编号输入错误";
-		  else if(streetcode == "" || !isInteger(streetcode))
-			  flag = "街道编号输入错误";
-		  else if(businesscode == "" || !isInteger(businesscode))
-			  flag = "城区编号输入错误";
+		  else if(!parkingService.checkParkCode(parkcode))
+			  flag = "该停车场编号已存在";
+		  else if(parkname == "")
+			  flag = "请输入停车场名";
+		  else if(streetname == "")
+			  flag = "请输入街道名";
+		  else if(areaname == "")
+			  flag = "请输入城区名";
+		  else if(typename == "")
+			  flag = "请输入停车场类型";
 		  else if(parking_amount == "" || !isInteger(parking_amount))
 			  flag = "停车位总数输入错误";
-		  else if(parking_rest == "" || !isInteger(parking_rest))
-			  flag = "空余停车位输入错误";
+		  else if(lng == "")
+			  flag = "请输入经度";
+		  else if(lat == "")
+			  flag = "请输入纬度";
 		  //119.35,120.5
 		  //29.883,30.55
 		  else if(!isDouble(lng))
@@ -124,7 +131,7 @@ public class ParkingController {
 		  }
 		  
 		  if(flag == "true")
-			  parkingService.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typename, parking_amount, parking_rest, lng, lat);
+			  parkingService.addParking(parkcode, parkname, streetname, areaname, typename, parking_amount, lng, lat);
 		  
 		  String str = "{\"flag\":\"" + flag + "\"}";
 		  return str;

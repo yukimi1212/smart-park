@@ -267,11 +267,11 @@
 		var user_id = $("#user_id").html();
 		$("#tab").html("");
 		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th>" + 
-					"<th>所属城区</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
+					"<th>所属城区</th><th>停车场类型</th><th>停车位总数</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode 
 			+ "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" 
-			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
+			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		if(user_id == "admin")

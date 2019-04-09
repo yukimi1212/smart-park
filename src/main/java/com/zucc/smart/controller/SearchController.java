@@ -134,6 +134,30 @@ public class SearchController {
 		return list;
     }
     
+    @RequestMapping(value = "/tags/typename", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableTypeNameTags() {
+    	log.info("/search/tags/typename");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvaliableTypeNameTags();		
+		return list;
+    }
+
+    @RequestMapping(value = "/tags/streetname", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableStreetNameTags() {
+    	log.info("/search/tags/streetname");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvaliableStreetNameTags();		
+		return list;
+    }
+
+    
+    @RequestMapping(value = "/tags/areaname", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableAreaNameTags() {
+    	log.info("/search/tags/areaname");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvaliableAreaNameTags();		
+		return list;
+    }
     
     @RequestMapping(value = "/{searchWord}/time", method = RequestMethod.GET)
     public ArrayList<TimeVO> getRecordTimeSearch(@PathVariable("searchWord") String searchWord, String source) {

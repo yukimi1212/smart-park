@@ -21,4 +21,12 @@ public interface UserService {
 
 	void alterUser(String user_id, String user_gender, String user_age, String user_phone);
 
+	ArrayList<WordsVO> getAvaliableParkingNameTags();
+	
+	ArrayList<WordsVO> getAvaliableTypeNameTags();
+	
+	ArrayList<WordsVO> getAvaliableStreetNameTags();
+	
+	ArrayList<WordsVO> getAvaliableAreaNameTags();
+	
 }

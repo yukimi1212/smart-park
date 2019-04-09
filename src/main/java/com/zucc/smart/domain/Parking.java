@@ -9,7 +9,6 @@ public class Parking {
     private String areaname;
 	private String typecode;
 	private int parking_amount;
-	private int parking_rest;
 	private String lng;
 	private String lat;
 	
@@ -61,12 +60,6 @@ public class Parking {
 	}
 	public void setParking_amount(int parking_amount) {
 		this.parking_amount = parking_amount;
-	}
-	public int getParking_rest() {
-		return parking_rest;
-	}
-	public void setParking_rest(int parking_rest) {
-		this.parking_rest = parking_rest;
 	}
 	public String getLat() {
 		return lat;

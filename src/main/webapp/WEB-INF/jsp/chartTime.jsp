@@ -27,6 +27,13 @@
         	padding: 10px;
         	width: 90px;
       	}
+      	
+      	.ui-autocomplete {
+			max-width: 350px;
+	    	max-height: 200px;
+	    	overflow-y: auto;
+	    	overflow-x: hidden;
+  		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -145,6 +152,7 @@
     			<input type="text" id="searchWord" value="" placeholder="指定停车场/街道/城区/类型"  size="18px">
     			<button class="button" type="submit" onclick="checkSearchWord()">搜索</button>
   			</div><br>
+  			
              <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -172,20 +180,7 @@
 
 </body>
 
-<script type="text/javascript">  
-
-/* 	function checkSearchWord() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getChartTime();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&time";
-       		window.location.href=url;
-		}		
-	}
- */   
+<script type="text/javascript">     
  
  function checkSearchWord() {
 		var sWord = $("#searchWord").val();

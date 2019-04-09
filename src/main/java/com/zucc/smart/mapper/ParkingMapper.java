@@ -58,5 +58,7 @@ public interface ParkingMapper {
 	ArrayList<Parking> getParkingSearch(String up_lng, String down_lng, String up_lat, String down_lat);
 
 	void addParking(String parkcode, String streetcode, String businesscode, String parkname, String streetname,
-			String areaname, String typecode, String parking_amount, String parking_rest, String lng, String lat);
+			String areaname, String typecode, String parking_amount, String lng, String lat);
+
+	int checkParkCode(String parkcode);
 }

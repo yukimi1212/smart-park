@@ -43,6 +43,16 @@ public class ParkingServiceImpl implements ParkingService {
         ArrayList<ParkingVO> listVO = changeToParkingVO(list);
         return listVO;
 	}
+	
+	@Override
+	public boolean checkParkCode(String parkcode) {
+		log.info("checkParkCode: " + parkcode);
+		int n = parkingMapper.checkParkCode(parkcode);
+		if(n == 0)
+			return true;
+		else
+			return false;
+	}
 
 	@Override
 	public ArrayList<String> getBusinesscode() {
@@ -108,7 +118,7 @@ public class ParkingServiceImpl implements ParkingService {
 			
 			String streetcode = map.get("streetcode").toString();
 			String streetname = helperMapper.getStreetName(streetcode);
-			String areaname = helperMapper.getAreaNameByStreetcode(streetcode);
+			String areaname = helperMapper.getAreaNameByStreetCode(streetcode);
 			int amount = Integer.parseInt(map.get("count(streetcode)").toString());
 			StreetVO streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
@@ -165,7 +175,7 @@ public class ParkingServiceImpl implements ParkingService {
 			
 			String streetcode = map.get("streetcode").toString();
 			String streetname = map.get("streetname").toString();
-			String areaname = helperMapper.getAreaNameByStreetcode(streetcode);
+			String areaname = helperMapper.getAreaNameByStreetCode(streetcode);
 			int amount = Integer.parseInt(parkingMapper.getOneStreetCount(streetcode));
 			StreetVO streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
@@ -213,33 +223,12 @@ public class ParkingServiceImpl implements ParkingService {
 			parkingVO.setBusinesscode(list.get(i).getBusinesscode());
 			parkingVO.setAreaname(list.get(i).getAreaname());
 			parkingVO.setParking_amount(list.get(i).getParking_amount());
-			parkingVO.setParking_rest(list.get(i).getParking_rest());
 			String typename = parkingTypeMapper.getTypeName(list.get(i).getTypecode());
 			parkingVO.setTypename(typename);
 			listVO.add(parkingVO);
 		}
 		return listVO;
 	}
-/*
-	@Override
-	public ArrayList<Map> getParkingMap() {
-		log.info("getParkingMap：");
-		
-		ArrayList<Map> maplist = new ArrayList<Map>();
-		ArrayList<Parking> parkinglist = parkingMapper.getAllParking();
-		for(int i=0; i<parkinglist.size(); i++) {
-			Map map = new Map();
-			map.setLng(parkinglist.get(i).getLng());
-			map.setLat(parkinglist.get(i).getLat());
-			map.setTitle(parkinglist.get(i).getParkname());
-			map.setCon(parkinglist.get(i).getStreetname() + "," + parkinglist.get(i).getAreaname());
-			map.setBranch(parkinglist.get(i).getParkname());
-			maplist.add(map);
-		}
-		
-		return maplist;
-	}
-*/
 
 	@Override
 	public ArrayList<Map> getParkingMap(String lng, String lat) {
@@ -267,10 +256,13 @@ public class ParkingServiceImpl implements ParkingService {
 	}
 
 	@Override
-	public void addParking(String parkcode, String streetcode, String businesscode, String parkname, String streetname,
-			String areaname, String typename, String parking_amount, String parking_rest, String lng, String lat) {
+	public void addParking(String parkcode, String parkname, String streetname,
+			String areaname, String typename, String parking_amount, String lng, String lat) {
 		log.info("addParking：" + parkcode + "," + parkname);
+
 		String typecode = parkingTypeMapper.getTypeCode(typename);
-		parkingMapper.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount, parking_rest, lng, lat);
+		String streetcode = helperMapper.getStreetCode(streetname);
+		String businesscode = helperMapper.getBusinessCode(areaname);
+		parkingMapper.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount,lng, lat);
 	}
 }

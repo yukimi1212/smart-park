@@ -10,19 +10,23 @@ public interface HelperMapper {
 	
 	String getStreetCode(String streetname);
 	
-	String getBusinesscode(String businesscode);
+	String getBusinessCode(String businesscode);
 	
-	String getTypecode(String typecode);
+	String getTypeCode(String typecode);
 	
-	String getAreaNameByStreetcode(String streetcode);
+	String getAreaNameByStreetCode(String streetcode);
 	
 	String getParkingName(String parkcode);
 
-	ArrayList<String> getParkingnameTags();
+	ArrayList<String> getParkingNameTags();
 	
-	ArrayList<String> getTypenameTags();
+	ArrayList<String> getTypeNameTags();
 	
-	ArrayList<String> getStreetnameTags();
+	ArrayList<String> getStreetNameTags();
 	
-	ArrayList<String> getAreanameTags();	
+	ArrayList<String> getAreaNameTags();
+
+	ArrayList<String> getAreaCodeTags();
+
+	ArrayList<String> getStreetCodeTags();	
 }

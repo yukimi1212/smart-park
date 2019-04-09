@@ -415,7 +415,7 @@ public class RecordServiceImpl implements RecordService {
 		}
 		
 		else if(source.equals("area")) {
-			String businesscode = helperMapper.getBusinesscode(searchWord);
+			String businesscode = helperMapper.getBusinessCode(searchWord);
 			String first;
 			for(int i=7; i<20; i++) {
 				if(i<10)
@@ -436,7 +436,7 @@ public class RecordServiceImpl implements RecordService {
 			long start,end;
 			start = System.currentTimeMillis();
 			
-			String typecode = helperMapper.getTypecode(searchWord);
+			String typecode = helperMapper.getTypeCode(searchWord);
 			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
 
 			String parkcode, first;

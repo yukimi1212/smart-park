@@ -277,9 +277,9 @@
 	
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th>停车场类型</th><th>停车位总数</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typename + "</td><td>" + data[i].parking_amount + "</td><td>" + data[i].parking_rest + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode + "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].typename + "</td><td>" + data[i].parking_amount + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "所有停车场信息";

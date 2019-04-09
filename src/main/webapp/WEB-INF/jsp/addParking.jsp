@@ -11,20 +11,16 @@
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.min.css">
     
-    <style> 		
-      	#search input[type=text] {
-      		margin:0 auto;
-      		width:350px;
-      		height:50px;
-      		border:1px
-        	font-size: 18px;
-        	width: 705px;
-      	}
-      	#search .button {
-        	padding: 10px;
-        	width: 90px;
-      	}
+    <style> 		     	
+     	.ui-autocomplete {
+			max-width: 350px;
+	    	max-height: 200px;
+	    	overflow-y: auto;
+	    	overflow-x: hidden;
+  		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -75,7 +71,7 @@
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
-                                <a href="#"  class="nav-link active">
+                                <a href="javascript:void(0)" onclick="returnForm()" class="nav-link active">
                                     <i class="icon icon-target"></i> 停车场查询
                                 </a>
                             </li>
@@ -138,7 +134,7 @@
             </nav>
         </div>
 		
-        <div class="content">   
+        <div class="content"> 
   			
             <div class="row">             
                 <div class="col-md-12">
@@ -167,26 +163,106 @@
 <script src="../../vendor/chart.js/chart.min.js"></script>
 <script src="../../js/carbon.js"></script>
 <script src="../../js/demo.js"></script>
+<script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
+
 </body>
 
 <script type="text/javascript">  
 
-    
-	function doSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnForm();
-		else{
-			var user_id = $("#user_id").html();
-		    var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&form";
-	        window.location.href=url;
-		}
-	}
+	function auto() {
+	    var availableStreetTags = [];
+	    $.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/tags/streetname',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableStreetTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	    
+	    $( "#streetname" ).autocomplete({
+	    	source: availableStreetTags,
+	    	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("该街道不存在，请重新输入！");
+		    		$(this).val('');
+		    	}
+		 	}
+	    });
+	    
+	    var availableAreaTags = [];
+	    $.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/tags/areaname',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableAreaTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	    
+	    $( "#areaname" ).autocomplete({
+	      	source: availableAreaTags,
+	      	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("该城区不存在，请重新输入！");
+		    		$(this).val('');
+		    	}
+		 	}
+	    });
+	    
+	    var availableTypeTags = [];
+	    $.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/tags/typename',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableTypeTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+			})
+	    
+	    $( "#typename" ).autocomplete({
+	    	source: availableTypeTags,
+	    	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("该类型不存在，请重新输入！");
+		    		$(this).val('');
+		    	}
+		 	}
+	    });
 
-	
+	  }
+
 	$(document).ready(function(){  
 		showData();
+		auto();
 	});
 	
 	function returnForm() {
@@ -219,19 +295,19 @@
 
 	function showData() {
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th></th></tr></thead><tbody>";
 		
-		str = str + "<tr><td>" + "<input type=\"text\" id=\"parkcode\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"streetcode\" style=\"width:100px;\" />" 
-				  + "</td><td>" + "<input type=\"text\" id=\"businesscode\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"parkname\" style=\"width:100px;\" />" 
+		str = str + "<tr><td>" + "<input type=\"text\" id=\"parkcode\" style=\"width:100px;\" />"
+				  + "</td><td>" + "<input type=\"text\" id=\"parkname\" style=\"width:100px;\" />" 
 				  + "</td><td>" + "<input type=\"text\" id=\"streetname\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"areaname\" style=\"width:100px;\" />" + "</td></tr>"
 				  
-				  + "<thead></th><th>停车场类型</th><th>停车位总数</th><th>停车位空余</th><th>经度</th><th>纬度</th><th>操作</th></tr></thead><tbody>"
+				  + "<thead></th><th>停车场类型</th><th>停车位总数</th><th>经度</th><th>纬度</th><th>操作</th></tr></thead><tbody>"
 				  + "<tr><td>" + "<input type=\"text\" id=\"typename\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"parking_amount\" style=\"width:100px;\" />"
-				  + "</td><td>" + "<input type=\"text\" id=\"parking_rest\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"lng\" style=\"width:100px;\" />"
+				  + "</td><td>" + "<input type=\"text\" id=\"lng\" style=\"width:100px;\" />"
 				  + "</td><td>" + "<input type=\"text\" id=\"lat\" style=\"width:100px;\" />" + "</td><td>"; 
 		str = str + "<a href=\"javascript:void(0)\" onclick=\"addParking()\" >添加</a></td></tr>";
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "添加停车场";
+		document.getElementById("name").innerHTML = "添加停车场 &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"returnForm()\">返回</a>";
 
 		$("#tab").append(str); 
 	}
@@ -240,14 +316,11 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var parkcode = document.getElementById("parkcode").value;  
-		var streetcode = document.getElementById("streetcode").value;
-		var businesscode = document.getElementById("businesscode").value;  
 		var parkname = document.getElementById("parkname").value;
 		var streetname = document.getElementById("streetname").value;  
 		var areaname = document.getElementById("areaname").value;
 		var typename = document.getElementById("typename").value;  
 		var parking_amount = document.getElementById("parking_amount").value;
-		var parking_rest = document.getElementById("parking_rest").value;
 		var lng = document.getElementById("lng").value;
 		var lat = document.getElementById("lat").value;
 		
@@ -258,24 +331,22 @@
      		dataType:'json',
      		data:{
      			'parkcode':parkcode,
-     			'streetcode':streetcode,
-     			'businesscode':businesscode,
      			'parkname':parkname,
      			'streetname':streetname,
      			'areaname':areaname,
      			'typename':typename,
      			'parking_amount':parking_amount,
-     			'parking_rest':parking_rest,
      			'lng':lng,
      			'lat':lat
      		},
      		success:function(result){
      			var flag = result["flag"];
-     			alert(flag);
      			if(flag == "true") {
      				var url = "http://localhost:8080/user/" + param + "/form";
      				window.location.href=url;
      			}
+     			else
+     				alert(flag);
      		},
      		error:function(error){
      			var jsonData = JSON.stringify(error);

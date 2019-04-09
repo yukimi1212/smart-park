@@ -21,19 +21,19 @@
     	where businesscode = #{businesscode}
     </select>
     
-    <select id="getBusinesscode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    <select id="getBusinessCode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select businesscode
     	FROM area
     	where areaname = #{areaname}
     </select>
     
-    <select id="getTypecode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    <select id="getTypeCode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select typecode
     	FROM parkingtype
     	where typename = #{typename}
     </select>
     
-    <select id="getAreaNameByStreetcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    <select id="getAreaNameByStreetCode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct areaname
     	FROM street
     	where streetcode = #{streetcode}
@@ -45,23 +45,33 @@
     	where parkcode = #{parkcode}
     </select>
     
-    <select id="getParkingnameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    <select id="getParkingNameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct parkname
     	FROM parking
     </select>
     
-     <select id="getTypenameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+     <select id="getTypeNameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct typename
     	FROM parkingtype
     </select>
     
-     <select id="getStreetnameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+     <select id="getStreetNameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct streetname
     	FROM street
     </select>
     
-     <select id="getAreanameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    <select id="getStreetCodeTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct streetcode
+    	FROM street
+    </select>
+    
+     <select id="getAreaNameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct areaname
+    	FROM area
+    </select>
+    
+    <select id="getAreaCodeTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct businesscode
     	FROM area
     </select>
     

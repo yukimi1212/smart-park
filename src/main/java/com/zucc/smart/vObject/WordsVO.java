@@ -3,6 +3,7 @@ package com.zucc.smart.vObject;
 public class WordsVO {
 	private String source;
 	private String value;
+	
 	public String getValue() {
 		return value;
 	}
