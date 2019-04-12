@@ -257,12 +257,14 @@ public class ParkingServiceImpl implements ParkingService {
 
 	@Override
 	public void addParking(String parkcode, String parkname, String streetname,
-			String areaname, String typename, String parking_amount, String lng, String lat) {
+			String typename, String parking_amount, String lng, String lat) {
 		log.info("addParking：" + parkcode + "," + parkname);
-
+		
 		String typecode = parkingTypeMapper.getTypeCode(typename);
 		String streetcode = helperMapper.getStreetCode(streetname);
+		String areaname = helperMapper.getAreaNameByStreetCode(streetcode);
 		String businesscode = helperMapper.getBusinessCode(areaname);
+		
 		parkingMapper.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount,lng, lat);
 	}
 }

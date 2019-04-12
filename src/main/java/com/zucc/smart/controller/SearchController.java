@@ -125,12 +125,11 @@ public class SearchController {
 		return list;
     }
     
-    @RequestMapping(value = "/{user_id}/tags", method = RequestMethod.GET)
-    public ArrayList<WordsVO> getAvailableTags(@PathVariable("user_id") String user_id_obj) {
-    	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/search/" + user_id + "/tags");   	
+    @RequestMapping(value = "/tags/time", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableTimeTags() {
+    	log.info("/search/tags/time");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
-		list = userService.getAvailableTags();		
+		list = userService.getAvailableTimeTags();		
 		return list;
     }
     
@@ -149,13 +148,37 @@ public class SearchController {
 		list = userService.getAvaliableStreetNameTags();		
 		return list;
     }
-
     
     @RequestMapping(value = "/tags/areaname", method = RequestMethod.GET)
     public ArrayList<WordsVO> getAvailableAreaNameTags() {
     	log.info("/search/tags/areaname");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
 		list = userService.getAvaliableAreaNameTags();		
+		return list;
+    }
+    
+    @RequestMapping(value = "/tags/cartype", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableCarTypeTags() {
+    	log.info("/search/tags/cartype");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvaliableCarTypeTags();		
+		return list;
+    }
+    
+    @RequestMapping(value = "/tags/parking", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableParkingSearchTags() {
+    	log.info("/search/tags/parking");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableParkingSearchTags();		
+		return list;
+    }
+    
+    @RequestMapping(value = "/tags/{user_id}/record", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableRecordSearchTags(@PathVariable("user_id") String user_id_obj) {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/search/tags/" + user_id + "/record");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableUserRecordSearchTags(user_id);		
 		return list;
     }
     
@@ -172,7 +195,7 @@ public class SearchController {
     public String checkTags(@PathVariable("searchWord") String searchWord) {
     	log.info("/search/" + searchWord + "/check");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
-		list = userService.getAvailableTags();
+		list = userService.getAvailableTimeTags();
 		String result = "null";
 		for(int i=0; i<list.size(); i++) {
 			if(searchWord.equals(list.get(i).getValue())) {
@@ -209,7 +232,6 @@ public class SearchController {
     	ArrayList<Map> list = new ArrayList<Map>();
         
         list = parkingService.getParkingMap(lng, lat);
-
 		return list;
     }
 }

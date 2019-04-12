@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
+	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
     
     <style> 		
       	#search input[type=text] {
@@ -25,6 +27,12 @@
         	padding: 10px;
         	width: 90px;
       	}
+      	.ui-autocomplete {
+			max-width: 350px;
+	    	max-height: 200px;
+	    	overflow-y: auto;
+	    	overflow-x: hidden;
+  		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -182,6 +190,8 @@
 <script src="../../vendor/chart.js/chart.min.js"></script>
 <script src="../../js/carbon.js"></script>
 <script src="../../js/demo.js"></script>
+<script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
 </body>
 
 <script type="text/javascript">  
@@ -194,6 +204,33 @@
 	var page;            //总页数
 	var begin;
 	var end;
+	
+	function auto() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+	    var availableTags = [];
+	    $.ajax({
+				type:'GET',
+	 		url:'http://localhost:8080/search/tags/' + param + '/record',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+			})
+	    
+	    $( "#searchWord" ).autocomplete({
+	      source: availableTags
+	    });
+
+	  }
 	
 	function doSearch() {
 		var sWord = $("#searchWord").val();
@@ -215,7 +252,9 @@
 	
 	$(document).ready(function(){  
 		showForm();
+		auto();
 	});	
+	
 	function showForm(){
 		var search_id = $("#search_id").html();		
  		if(search_id == "admin"){

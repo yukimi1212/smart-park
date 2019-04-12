@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.min.css">
     
     <style> 		
       	#search input[type=text] {
@@ -172,12 +174,46 @@
 <script src="../../vendor/chart.js/chart.min.js"></script>
 <script src="../../js/carbon.js"></script>
 <script src="../../js/demo.js"></script>
+<script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
 </body>
 
 <script type="text/javascript">  
+
+	function auto() {
+    	var availableTags = [];
+    	$.ajax({
+			type:'GET',
+ 			url:'http://localhost:8080/search/tags/cartype',
+ 			async:true,
+ 			data:{
+ 			},
+ 			success:function(list){
+ 				for (var i = 0; i < list.length; i++) {
+ 					availableTags.push(list[i].value);
+ 			    }
+ 			},
+ 			error:function(error){
+ 				var jsonData = JSON.stringify(error);
+ 		    	alert(jsonData)
+ 			}
+		})
+	    
+	    $( "#cartype" ).autocomplete({
+	    	source: availableTags,
+	    	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("该车辆类型不存在，请重新输入！");
+		    		$(this).val('');
+		    	}
+		 	}
+    	});
+	}
     
 	$(document).ready(function(){  
 		showData();
+		auto();
 	});
 	
 	
@@ -242,28 +278,31 @@
 	    var param = encode64(user_id);
 		var cph = document.getElementById("cph").value;  
 		var cartype = document.getElementById("cartype").value;
-		$.ajax({
-   			type:'GET',
-     		url:'http://localhost:8080/park/' + param + "/addV",
-     		async:true,
-     		dataType:'json',
-     		data:{
-     			'cph':cph,
-     			'cartype':cartype
-     		},
-     		success:function(result){
-     			var flag = result["flag"];
-     			alert(flag);
-     			if(flag == "true") {
-     				var url = "http://localhost:8080/user/" + param + "/vehicle";
-         			window.location.href=url;
-     			}	
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
+		
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/park/' + param + "/addV",
+	     		async:true,
+	     		dataType:'json',
+	     		data:{
+	     			'cph':cph,
+	     			'cartype':cartype
+	     		},
+	     		success:function(result){
+	     			var flag = result["flag"];     			
+	     			if(flag == "true") {
+	     				var url = "http://localhost:8080/user/" + param + "/vehicle";
+	         			window.location.href=url;
+	     			}	
+	     			else
+	     				alert(flag);
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+			
 	}
 	
 	function getRecord() {

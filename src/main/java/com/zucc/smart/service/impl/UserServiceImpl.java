@@ -100,6 +100,23 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public ArrayList<WordsVO> getAvaliableParkingCodeTags() {
+		log.info("getAvaliableParkingCodeTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getParkingCodeTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("park");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		return listVO;
+	}
+	
+	@Override
 	public ArrayList<WordsVO> getAvaliableTypeNameTags() {
 		log.info("getAvaliableTypeNameTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
@@ -134,6 +151,23 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public ArrayList<WordsVO> getAvaliableStreetCodeTags() {
+		log.info("getAvaliableStreetCodeTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getStreetCodeTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("streetcode");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		return listVO;
+	}
+	
+	@Override
 	public ArrayList<WordsVO> getAvaliableAreaNameTags() {
 		log.info("getAvaliableAreaNameTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
@@ -149,10 +183,78 @@ public class UserServiceImpl implements UserService {
 		
 		return listVO;
 	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvaliableAreaCodeTags() {
+		log.info("getAvaliableAreaCodeTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getAreaCodeTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("areacode");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		
+		return listVO;
+	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvaliableCarTypeTags() {
+		log.info("getAvaliableCarTypeTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getCarTypeTags();
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("cartype");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		return listVO;
+	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvaliableUserCphTags(String user_id) {
+		log.info("getAvaliableCphTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list = helperMapper.getUserCphTags(user_id);
+		for(int i=0; i<list.size(); i++) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setSource("cartype");
+			wordsVO.setValue(list.get(i));
+			listVO.add(wordsVO);
+		}
+		return listVO;
+	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvaliableUserRecordIDTags(String user_id) {
+		log.info("getAvaliableRecordIDTags：");
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<Vehicle> listVehicle = vehicleMapper.getUserVehicle(user_id);
+		for(int c=0; c<listVehicle.size(); c++) {
+			list = helperMapper.getUserRecordIDTags(listVehicle.get(c).getCph());
+			for(int i=0; i<list.size(); i++) {
+				WordsVO wordsVO = new WordsVO();
+				wordsVO.setSource("cartype");
+				wordsVO.setValue(list.get(i));
+				listVO.add(wordsVO);
+			}
+		}
+		return listVO;
+	}
 
 	
 	@Override
-	public ArrayList<WordsVO> getAvailableTags() {
+	public ArrayList<WordsVO> getAvailableTimeTags() {
 		log.info("getAvailableTags：");
 		
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
@@ -161,6 +263,37 @@ public class UserServiceImpl implements UserService {
 		listVO.addAll(getAvaliableTypeNameTags());
 		listVO.addAll(getAvaliableStreetNameTags());
 		listVO.addAll(getAvaliableAreaNameTags());	
+	
+		return listVO;
+	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvailableParkingSearchTags() {
+		log.info("getAvailableParkingSearchTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+				
+		listVO.addAll(getAvaliableParkingNameTags());
+		listVO.addAll(getAvaliableParkingCodeTags());
+		listVO.addAll(getAvaliableStreetNameTags());
+		listVO.addAll(getAvaliableStreetCodeTags());
+		listVO.addAll(getAvaliableAreaNameTags());
+		listVO.addAll(getAvaliableAreaCodeTags());	
+	
+		return listVO;
+	}
+	
+	@Override
+	public ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id) {
+		log.info("getAvailableParkingSearchTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+			
+		listVO.addAll(getAvaliableUserRecordIDTags(user_id));
+		listVO.addAll(getAvaliableUserCphTags(user_id));
+		listVO.addAll(getAvaliableParkingNameTags());
+		listVO.addAll(getAvaliableStreetNameTags());
+		listVO.addAll(getAvaliableAreaNameTags());
 	
 		return listVO;
 	}

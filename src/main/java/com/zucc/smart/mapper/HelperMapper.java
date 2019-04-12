@@ -28,5 +28,13 @@ public interface HelperMapper {
 
 	ArrayList<String> getAreaCodeTags();
 
-	ArrayList<String> getStreetCodeTags();	
+	ArrayList<String> getStreetCodeTags();
+
+	ArrayList<String> getCarTypeTags();
+
+	ArrayList<String> getParkingCodeTags();
+
+	ArrayList<String> getUserRecordIDTags(String cph);
+
+	ArrayList<String> getUserCphTags(String user_id);	
 }

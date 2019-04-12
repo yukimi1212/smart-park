@@ -200,35 +200,6 @@
 		 	}
 	    });
 	    
-	    var availableAreaTags = [];
-	    $.ajax({
-			type:'GET',
-	 		url:'http://localhost:8080/search/tags/areaname',
-	 		async:true,
-	 		data:{
-	 		},
-	 		success:function(list){
-	 			for (var i = 0; i < list.length; i++) {
-	 				availableAreaTags.push(list[i].value);
-	 		    }
-	 		},
-	 		error:function(error){
-	 			var jsonData = JSON.stringify(error);
-	 	    	alert(jsonData)
-	 		}
-		})
-	    
-	    $( "#areaname" ).autocomplete({
-	      	source: availableAreaTags,
-	      	mustMatch: true,
-			change: function (event, ui) {
-		  		if (!ui.item) {
-		  			alert("该城区不存在，请重新输入！");
-		    		$(this).val('');
-		    	}
-		 	}
-	    });
-	    
 	    var availableTypeTags = [];
 	    $.ajax({
 			type:'GET',
@@ -295,14 +266,14 @@
 
 	function showData() {
 		$("#tab").html("");
-		var str = "<thead><tr><th>停车场编号</th><th>停车场名</th><th>街道名</th><th>所属城区</th><th></th></tr></thead><tbody>";
+		var str = "<thead><tr><th>停车场编号</th><th>停车场名</th><th>街道名</th><th>停车场类型</th><th></th></tr></thead><tbody>";
 		
 		str = str + "<tr><td>" + "<input type=\"text\" id=\"parkcode\" style=\"width:100px;\" />"
 				  + "</td><td>" + "<input type=\"text\" id=\"parkname\" style=\"width:100px;\" />" 
-				  + "</td><td>" + "<input type=\"text\" id=\"streetname\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"areaname\" style=\"width:100px;\" />" + "</td></tr>"
+				  + "</td><td>" + "<input type=\"text\" id=\"streetname\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"typename\" style=\"width:100px;\" />" + "</td></tr>"
 				  
-				  + "<thead></th><th>停车场类型</th><th>停车位总数</th><th>经度</th><th>纬度</th><th>操作</th></tr></thead><tbody>"
-				  + "<tr><td>" + "<input type=\"text\" id=\"typename\" style=\"width:100px;\" />" + "</td><td>" + "<input type=\"text\" id=\"parking_amount\" style=\"width:100px;\" />"
+				  + "<thead></th><th>停车位总数</th><th>经度</th><th>纬度</th><th>操作</th></tr></thead><tbody>"
+				  + "<tr><td>"  + "<input type=\"text\" id=\"parking_amount\" style=\"width:100px;\" />"
 				  + "</td><td>" + "<input type=\"text\" id=\"lng\" style=\"width:100px;\" />"
 				  + "</td><td>" + "<input type=\"text\" id=\"lat\" style=\"width:100px;\" />" + "</td><td>"; 
 		str = str + "<a href=\"javascript:void(0)\" onclick=\"addParking()\" >添加</a></td></tr>";
@@ -318,7 +289,6 @@
 		var parkcode = document.getElementById("parkcode").value;  
 		var parkname = document.getElementById("parkname").value;
 		var streetname = document.getElementById("streetname").value;  
-		var areaname = document.getElementById("areaname").value;
 		var typename = document.getElementById("typename").value;  
 		var parking_amount = document.getElementById("parking_amount").value;
 		var lng = document.getElementById("lng").value;
@@ -333,7 +303,6 @@
      			'parkcode':parkcode,
      			'parkname':parkname,
      			'streetname':streetname,
-     			'areaname':areaname,
      			'typename':typename,
      			'parking_amount':parking_amount,
      			'lng':lng,

@@ -197,7 +197,7 @@
 	var begin;
 	var end;
     
-	window.onload = function(){	
+	window.onload = function(){ 	
 		var user_id = $("#user_id").html();
 		if(user_id == "admin"){
 			$("user").empty();

@@ -17,8 +17,6 @@ public interface UserService {
 
 	ArrayList<UserVO> userSearch(String searchWord);
 
-	ArrayList<WordsVO> getAvailableTags();
-
 	void alterUser(String user_id, String user_gender, String user_age, String user_phone);
 
 	ArrayList<WordsVO> getAvaliableParkingNameTags();
@@ -28,5 +26,23 @@ public interface UserService {
 	ArrayList<WordsVO> getAvaliableStreetNameTags();
 	
 	ArrayList<WordsVO> getAvaliableAreaNameTags();
+
+	ArrayList<WordsVO> getAvaliableCarTypeTags();
+
+	ArrayList<WordsVO> getAvailableTimeTags();
+
+	ArrayList<WordsVO> getAvaliableParkingCodeTags();
+
+	ArrayList<WordsVO> getAvaliableStreetCodeTags();
+
+	ArrayList<WordsVO> getAvaliableAreaCodeTags();
+
+	ArrayList<WordsVO> getAvailableParkingSearchTags();
+
+	ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id);
+
+	ArrayList<WordsVO> getAvaliableUserRecordIDTags(String user_id);
+
+	ArrayList<WordsVO> getAvaliableUserCphTags(String user_id);
 	
 }

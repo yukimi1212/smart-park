@@ -198,8 +198,6 @@
 	     		success:function(result){
 	     			if(result != "null")
 	     				doSearch(sWord,result);
-	     			else
-	     				alert("请输入完整正确的停车场/街道/城区/类型名称！")
 	     		},
 	     		error:function(error){
 	     			var jsonData = JSON.stringify(error);
@@ -264,7 +262,7 @@ function auto() {
     var availableTags = [];
     $.ajax({
 			type:'GET',
- 		url:'http://localhost:8080/search/' + param + '/tags',
+ 		url:'http://localhost:8080/search/tags/time',
  		async:true,
  		data:{
  		},
@@ -280,7 +278,14 @@ function auto() {
 		})
     
     $( "#searchWord" ).autocomplete({
-      source: availableTags
+      source: availableTags,
+      mustMatch: true,
+		change: function (event, ui) {
+	  		if (!ui.item) {
+	  			alert("请输入完整正确的停车场/街道/城区/类型名称！");
+	    		$(this).val('');
+	    	}
+	 	}
     });
 
   }

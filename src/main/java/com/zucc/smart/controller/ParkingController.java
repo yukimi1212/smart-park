@@ -78,13 +78,18 @@ public class ParkingController {
     	return list;
     }
     
-    @RequestMapping(value = {"/", "/{user_id}/add"}) 
+    @RequestMapping(value = {"/", "/{user_id}/addV"}) 
 	  public String addVehicle(@PathVariable("user_id") String user_id_obj, 
 			  String cph, String cartype) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/park/"+ user_id + "/add ----- " + cph + "   " + cartype);
+		  log.info("/park/"+ user_id + "/addV ----- " + cph + "   " + cartype);
 		  String flag = "true";
-		  vehicleService.addVehicle(cph, cartype, user_id);
+		  if(cph == "")
+			  flag = "请输入车牌号";
+		  else if(cartype == "")
+			  flag = "请输入车辆类型";
+		  else
+			  vehicleService.addVehicle(cph, cartype, user_id);
 		  
 		  String str = "{\"flag\":\"" + flag + "\"}";
 		  return str;
@@ -92,7 +97,7 @@ public class ParkingController {
     
     @RequestMapping(value = {"/", "/admin/add"}) 
 	  public String addParking(String parkcode, String parkname, String streetname,
-			   String areaname, String typename, String parking_amount, String lng, String lat) throws IOException { 
+			   String typename, String parking_amount, String lng, String lat) throws IOException { 
 		  log.info("/park/admin/add ----- " + parkcode + "   " + parkname);
 		  String flag = "true";
 		  double lng_obj;
@@ -105,8 +110,6 @@ public class ParkingController {
 			  flag = "请输入停车场名";
 		  else if(streetname == "")
 			  flag = "请输入街道名";
-		  else if(areaname == "")
-			  flag = "请输入城区名";
 		  else if(typename == "")
 			  flag = "请输入停车场类型";
 		  else if(parking_amount == "" || !isInteger(parking_amount))
@@ -131,7 +134,7 @@ public class ParkingController {
 		  }
 		  
 		  if(flag == "true")
-			  parkingService.addParking(parkcode, parkname, streetname, areaname, typename, parking_amount, lng, lat);
+			  parkingService.addParking(parkcode, parkname, streetname, typename, parking_amount, lng, lat);
 		  
 		  String str = "{\"flag\":\"" + flag + "\"}";
 		  return str;

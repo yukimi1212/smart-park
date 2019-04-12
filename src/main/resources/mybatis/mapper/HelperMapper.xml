@@ -50,6 +50,11 @@
     	FROM parking
     </select>
     
+    <select id="getParkingCodeTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select parkcode
+    	FROM parking
+    </select>
+    
      <select id="getTypeNameTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct typename
     	FROM parkingtype
@@ -73,6 +78,23 @@
     <select id="getAreaCodeTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct businesscode
     	FROM area
+    </select>
+    
+    <select id="getCarTypeTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select distinct cartype
+    	FROM vehicle
+    </select>
+    
+    <select id="getUserCphTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select cph
+    	FROM vehicle
+    	where user_id = #{user_id}
+    </select>
+    
+    <select id="getUserRecordIDTags" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
+    	select id
+    	FROM record
+    	where cph = #{cph}
     </select>
     
 </mapper>

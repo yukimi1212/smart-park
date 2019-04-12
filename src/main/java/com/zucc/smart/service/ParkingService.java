@@ -32,7 +32,7 @@ public interface ParkingService {
 	ArrayList<Map> getParkingMap(String lng, String lat);
 
 	void addParking(String parkcode, String streetcode, String businesscode, String parkname, String streetname,
-			String areaname, String typename, String parking_amount);
+			String areaname, String typename);
 
 	boolean checkParkCode(String parkcode);
 }

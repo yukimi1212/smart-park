@@ -49,9 +49,7 @@ body {
 	window.onload = function() {  
 		setMapEvent();
 		if(navigator.geolocation) {  
-			navigator.geolocation.getCurrentPosition(showPosition);
-            // 百度地图API功能  
-            
+			navigator.geolocation.getCurrentPosition(showPosition);         
             var geolocation = new BMap.Geolocation();  
             geolocation.getCurrentPosition(function(r){  
             	if(this.getStatus() == BMAP_STATUS_SUCCESS){  
@@ -85,29 +83,26 @@ body {
 			return;
     	}  
 		alert("你的浏览器不支持获取地理位置！");
-	};  
+	}
 
 	function showPosition(position){
   		x=position.coords.latitude; 
   		y=position.coords.longitude;
-//  		alert("showPosition: " + x + "," + y);
 	}	
 	
 	//地图事件设置函数：
     function setMapEvent(){
-        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-        map.enableKeyboard();//启用键盘上下左右键移动地图
-        map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
-        
-//        var opts = {anchor:BMAP_ANCHOR_BOTTOM_RIGHT};//设置定位按钮位置
-//		map.addControl(new BMap.GeolocationControl(opts));//将定位控件添加到地图上
+        map.enableDragging();
+        map.enableScrollWheelZoom();
+        map.enableDoubleClickZoom();
+        map.enableKeyboard();
+        map.enableContinuousZoom();    
+
 		
-		map.addControl(new BMap.NavigationControl()); //添加控件：缩放地图的控件，默认在左上角；
-		map.addControl(new BMap.MapTypeControl()); //添加控件：地图类型控件，默认在右上方；
-		map.addControl(new BMap.ScaleControl()); //添加控件：地图显示比例的控件，默认在左下方；
-		map.addControl(new BMap.OverviewMapControl()); //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl    
+		map.addControl(new BMap.NavigationControl()); 
+		map.addControl(new BMap.MapTypeControl());
+		map.addControl(new BMap.ScaleControl()); 
+		map.addControl(new BMap.OverviewMapControl());     
     }
     
 	function getMap(list,point){		
@@ -116,7 +111,6 @@ body {
         map.addOverlay(new BMap.Marker(point)); 
 		
         var i = 0;
-//        alert(list.length);
         for (;i<list.length;i++) {
             var points = new BMap.Point(list[i].lng,list[i].lat);//创建坐标点
             var opts = {
@@ -131,13 +125,11 @@ body {
             markerFun(points,label,infoWindows);
         }
 		
-    	// 函数 创建多个标注
         function markerFun (points,label,infoWindows) {
             var markers = new BMap.Marker(points);
             map.addOverlay(markers);
-//            markers.setLabel(label);
             markers.addEventListener("click",function (event) {
-                map.openInfoWindow(infoWindows,points);//参数：窗口、点  根据点击的点出现对应的窗口
+                map.openInfoWindow(infoWindows,points);
             });
         }
 	}		
@@ -150,7 +142,7 @@ body {
 		var areaname = document.getElementById("areaName").value;
 		// 创建地址解析器实例     
 		var myGeo = new BMap.Geocoder();      
-		// 将地址解析结果显示在地图上，并调整地图视野    
+		// 将地址解析结果显示在地图上
 		myGeo.getPoint(areaname, function(point){      
 		    if (point) {
 		    	$.ajax({
