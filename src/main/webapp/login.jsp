@@ -18,7 +18,7 @@
   <body class="login-body">
       
       <div class="login-logo">
-          <img src="images/logo.PNG" alt="smart"/>
+          <!-- <img src="images/logo.PNG" alt="smart"/> -->
       </div>
 
       <h2 class="form-heading">登录</h2>

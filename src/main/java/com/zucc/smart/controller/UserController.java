@@ -192,7 +192,6 @@ public class UserController {
 		  User user = userService.getUserById(user_id); 
 		  map.put("user_name",user.getUser_name());
 		  map.put("user_gender", user.getUser_gender());
-		  map.put("user_age", user.getUser_age());
 		  map.put("user_phone", user.getUser_phone());
 		  map.put("user_id", user_id); 
 		  return "alterUser"; 
@@ -202,10 +201,10 @@ public class UserController {
 	  
 	  @RequestMapping(value = {"/", "/{user_id}/alterU"}) 
 	  public String alterUser(@PathVariable("user_id") String user_id_obj, String user_gender, 
-			  String user_age, String user_phone, Map<String, Object>map) throws IOException { 
+			  String user_phone, Map<String, Object>map) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/user/"+ user_id + "/alterU ----- " + user_gender + "   " + user_age + "   " + user_phone);
-		  userService.alterUser(user_id, user_gender, user_age, user_phone);
+		  log.info("/user/"+ user_id + "/alterU ----- " + user_gender + "   " + user_phone);
+		  userService.alterUser(user_id, user_gender, user_phone);
 		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
 		  map.put("user_name",user_name); 
 		  map.put("user_id", user_id); 

@@ -6,7 +6,6 @@ public class User {
 	private String user_name;
 	private String user_pwd;
 	private String user_gender;
-    private int user_age;
     private String user_phone;
 	private String registration_time;
 	private String user_identity;
@@ -34,12 +33,6 @@ public class User {
 	}
 	public void setUser_gender(String user_gender) {
 		this.user_gender = user_gender;
-	}
-	public int getUser_age() {
-		return user_age;
-	}
-	public void setUser_age(int user_age) {
-		this.user_age = user_age;
 	}
 	public String getUser_phone() {
 		return user_phone;

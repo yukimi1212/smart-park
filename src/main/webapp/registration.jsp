@@ -17,26 +17,25 @@
 
   <body class="login-body">
       
-      <div class="login-logo">
+   <!--    <div class="login-logo">
           <img src="images/logo.PNG" alt="smart"/>
-      </div>
+      </div> -->
 
       <h2 class="form-heading">注册</h2>
       <div class="container log-row">
       	<form id="form" class="form-signin" action="/login/register" method="post" enctype="multipart/form-data"> 
         	<div class="login-wrap">
-              	<span style="color:#f36616" id="warning_id"></span>
-               	<input type="text" id="user_id" name="user_id" class="form-control" placeholder="用户ID" autofocus>
+        		<span></span>
+              	<span style="color:#ff7f50">*为必填选项</span>
+               	<input type="text" id="user_id" name="user_id" class="form-control" placeholder="用户ID	*" autofocus>
                 <span style="color:#f36616" id="warning_name"></span>
-                <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名" autofocus>
+                <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名	*">
                 <span style="color:#f36616" id="warning_pwd"></span>
-                <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码">
+                <input type="password" id="user_pwd" name="user_pwd" class="form-control" placeholder="密码	*">
                 <span style="color:#f36616" id="warning_repwd"></span>
-                <input type="password" id="reuser_pwd" name="reuser_pwd" class="form-control" placeholder="确认密码">
-                <span style="color:#f36616" id="warning_age"></span>
-               	<input type="text" id="user_age" name="user_age" class="form-control" placeholder="年龄" autofocus>
+                <input type="password" id="reuser_pwd" name="reuser_pwd" class="form-control" placeholder="确认密码	*">
                	<span style="color:#f36616" id="warning_phone"></span>
-               	<input type="text" id="user_phone" name="user_phone" class="form-control" placeholder="联系电话" autofocus>
+               	<input type="text" id="user_phone" name="user_phone" class="form-control" placeholder="联系电话">
 
                 <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
 				<div class="radio-custom radio-success">
@@ -76,7 +75,6 @@
 	        var user_pwd = document.getElementById("user_pwd").value;
 	        var reuser_pwd = document.getElementById("reuser_pwd").value;
 	        var user_phone = document.getElementById("user_phone").value;
-	        var user_age = document.getElementById("user_age").value;
 	    	$.ajax({
                 type:'POST',
                 url:"http://localhost:8080/login/register",
@@ -87,7 +85,6 @@
                     'user_pwd':user_pwd,
                     'reuser_pwd':reuser_pwd,
                     'user_gender':user_gender,
-                    'user_age':user_age,
                     'user_phone':user_phone
                 }, 
                 dataType:'json',
@@ -102,10 +99,6 @@
                 		document.getElementById("warning_pwd").innerHTML = "请输入密码";            	
                 	else if(flag == "id已存在")
                 		document.getElementById("warning_id").innerHTML = "id已存在";               	
-                	else if(flag == "age输入错误"){
-                		document.getElementById("warning_age").innerHTML = "年龄应为数字  0-100";
-                		$("#user_age").val("");
-                	}
                 	else if(flag == "phone输入错误"){
                 		document.getElementById("warning_phone").innerHTML = "联系电话应为数字";
                 		$("#user_phone").val("");

@@ -232,6 +232,13 @@
 
 	  }
 	
+	function subString(str,beginStr,endStr){
+		if(typeof str == 'string'){ 
+	        let ruten = str.substring(beginStr,endStr); 
+	        return str.replace(ruten,'****'); 
+	   }
+	}
+	
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
@@ -253,6 +260,10 @@
 	
 	window.onload = function(){
 		var searchWord = $("#searchWord").val();
+		
+		var sWord = document.getElementById("searchWord");
+		sWord.value = subString(searchWord,3,6);
+
 		var property = $("#property").html();
 		var user_id = $("#user_id").html();
 
@@ -340,13 +351,15 @@
 
 	function showData(data) {
 		$("#tab").html("");
-		var str = "<thead><tr><th>记录编号</th><th>车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>驶入时间</th><th>驶离时间</th></tr></thead><tbody>";
+		var str = "<thead><tr><th>记录编号</th><th>车牌号</th><th>真实车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>驶入时间</th><th>驶离时间</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].id + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
+			str = str + "<tr><td>" + data[i].id + "</td><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "停车记录";
 		$("#tab").append(str); 
+		$('tr').find('th:eq(2)').hide();
+		$('tr').find('td:eq(2)').hide();
 	}
 
 	

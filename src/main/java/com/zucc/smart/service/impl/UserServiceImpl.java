@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService {
 			UserVO userVO = new UserVO();
 			userVO.setUser_id(list.get(i).getUser_id());
 			userVO.setUser_name(list.get(i).getUser_name());
-			userVO.setUser_age(list.get(i).getUser_age());
 			userVO.setUser_gender(list.get(i).getUser_gender());
 			userVO.setUser_phone(list.get(i).getUser_phone());
 			userVO.setRegistration_time(list.get(i).getRegistration_time());
@@ -299,9 +298,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void alterUser(String user_id, String user_gender, String user_age, String user_phone) {
+	public void alterUser(String user_id, String user_gender, String user_phone) {
 		log.info("alterUser：");
-		userMapper.alterUser(user_id, user_gender, user_age, user_phone);
+		userMapper.alterUser(user_id, user_gender, user_phone);
 	}
 
 }

@@ -58,7 +58,7 @@ public class LoginController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register (@RequestParam(value="user_id") String user_id, @RequestParam("user_name") String user_name,
     		@RequestParam("user_pwd") String user_pwd, @RequestParam("reuser_pwd") String reuser_pwd, @RequestParam("user_gender") String user_gender,
-    		@RequestParam("user_age") String user_age, @RequestParam("user_phone") String user_phone) {
+    		@RequestParam("user_phone") String user_phone) {
         log.info("/login/register/" + user_id + "---user_name：" + user_name);
         String flag = "";
         if(user_id == "") 
@@ -70,9 +70,7 @@ public class LoginController {
         else if(userService.getUserById(user_id) != null) 
         	flag = "id已存在";        
         else if(user_pwd.compareTo(reuser_pwd) != 0) 
-        	flag = "pwd不一致";       
-        else if(user_age != "" && (!isInteger(user_age) || Integer.parseInt(user_age) > 100 || Integer.parseInt(user_age) < 0)) 
-        	flag = "age输入错误";        
+        	flag = "pwd不一致";        
         else if(user_phone != "" && !isInteger(user_phone)) 
         	flag = "phone输入错误";        
         else {
@@ -81,8 +79,6 @@ public class LoginController {
             adduser.setUser_name(user_name);
             adduser.setUser_pwd(user_pwd);
             adduser.setUser_gender(user_gender);
-            if(user_age != "")
-            	adduser.setUser_age(Integer.parseInt(user_age));
             adduser.setUser_phone(user_phone);
             adduser.setUser_identity("user");
         	boolean addflag = userService.addUser(adduser);

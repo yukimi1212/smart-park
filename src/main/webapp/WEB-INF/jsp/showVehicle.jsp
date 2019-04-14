@@ -211,6 +211,12 @@
 		}
 	}
 
+	function subString(str,beginStr,endStr){
+		if(typeof str == 'string'){ 
+	        let ruten = str.substring(beginStr,endStr); 
+	        return str.replace(ruten,'****'); 
+	   }
+	}
 	
 	$(document).ready(function(){  
 		showForm();
@@ -300,13 +306,13 @@
 	function showData(data) {
 		var user_id = $("#user_id").html();
 		$("#tab").html("");
-		var str = "<thead><tr><th>车牌号</th><th>车辆类型</th><th>停车记录";
+		var str = "<thead><tr><th>车牌号</th><th>真实车牌号</th><th>车辆类型</th><th>停车记录";
 		if(user_id == "admin")
 			str = str + "</th></tr></thead><tbody>";
 		else	
 			str = str + "</th><th>操作</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].cph + "</td><td>" + data[i].cartype + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\">查看</a>";
+			str = str + "<tr><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].cartype + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\">查看</a>";
 			
 			if(user_id == "admin")
 				str = str + "</td></tr>";
@@ -316,13 +322,15 @@
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "车辆信息 &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"addVehicle()\">添加</a> &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"getUser()\">返回</a>";
 		$("#tab").append(str); 
+		$('tr').find('th:eq(1)').hide();
+		$('tr').find('td:eq(1)').hide();
 	}
 	
 	function deleteVehicle(id) {
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
 		var rows = id.parentNode.parentNode.rowIndex;
-		var cph = "&car&" + $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		var cph = "&car&" + $("#tab tr:eq(" + rows + ") td:eq(1)").html();
 		var url = "http://localhost:8080/user/" + param + cph + "/delete";
 		window.location.href=url;
 	}
@@ -331,7 +339,7 @@
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
 		var rows = id.parentNode.parentNode.rowIndex;
-		var cph = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		var cph = $("#tab tr:eq(" + rows + ") td:eq(1)").html();
 		if(user_id == "admin"){
 			var url = "http://localhost:8080/admin/" + cph + "/record";
 	        window.location.href=url;

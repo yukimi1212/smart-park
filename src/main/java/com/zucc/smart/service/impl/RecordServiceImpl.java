@@ -228,7 +228,6 @@ public class RecordServiceImpl implements RecordService {
 		UserVO userVO = new UserVO();
 		userVO.setUser_id(user.getUser_id());
 		userVO.setUser_name(user.getUser_name());
-		userVO.setUser_age(user.getUser_age());
 		userVO.setUser_gender(user.getUser_gender());
 		userVO.setUser_phone(user.getUser_phone());
 		userVO.setRegistration_time(user.getRegistration_time());

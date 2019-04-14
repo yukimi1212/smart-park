@@ -140,7 +140,7 @@
 			</h1>
 			<p class="sp-layer"
 			data-position="center" data-vertical="15%" data-show-delay="2000" data-hide-delay="200" data-show-transition="left" data-hide-transition="down">
-			   智慧城市，智能停车.
+			  智能停车管理系统
 			</p>
 
 		</div>
@@ -158,7 +158,7 @@
 
 			<p class="sp-layer"
 			 data-position="center" data-vertical="15%" data-show-delay="2000" data-hide-delay="200" data-show-transition="left" data-hide-transition="down">
-				智慧城市，智能停车.
+				智能停车管理系统
 			</p>
 		</div>
 		<!-- Slides End -->
@@ -176,7 +176,7 @@
 
 			<p class="sp-layer"
 			data-position="center" data-vertical="15%" data-show-delay="1000" data-hide-delay="200" data-show-transition="left" data-hide-transition="down">
-				智慧城市，智能停车.
+				智能停车管理系统
 			</p>
 
 		</div>

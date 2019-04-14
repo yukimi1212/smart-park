@@ -8,34 +8,33 @@
 		<result column="user_name" property="user_name" />
 		<result column="user_pwd" property="user_pwd" />
 		<result column="user_gender" property="user_gender" />
-		<result column="user_age" property="user_age" />
 		<result column="user_phone" property="user_phone" />
 		<result column="registration_time" property="registration_time" />	
 		<result column="user_identity" property="user_identity" />
 	</resultMap>
 
 	<select id="getAllUser" resultMap="UserMap" useCache="false">
-    	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity 
+    	select user_id, user_name, user_pwd, user_gender, user_phone, registration_time, user_identity 
     	FROM user  
     </select>
     
 	<select id="checkUser" resultMap="UserMap" useCache="false">
-    	select user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity 
+    	select user_id, user_name, user_pwd, user_gender, user_phone, registration_time, user_identity 
     	FROM user  
     	where user_id = #{user_id} and user_pwd = #{user_pwd}
     </select>
     
 	<select id="getUserById" parameterType="java.lang.String" resultMap="UserMap" useCache="false">
-		SELECT user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity
+		SELECT user_id, user_name, user_pwd, user_gender, user_phone, registration_time, user_identity
 		FROM user
 		where user_id = #{user_id}
 	</select>
 	
 	<insert id="addUser" parameterType="com.zucc.smart.domain.User">
 		INSERT INTO user
-		(user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity)
+		(user_id, user_name, user_pwd, user_gender, user_phone, registration_time, user_identity)
 		values
-		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_age}, #{user_phone}, now(), #{user_identity})
+		(#{user_id}, #{user_name}, #{user_pwd}, #{user_gender}, #{user_phone}, now(), #{user_identity})
 	</insert>
     
     <delete id="deleteUser" parameterType="java.lang.String">
@@ -45,7 +44,7 @@
 	</delete>
 	
 	<select id="searchUser" parameterType="java.lang.String" resultMap="UserMap" useCache="false">
-		SELECT user_id, user_name, user_pwd, user_gender, user_age, user_phone, registration_time, user_identity
+		SELECT user_id, user_name, user_pwd, user_gender, user_phone, registration_time, user_identity
 		FROM user
 		where user_id like #{searchWord} or user_name like #{searchWord}
 	</select>
@@ -54,7 +53,6 @@
         update user
         <set>
             user_gender = #{user_gender},
-            user_age = #{user_age},
             user_phone = #{user_phone},
         </set>
         where user_id = #{user_id}

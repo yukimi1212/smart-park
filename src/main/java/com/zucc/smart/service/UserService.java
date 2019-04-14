@@ -17,7 +17,7 @@ public interface UserService {
 
 	ArrayList<UserVO> userSearch(String searchWord);
 
-	void alterUser(String user_id, String user_gender, String user_age, String user_phone);
+	void alterUser(String user_id, String user_gender, String user_phone);
 
 	ArrayList<WordsVO> getAvaliableParkingNameTags();
 	
