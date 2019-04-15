@@ -55,5 +55,9 @@ public interface RecordMapper {
 	int getRecordTimeCountForStreet(String str, String streetcode);
 	
 	int getRecordTimeCountForArea(String str, String businesscode);
+
+	ArrayList<Record> getRecordWithStreet(String streetcode);
+
+	ArrayList<Record> getRecordWithArea(String businesscode);
 	
 }

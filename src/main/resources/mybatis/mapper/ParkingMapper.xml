@@ -78,8 +78,27 @@
 		from parking 
 		where parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} 
 			or parkname like #{searchWord} or streetname like #{searchWord} 
-			or areaname like #{searchWord} or typecode like #{searchWord};
+			or areaname like #{searchWord};
 	</select>
+	
+	<select id="parkingSearchByParking" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select * 
+		from parking 
+		where parkcode like #{searchWord} or parkname like #{searchWord};
+	</select>
+	
+	<select id="parkingSearchByStreet" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select * 
+		from parking 
+		where streetcode like #{searchWord} or streetname like #{searchWord};
+	</select>
+	
+	<select id="parkingSearchByArea" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
+		select * 
+		from parking 
+		where businesscode like #{searchWord} or areaname like #{searchWord};
+	</select>
+	
 	
 	<select id="searchStreet" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
 		select distinct streetcode,streetname

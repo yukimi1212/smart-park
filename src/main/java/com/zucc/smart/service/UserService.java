@@ -37,12 +37,14 @@ public interface UserService {
 
 	ArrayList<WordsVO> getAvaliableAreaCodeTags();
 
-	ArrayList<WordsVO> getAvailableParkingSearchTags();
+	ArrayList<WordsVO> getAvailableParkingSearchTags(String source);
 
-	ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id);
+	ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id, String source);
 
 	ArrayList<WordsVO> getAvaliableUserRecordIDTags(String user_id);
 
 	ArrayList<WordsVO> getAvaliableUserCphTags(String user_id);
+
+	ArrayList<WordsVO> getAvailableChartTypeSearchTags();
 	
 }

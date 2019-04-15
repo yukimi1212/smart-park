@@ -132,10 +132,21 @@ public class ParkingServiceImpl implements ParkingService {
 	}
 
 	@Override
-	public ArrayList<ParkingVO> parkingSearch(String searchWord) {
-		log.info("parkingSearch：" + searchWord);
+	public ArrayList<ParkingVO> parkingSearch(String searchWord, String source) {
+		log.info("parkingSearch：" + searchWord + "  " + source);
 		searchWord = "%"+searchWord+"%";
-		ArrayList<Parking> list = parkingMapper.parkingSearch(searchWord);
+		ArrayList<Parking> list = new ArrayList<Parking>();
+		if(source.equals("form"))
+			list = parkingMapper.parkingSearch(searchWord);
+		else if(source.equals("formpark"))
+			list = parkingMapper.parkingSearchByParking(searchWord);
+		else if(source.equals("formstreet"))
+			list = parkingMapper.parkingSearchByStreet(searchWord);
+		else
+			list = parkingMapper.parkingSearchByArea(searchWord);
+		
+		System.out.println(list.size());
+		
 		ArrayList<ParkingVO> listVO = changeToParkingVO(list);
 		return listVO;
 	}

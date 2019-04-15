@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableParkingNameTags() {
-		log.info("getAvaliableParkingNameTags：");
+//		log.info("getAvaliableParkingNameTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableParkingCodeTags() {
-		log.info("getAvaliableParkingCodeTags：");
+//		log.info("getAvaliableParkingCodeTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableStreetNameTags() {
-		log.info("getAvaliableStreetNameTags：");
+//		log.info("getAvaliableStreetNameTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableStreetCodeTags() {
-		log.info("getAvaliableStreetCodeTags：");
+//		log.info("getAvaliableStreetCodeTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableAreaNameTags() {
-		log.info("getAvaliableAreaNameTags：");
+//		log.info("getAvaliableAreaNameTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableAreaCodeTags() {
-		log.info("getAvaliableAreaCodeTags：");
+//		log.info("getAvaliableAreaCodeTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -218,7 +218,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableUserCphTags(String user_id) {
-		log.info("getAvaliableCphTags：");
+//		log.info("getAvaliableCphTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -234,7 +234,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public ArrayList<WordsVO> getAvaliableUserRecordIDTags(String user_id) {
-		log.info("getAvaliableRecordIDTags：");
+//		log.info("getAvaliableRecordIDTags：");
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -267,33 +267,58 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public ArrayList<WordsVO> getAvailableParkingSearchTags() {
-		log.info("getAvailableParkingSearchTags：");
+	public ArrayList<WordsVO> getAvailableParkingSearchTags(String source) {
+		log.info("getAvailableParkingSearchTags：" + source);
 		
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
-				
-		listVO.addAll(getAvaliableParkingNameTags());
-		listVO.addAll(getAvaliableParkingCodeTags());
-		listVO.addAll(getAvaliableStreetNameTags());
-		listVO.addAll(getAvaliableStreetCodeTags());
-		listVO.addAll(getAvaliableAreaNameTags());
-		listVO.addAll(getAvaliableAreaCodeTags());	
-	
+		if(source.equals("form")) {
+			listVO.addAll(getAvaliableParkingNameTags());
+			listVO.addAll(getAvaliableParkingCodeTags());
+			listVO.addAll(getAvaliableStreetNameTags());
+			listVO.addAll(getAvaliableStreetCodeTags());
+			listVO.addAll(getAvaliableAreaNameTags());
+			listVO.addAll(getAvaliableAreaCodeTags());
+		}
+		else if(source.equals("formpark")) {
+			listVO.addAll(getAvaliableParkingNameTags());
+			listVO.addAll(getAvaliableParkingCodeTags());
+		}
+		else if(source.equals("formstreet")) {
+			listVO.addAll(getAvaliableStreetNameTags());
+			listVO.addAll(getAvaliableStreetCodeTags());
+		}
+		else {
+			listVO.addAll(getAvaliableAreaNameTags());
+			listVO.addAll(getAvaliableAreaCodeTags());
+		}
 		return listVO;
 	}
 	
 	@Override
-	public ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id) {
-		log.info("getAvailableParkingSearchTags：");
+	public ArrayList<WordsVO> getAvailableUserRecordSearchTags(String user_id, String source) {
+		log.info("getAvailableUserRecordSearchTags：" + user_id + "   " + source);
 		
 		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
-			
-		listVO.addAll(getAvaliableUserRecordIDTags(user_id));
-		listVO.addAll(getAvaliableUserCphTags(user_id));
-		listVO.addAll(getAvaliableParkingNameTags());
-		listVO.addAll(getAvaliableStreetNameTags());
-		listVO.addAll(getAvaliableAreaNameTags());
-	
+		if(source.equals("record")) {	
+			listVO.addAll(getAvaliableUserRecordIDTags(user_id));
+//			listVO.addAll(getAvaliableUserCphTags(user_id));
+			listVO.addAll(getAvaliableParkingNameTags());
+			listVO.addAll(getAvaliableStreetNameTags());
+			listVO.addAll(getAvaliableAreaNameTags());
+		}
+		else if(source.equals("recordcph")) {	
+//			listVO.addAll(getAvaliableUserCphTags(user_id));
+		}
+		else if(source.equals("recordpark")) {	
+			listVO.addAll(getAvaliableParkingNameTags());
+		}
+		else if(source.equals("recordstreet")){	
+			listVO.addAll(getAvaliableStreetNameTags());
+		}
+		else
+			listVO.addAll(getAvaliableAreaNameTags());
+		
+//		System.out.println(listVO.size());
 		return listVO;
 	}
 
@@ -301,6 +326,17 @@ public class UserServiceImpl implements UserService {
 	public void alterUser(String user_id, String user_gender, String user_phone) {
 		log.info("alterUser：");
 		userMapper.alterUser(user_id, user_gender, user_phone);
+	}
+
+	@Override
+	public ArrayList<WordsVO> getAvailableChartTypeSearchTags() {
+		log.info("getAvailableChartTypeSearchTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		
+		listVO.addAll(getAvaliableStreetNameTags());
+		listVO.addAll(getAvaliableAreaNameTags());
+		return listVO;
 	}
 
 }

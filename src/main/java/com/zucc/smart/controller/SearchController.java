@@ -47,12 +47,12 @@ public class SearchController {
 	VehicleService vehicleService;
     
     @RequestMapping(value = "/form/user/{user_id}", method = RequestMethod.GET)
-    public ArrayList<ParkingVO> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
+    public ArrayList<ParkingVO> getFormSearch(@PathVariable("user_id") String user_id_obj, String searchWord, String source) {
     	String user_id = new String (Decode.decode(user_id_obj));
     	log.info("/search/form/user/" + user_id + "-----" + searchWord);
     	
     	ArrayList<ParkingVO> listVO = new ArrayList<ParkingVO>();
-		listVO = parkingService.parkingSearch(searchWord);		
+		listVO = parkingService.parkingSearch(searchWord,source);		
 		return listVO;
     }
 
@@ -87,12 +87,12 @@ public class SearchController {
     }
     
     @RequestMapping(value = "/record/user/{user_id}", method = RequestMethod.GET)
-    public ArrayList<RecordVO> getUserRecordSearch(@PathVariable("user_id") String user_id_obj, String searchWord) {
+    public ArrayList<RecordVO> getUserRecordSearch(@PathVariable("user_id") String user_id_obj, String searchWord, String source) {
     	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/search/record/user/" + user_id + "-----" + searchWord);
+    	log.info("/search/record/user/" + user_id + "-----" + searchWord + "   " + source);
     	
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-		list = recordService.userRecordSearch(searchWord, user_id);		
+		list = recordService.userRecordSearch(searchWord, user_id, source);		
 		return list;
     }
     
@@ -165,20 +165,29 @@ public class SearchController {
 		return list;
     }
     
+    @RequestMapping(value = "/tags/chartType", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableChartTypeSearchTags() {
+    	log.info("/search/tags/chartType");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableChartTypeSearchTags();		
+		return list;
+    }
+    //url:'http://localhost:8080/search/tags/' + param + '/chartType',
+    
     @RequestMapping(value = "/tags/parking", method = RequestMethod.GET)
-    public ArrayList<WordsVO> getAvailableParkingSearchTags() {
+    public ArrayList<WordsVO> getAvailableParkingSearchTags(String source) {
     	log.info("/search/tags/parking");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
-		list = userService.getAvailableParkingSearchTags();		
+		list = userService.getAvailableParkingSearchTags(source);		
 		return list;
     }
     
     @RequestMapping(value = "/tags/{user_id}/record", method = RequestMethod.GET)
-    public ArrayList<WordsVO> getAvailableRecordSearchTags(@PathVariable("user_id") String user_id_obj) {
+    public ArrayList<WordsVO> getAvailableUserRecordSearchTags(@PathVariable("user_id") String user_id_obj, String source) {
     	String user_id = new String (Decode.decode(user_id_obj));
-    	log.info("/search/tags/" + user_id + "/record");   	
+    	log.info("/search/tags/" + user_id + "/record    " + source );   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
-		list = userService.getAvailableUserRecordSearchTags(user_id);		
+		list = userService.getAvailableUserRecordSearchTags(user_id, source);		
 		return list;
     }
     
@@ -187,6 +196,15 @@ public class SearchController {
     	log.info("/search/" + searchWord + "/time ----- " + source);   	
     	ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
 		listVO = recordService.getTimeSearch(searchWord, source);
+
+		return listVO;
+    }
+    
+    @RequestMapping(value = "/{searchWord}/chartType", method = RequestMethod.GET)
+    public ArrayList<ParkingTypeVO> getRecordChartTypeSearch(@PathVariable("searchWord") String searchWord, String source) {
+    	log.info("/search/" + searchWord + "/time ----- " + source);   	
+    	ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
+		listVO = recordService.getRecordChartTypeSearch(searchWord, source);
 
 		return listVO;
     }
@@ -207,21 +225,10 @@ public class SearchController {
     }
     
     @RequestMapping(value = "/record/admin", method = RequestMethod.GET)
-    public ArrayList<RecordVO> getAdminRecordSearch(String searchWord,String property) {
+    public ArrayList<RecordVO> getAdminRecordSearch(String searchWord,String property, String source) {
     	log.info("/search/record/admin" + "----- searchWord：" + searchWord);
     	ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-    	list = recordService.adminRecordSearch(searchWord);
-/*    	if(property.equals("ID")) 
-    		list = recordService.adminRecordIDSearch(searchWord);	
-    	else if(property.equals("CPH")) 
-    		list = recordService.adminRecordCPHSearch(searchWord);
-    	else if(property.equals("parking"))
-    		list = recordService.adminRecordParkingSearch(searchWord);
-    	else if(property.equals("street"))
-    		list = recordService.adminRecordStreetSearch(searchWord);
-    	else
-    		list = recordService.adminRecordAreaSearch(searchWord);
-*/    		
+    	list = recordService.adminRecordSearch(searchWord,source);  		
 		return list;
     }
     

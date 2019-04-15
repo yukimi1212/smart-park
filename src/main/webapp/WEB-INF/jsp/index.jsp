@@ -133,7 +133,7 @@
 		<div class="sp-slide clean-main-slides">
 			<div class="clean-img-overlay"></div>
 
-			<img class="sp-image" src="../../images/slider/3.jpg" alt="Slider 1"/>
+			<img class="sp-image" src="../../images/slider/741.jpg" alt="Slider 1"/>
 
 			<h1 class="sp-layer clean-slider-text-big"
 			data-position="center" data-show-transition="right" data-hide-transition="right" data-show-delay="1500" data-hide-delay="200">
@@ -150,7 +150,7 @@
 		<!-- Slides -->
 		<div class="sp-slide clean-main-slides">
 		<div class="clean-img-overlay"></div>
-			<img class="sp-image" src="../../images/slider/2.jpg" alt="Slider 2"/>
+			<img class="sp-image" src="../../images/slider/742.jpg" alt="Slider 2"/>
 
 			<h1 class="sp-layer clean-slider-text-big"
 			 data-position="center" data-show-transition="right" data-hide-transition="right" data-show-delay="1500" data-hide-delay="200">
@@ -168,7 +168,7 @@
 		<div class="sp-slide clean-main-slides">
 			<div class="clean-img-overlay"></div>
 
-			<img class="sp-image" src="../../images/slider/1.jpg" alt="Slider 3"/>
+			<img class="sp-image" src="../../images/slider/743.jpg" alt="Slider 3"/>
 
 			<h1 class="sp-layer clean-slider-text-big"
 			data-position="center" data-show-transition="right" data-hide-transition="right" data-show-delay="1500" data-hide-delay="200">

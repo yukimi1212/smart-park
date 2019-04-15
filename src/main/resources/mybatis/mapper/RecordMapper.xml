@@ -20,6 +20,20 @@
     	order by parkcode asc;
     </select>
     
+    <select id="getRecordWithStreet" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where streetcode = #{streetcode}
+    	order by parkcode asc;
+    </select>
+    
+    <select id="getRecordWithArea" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	where businesscode = #{businesscode}
+    	order by parkcode asc;
+    </select>
+    
     <select id="getUserRecord" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
@@ -67,7 +81,7 @@
 	<select id="searchUserRecordByCPH" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
-    	where CPH like #{searchWord} and cph = #{cph};
+    	where CPH = #{searchWord} and cph = #{cph};
     </select>
     
     <select id="searchUserRecordByParking" resultMap="RecordMap" useCache="false">

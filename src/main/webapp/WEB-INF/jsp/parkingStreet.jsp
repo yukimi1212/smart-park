@@ -69,18 +69,45 @@
                     <li class="nav-title">数据展示</li>
 					
                     <li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 停车场查询 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" id="form" onclick="returnForm()" class="nav-link">
+                                    <i class="icon icon-target"></i> 全部查询
+                                </a>
+                            </li>
+                            
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" id="formpark" onclick="returnFormParking()" class="nav-link">
+                                    <i class="icon icon-target"></i> 按停车场查询
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="formstreet" onclick="returnFormStreet()"  class="nav-link">
+                                    <i class="icon icon-target"></i> 按街道查询
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="formarea" onclick="returnFormArea()" class="nav-link">
+                                    <i class="icon icon-target"></i> 按城区查询
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         
-                        	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="returnForm()"  class="nav-link">
-                                    <i class="icon icon-target"></i> 停车场查询
-                                </a>
-                            </li>
-                            
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
                                     <i class="icon icon-target"></i> 类型统计
@@ -94,7 +121,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="javascript:void(0)" onclick="getStreet()" class="nav-link active">
                                     <i class="icon icon-target"></i> 街道统计
                                 </a>
                             </li>
@@ -141,7 +168,7 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="可按编号/名称进行搜索" size="18px">
+    			<input type="text" id="searchWord" value="" placeholder="可按编号/街道名/城区名进行搜索" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
   			</div><br>
   			
@@ -246,6 +273,27 @@
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
+        window.location.href=url;
+	}
+	
+	function returnFormParking() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formpark";
+        window.location.href=url;
+	}
+	
+	function returnFormStreet() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formstreet";
+        window.location.href=url;
+	}
+	
+	function returnFormArea() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formarea";
         window.location.href=url;
 	}
 	

@@ -54,6 +54,7 @@
                 	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
+                    <span id="source" style="display:none">${source }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -78,15 +79,43 @@
 					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-target"></i> 停车场信息 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车场查询 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
-                                <a href="#"  class="nav-link active">
-                                    <i class="icon icon-target"></i> 停车场查询
+                                <a href="javascript:void(0)" id="form" onclick="returnForm()" class="nav-link active">
+                                    <i class="icon icon-target"></i> 全部查询
                                 </a>
                             </li>
+                            
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" id="formpark" onclick="returnFormParking()" class="nav-link">
+                                    <i class="icon icon-target"></i> 按停车场查询
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="formstreet" onclick="returnFormStreet()"  class="nav-link">
+                                    <i class="icon icon-target"></i> 按街道查询
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="formarea" onclick="returnFormArea()" class="nav-link">
+                                    <i class="icon icon-target"></i> 按城区查询
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
                         
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
@@ -206,25 +235,37 @@
     
 	function doSearch() {
 		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			returnForm();
+		var source = $("#source").html();
+		if(sWord == ""){
+			if(source == "from")
+				returnForm();
+			else if(source == "formpark")
+				returnFormParking();
+			else if(source == "formstreet")
+				returnFormStreet();
+			else
+				returnFormArea();
+		}
+			
 		else{
 			var user_id = $("#user_id").html();
 		    var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&form";
+			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&" + source;
 	        window.location.href=url;
 		}
 	}
 	
-	function auto() {
+	function auto(source) {
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
 	    var availableTags = [];
+	    
 	    $.ajax({
 				type:'GET',
 	 		url:'http://localhost:8080/search/tags/parking',
 	 		async:true,
 	 		data:{
+	 			'source':source
 	 		},
 	 		success:function(list){
 	 			for (var i = 0; i < list.length; i++) {
@@ -245,7 +286,31 @@
 	
 	$(document).ready(function(){  
 		showForm();
-		auto();
+		var source = $("#source").html();
+		auto(source);
+		
+		if(source != "form"){
+			var sWord = document.getElementById('searchWord');
+			var clzall = document.getElementById('form');    
+			clzall.setAttribute("class", "nav-link"); 
+			
+			if(source == "formpark"){
+				var clzpark = document.getElementById('formpark');    
+				clzpark.setAttribute("class", "nav-link active");				
+				sWord.setAttribute("placeholder", "可按停车场编号/停车场名进行搜索");
+			}
+			else if(source == 'formstreet'){
+				var clzpark = document.getElementById('formstreet');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "可按街道编号/街道名进行搜索");
+			}
+			else if(source == 'formarea'){
+				var clzpark = document.getElementById('formarea');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "可按城区编号/城区名进行搜索");
+			}		
+		}
+			
 	});
 	
 	function showForm(){
@@ -276,6 +341,28 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/form";
+        window.location.href=url;
+	}
+	
+	
+	function returnFormParking() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formpark";
+        window.location.href=url;
+	}
+	
+	function returnFormStreet() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formstreet";
+        window.location.href=url;
+	}
+	
+	function returnFormArea() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/formarea";
         window.location.href=url;
 	}
 	

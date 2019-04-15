@@ -20,12 +20,14 @@ import com.zucc.smart.service.impl.Decode;
 public class AdminController {
 	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 	 
-    @RequestMapping(value = {"/", "/{searchWord}/record"})
-    public String searchRecord(@PathVariable("searchWord") String searchWord, Map<String, Object> map) throws IOException {
-    	log.info("/admin/" + searchWord + "/record");
+    @RequestMapping(value = {"/", "/{searchWord}/{source}"})
+    public String searchRecord(@PathVariable("searchWord") String searchWord, @PathVariable("source") String source, Map<String, Object> map) throws IOException {
+    	log.info("/admin/" + searchWord + "/" + source);
+    	
     	map.put("user_id", "admin");
     	map.put("user_name", "管理");
     	map.put("searchWord", searchWord);
+    	map.put("source", source);
     	return "searchRecord";
     }
     

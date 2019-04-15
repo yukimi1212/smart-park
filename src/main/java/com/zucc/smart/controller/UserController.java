@@ -51,6 +51,29 @@ public class UserController {
         return "chartArea";
     }
     
+    @RequestMapping(value = {"/", "/{user_id}/chartStreet"})
+    public String getChartStreet(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/chartStreet");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        return "chartStreet";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/chartType"})
+    public String getChartType(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/chartType");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        map.put("searchWord", "");
+        return "chartType";
+    }
+    
     @RequestMapping(value = {"/", "/{user_id}/chartTime"})
     public String getChartTime(@PathVariable("user_id") String user_id_obj, 
     		Map<String, Object> map) throws IOException {
@@ -83,6 +106,47 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", "");
+    	map.put("source", "form");
+    	System.out.println("form");
+        return "parkingForm";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/formpark"})
+    public String gotoParkingFormByParking(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/formpark");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("searchWord", "");
+    	map.put("source", "formpark");
+        return "parkingForm";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/formstreet"})
+    public String gotoParkingFormByStreet(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/formstreet");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("searchWord", "");
+    	map.put("source", "formstreet");
+        return "parkingForm";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/formarea"})
+    public String gotoParkingFormByArea(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/formarea");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("searchWord", "");
+    	map.put("source", "formarea");
         return "parkingForm";
     }
 
@@ -133,6 +197,63 @@ public class UserController {
     	map.put("search_id", user_id);
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
+    	map.put("source", "record");
+        return "showRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/recordcph"})
+    public String gotoParkingRecordCPH(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/recordcph");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("search_name", user_name);
+    	map.put("search_id", user_id);
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("source", "recordcph");
+        return "showRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/recordpark"})
+    public String gotoParkingRecordParking(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/recordpark");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("search_name", user_name);
+    	map.put("search_id", user_id);
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("source", "recordpark");
+        return "showRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/recordstreet"})
+    public String gotoParkingRecordStreet(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/recordstreet");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("search_name", user_name);
+    	map.put("search_id", user_id);
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("source", "recordstreet");
+        return "showRecord";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/recordarea"})
+    public String gotoParkingRecordArea(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/recordarea");
+    	String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("search_name", user_name);
+    	map.put("search_id", user_id);
+    	map.put("user_name", user_name);
+    	map.put("user_id", user_id);
+    	map.put("source", "recordarea");
         return "showRecord";
     }
     
@@ -238,8 +359,9 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", searchWord);
-
-    	if(source.equals("form"))
+    	map.put("source", source);
+    	    	
+    	if(source.equals("form") || source.equals("formpark") || source.equals("formstreet") || source.equals("formarea"))
     		return "searchForm";
     	else if(source.equals("type"))
     		return "searchType";

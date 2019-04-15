@@ -73,24 +73,34 @@ public class RecordServiceImpl implements RecordService {
 	}
 
 	@Override
-	public ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id) {
-		log.info("userRecordSearch: " + user_id + "  searchWord：" + searchWord);
+	public ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id, String source) {
+		log.info("userRecordSearch: " + user_id + "  searchWord：" + searchWord + " source：" + source);
 		ArrayList<Vehicle> listAllCPH = vehicleMapper.getUserVehicle(user_id);
 		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
 		ArrayList<Record> listAll = new ArrayList<Record>();
+		String sWord = "%"+searchWord+"%";
 		for(int i=0; i<listAllCPH.size(); i++) {
 			String cph = listAllCPH.get(i).getCph();			
-			ArrayList<Record> listID = recordMapper.searchUserRecordByID("%"+searchWord+"%", cph);
-			ArrayList<Record> listCPH = recordMapper.searchUserRecordByCPH("%"+searchWord+"%", cph);
-			ArrayList<Record> listParking = userRecordParkingSearch(searchWord,cph);
-			ArrayList<Record> listStreet = userRecordStreetSearch(searchWord,cph);
-			ArrayList<Record> listArea = userRecordAreaSearch(searchWord,cph);
-			listAll.addAll(listID);
-			listAll.addAll(listCPH);
-			listAll.addAll(listParking);
-			listAll.addAll(listStreet);
-			listAll.addAll(listArea);			
+			if(source.equals("record")) {
+				listAll.addAll(recordMapper.searchUserRecordByID(sWord, cph));
+//				listAll.addAll(recordMapper.searchUserRecordByCPH(searchWord, cph));
+				listAll.addAll(userRecordParkingSearch(sWord,cph));
+				listAll.addAll(userRecordStreetSearch(sWord,cph));
+				listAll.addAll(userRecordAreaSearch(sWord,cph));
+			}
+			else if(source.equals("recordcph")) {
+				listAll.addAll(recordMapper.searchUserRecordByCPH(searchWord, cph));
+			}
+			else if(source.equals("recordpark")) {
+				listAll.addAll(userRecordParkingSearch(sWord,cph));
+			}
+			else if(source.equals("recordstreet")) {
+				listAll.addAll(userRecordStreetSearch(sWord,cph));
+			}
+			else 
+				listAll.addAll(userRecordAreaSearch(sWord,cph));
 		}
+		
 		listVO = changeToRecordVO(listAll);
 		return listVO;
 	}
@@ -128,8 +138,7 @@ public class RecordServiceImpl implements RecordService {
 	
 	@Override
 	public ArrayList<Record> userRecordParkingSearch(String searchWord, String cph) {
-//		log.info("userRecordParkingSearch: " + searchWord + "  cph：" + cph);
-		ArrayList<Parking> listParking = parkingMapper.searchParkcodeByParkname("%"+searchWord+"%");
+		ArrayList<Parking> listParking = parkingMapper.searchParkcodeByParkname(searchWord);
 		ArrayList<Record> listAll = new ArrayList<Record>();
 		for(int i=0; i<listParking.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchUserRecordByParking(listParking.get(i).getParkcode(), cph);
@@ -140,8 +149,7 @@ public class RecordServiceImpl implements RecordService {
 	
 	@Override
 	public ArrayList<Record> userRecordStreetSearch(String searchWord, String cph) {
-//		log.info("userRecordStreetSearch: " + searchWord + "  cph：" + cph);
-		ArrayList<Parking> listRecord = parkingMapper.searchStreetcodeByStreetname("%"+searchWord+"%");
+		ArrayList<Parking> listRecord = parkingMapper.searchStreetcodeByStreetname(searchWord);
 		ArrayList<Record> listAll = new ArrayList<Record>();
 		for(int i=0; i<listRecord.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchUserRecordByStreet(listRecord.get(i).getStreetcode(),cph);
@@ -153,7 +161,7 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public ArrayList<Record> userRecordAreaSearch(String searchWord, String cph) {
 //		log.info("userRecordAreaSearch: " + searchWord + "  cph：" + cph);
-		ArrayList<Parking> listArea = parkingMapper.searchBusinesscodeByAreaname("%"+searchWord+"%");
+		ArrayList<Parking> listArea = parkingMapper.searchBusinesscodeByAreaname(searchWord);
 		ArrayList<Record> listAll = new ArrayList<Record>();
 		for(int i=0; i<listArea.size(); i++) {
 			ArrayList<Record> list = recordMapper.searchUserRecordByArea(listArea.get(i).getBusinesscode(),cph);
@@ -191,20 +199,29 @@ public class RecordServiceImpl implements RecordService {
 	}
 
 	@Override
-	public ArrayList<RecordVO> adminRecordSearch(String searchWord) {	
+	public ArrayList<RecordVO> adminRecordSearch(String searchWord, String source) {	
 		log.info("adminRecordSearch: " + searchWord);
 		ArrayList<RecordVO> listVO = new ArrayList<RecordVO>();
-		ArrayList<RecordVO> listID = adminRecordIDSearch(searchWord);	
-		listVO.addAll(listID);
-		ArrayList<RecordVO> listCPH = adminRecordCPHSearch(searchWord);
-		listVO.addAll(listCPH);
-		ArrayList<RecordVO> listParking = adminRecordParkingSearch(searchWord);
-		listVO.addAll(listParking);
-		ArrayList<RecordVO> listStreet = adminRecordStreetSearch(searchWord);
-		listVO.addAll(listStreet);
-		ArrayList<RecordVO> listArea = adminRecordAreaSearch(searchWord);
-		listVO.addAll(listArea);
 		
+		if(source.equals("record")) {
+			listVO.addAll(adminRecordIDSearch(searchWord));
+			listVO.addAll(adminRecordCPHSearch(searchWord));
+			listVO.addAll(adminRecordParkingSearch(searchWord));
+			listVO.addAll(adminRecordStreetSearch(searchWord));
+			listVO.addAll(adminRecordAreaSearch(searchWord));
+		}
+		else if(source.equals("recordcph")) {
+			listVO.addAll(adminRecordCPHSearch(searchWord));
+		}
+		else if(source.equals("recordpark")) {
+			listVO.addAll(adminRecordParkingSearch(searchWord));
+		}
+		else if(source.equals("recordstreet")) {
+			listVO.addAll(adminRecordStreetSearch(searchWord));
+		}
+		else if(source.equals("recordarea")) {
+			listVO.addAll(adminRecordAreaSearch(searchWord));
+		}
 		return listVO;
 	}
 
@@ -274,9 +291,6 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public ArrayList<ParkingTypeVO> getRecordType() {
 		log.info("getRecordType: ");
-		long start,end;
-		start = System.currentTimeMillis();
-		
 		ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
 		ArrayList<Record> listRecord = recordMapper.getAllRecord();
 		int[] typeAmount = {0,0,0,0,0};
@@ -289,9 +303,6 @@ public class RecordServiceImpl implements RecordService {
 			typeAmount[typecode]++;
 		}
 		
-		end = System.currentTimeMillis();  
-		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
-		
 		for(int j=0; j<typeAmount.length; j++) {
 			ParkingTypeVO typeVO = new ParkingTypeVO();
 			typeVO.setTypecode(j+"");
@@ -300,8 +311,7 @@ public class RecordServiceImpl implements RecordService {
 			listVO.add(typeVO);
 		}
 		
-		end = System.currentTimeMillis();  
-		System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
+		listVO.get(0).setAmount(listRecord.size());
 		return listVO;
 	}
 	
@@ -432,8 +442,8 @@ public class RecordServiceImpl implements RecordService {
 		}
 		else {
 			
-			long start,end;
-			start = System.currentTimeMillis();
+//			long start,end;
+//			start = System.currentTimeMillis();
 			
 			String typecode = helperMapper.getTypeCode(searchWord);
 			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
@@ -458,10 +468,48 @@ public class RecordServiceImpl implements RecordService {
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + timeVO.getAmount());
 			}
 
-			end = System.currentTimeMillis();  
-			System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
+//			end = System.currentTimeMillis();  
+//			System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
 		}
 		
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<ParkingTypeVO> getRecordChartTypeSearch(String searchWord, String source) {
+		log.info("getRecordChartTypeSearch：" + searchWord + "  " + source);
+		ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
+		ArrayList<Record> listRecord = new ArrayList<Record>();
+		if (source.equals("street")) {
+			String streetcode = helperMapper.getStreetCode(searchWord);
+			listRecord = recordMapper.getRecordWithStreet(streetcode);
+		}
+		else {
+			String businesscode = helperMapper.getBusinessCode(searchWord);
+			listRecord = recordMapper.getRecordWithArea(businesscode);
+		}
+		
+		int[] typeAmount = {0,0,0,0,0};
+		int typecode = 0;
+		
+		for(int i=0; i<listRecord.size(); i++) {
+			String parkcode = listRecord.get(i).getParkcode();
+			ArrayList<Parking> parkingList = parkingMapper.getTypeCode(parkcode);
+			if (parkingList.size() != 0)
+				typecode = Integer.parseInt(parkingList.get(0).getTypecode());
+			if(typecode == 0)
+				System.out.println(listRecord.get(i).getId());
+			typeAmount[typecode]++;
+		}
+				
+		for(int j=0; j<typeAmount.length; j++) {
+			ParkingTypeVO typeVO = new ParkingTypeVO();
+			typeVO.setTypecode(j+"");
+			typeVO.setTypename(parkingTypeMapper.getTypeName(j+""));
+			typeVO.setAmount(typeAmount[j]);
+			listVO.add(typeVO);
+		}
+		listVO.get(0).setAmount(listRecord.size());
 		return listVO;
 	}
 

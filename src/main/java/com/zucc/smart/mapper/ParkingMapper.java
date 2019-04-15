@@ -61,4 +61,10 @@ public interface ParkingMapper {
 			String areaname, String typecode, String parking_amount, String lng, String lat);
 
 	int checkParkCode(String parkcode);
+
+	ArrayList<Parking> parkingSearchByParking(String searchWord);
+
+	ArrayList<Parking> parkingSearchByStreet(String searchWord);
+
+	ArrayList<Parking> parkingSearchByArea(String searchWord);
 }
