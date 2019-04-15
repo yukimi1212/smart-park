@@ -59,4 +59,8 @@ public interface RecordService {
 
 	ArrayList<ParkingTypeVO> getRecordChartTypeSearch(String searchWord, String source);
 
+	ArrayList<StreetVO> getRecordChartStreetSearch(String searchWord);
+
+	ArrayList<AreaVO> getRecordChartAreaSearch(String searchWord);
+
 }

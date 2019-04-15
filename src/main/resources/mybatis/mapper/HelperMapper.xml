@@ -33,6 +33,7 @@
     	where typename = #{typename}
     </select>
     
+    
     <select id="getAreaNameByStreetCode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
     	select distinct areaname
     	FROM street

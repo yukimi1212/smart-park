@@ -339,4 +339,22 @@ public class UserServiceImpl implements UserService {
 		return listVO;
 	}
 
+	@Override
+	public ArrayList<WordsVO> getAvailableChartStreetSearchTags() {
+		log.info("getAvailableChartStreetSearchTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		listVO.addAll(getAvaliableAreaNameTags());
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<WordsVO> getAvailableChartAreaSearchTags() {
+		log.info("getAvailableChartAreaSearchTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		listVO.addAll(getAvaliableTypeNameTags());
+		return listVO;
+	}
+
 }

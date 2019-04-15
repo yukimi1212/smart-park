@@ -59,5 +59,9 @@ public interface RecordMapper {
 	ArrayList<Record> getRecordWithStreet(String streetcode);
 
 	ArrayList<Record> getRecordWithArea(String businesscode);
+
+	ArrayList<HashMap<String, Object>> getRecordStreetCountWithArea(String businesscode);
+
+	ArrayList<HashMap<String, Object>> getRecordAreaCountWithType(String parkcode);
 	
 }

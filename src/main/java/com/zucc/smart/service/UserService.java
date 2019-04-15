@@ -46,5 +46,9 @@ public interface UserService {
 	ArrayList<WordsVO> getAvaliableUserCphTags(String user_id);
 
 	ArrayList<WordsVO> getAvailableChartTypeSearchTags();
+
+	ArrayList<WordsVO> getAvailableChartStreetSearchTags();
+
+	ArrayList<WordsVO> getAvailableChartAreaSearchTags();
 	
 }

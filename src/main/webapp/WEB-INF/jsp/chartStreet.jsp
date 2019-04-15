@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
+	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
     
     <style> 		
       	#search input[type=text] {
@@ -128,7 +130,7 @@
                         </ul>
                     </li>
                     
-					 <li class="nav-item nav-dropdown ">
+					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
                         </a>
@@ -197,7 +199,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>                   
 
                    
                   	<li class="nav-item">
@@ -211,15 +213,21 @@
         </div>
 		
         <div class="content">   
-           
+           <div id="search">
+    			<input type="text" id="searchWord" value="" placeholder="指定城区"  size="18px">
+    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
+  			</div>
+  			<sapn>（上城区  下城区  江干区  西湖区  拱墅区  风景名胜区）</sapn>
+  			<br>
+  			
              <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-light">
-                            	按街道
+                            	按街道 <sapn id="sum"></sapn>
                         </div>						
-                	    <div class="card-body">
-                            <canvas id="chartStreet" width="100%" height="50"></canvas>
+                	    <div class="card-body" id="card-body">
+                            <canvas id="chartStreet" width="80%" height="30"></canvas>
                         </div>		 
                     </div>
                 </div>
@@ -234,20 +242,66 @@
 <script src="../../vendor/chart.js/chart.min.js"></script>
 <script src="../../js/carbon.js"></script>
 <script src="../../js/demo.js"></script>
+<script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
 </body>
 
 <script type="text/javascript">  
-
-	var pageSize = 15;    //每页显示的记录条数
- 	var curPage=0;        //当前页
- 	var lastPage;        //最后页
- 	var direct=0;        //方向
-	var len;            //总行数
-	var page;            //总页数
-	var begin;
-	var end;
     
+	function doSearch(){
+		var searchWord = $("#searchWord").val();
+		$.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/' + searchWord + '/chartStreet',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(result){
+	 			getStreetChart(result);
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	}
+	
+	function auto() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+	    var availableTags = [];
+	    $.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/tags/chartStreet',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	    
+	    $( "#searchWord" ).autocomplete({
+	    	source: availableTags,
+	    	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("请输入完整正确的城区名！");
+		    		$(this).val('');
+		    	}
+		 	}
+	    });
+
+	  }
+	
 	window.onload = function(){ 	
+		auto();
 		var user_id = $("#user_id").html();
 		if(user_id == "admin"){
 			$("user").empty();
@@ -272,6 +326,12 @@
 	}
 	
 	function getStreetChart(list) {
+		$("sum").empty();
+		document.getElementById("sum").innerHTML = "&nbsp&nbsp总记录数：" + list[0].amount;
+		
+		$('#chartStreet').remove();
+		$('#card-body').append('<canvas id="chartStreet" width="80%" height="30"></canvas>');
+		
 		var ctx = document.getElementById("chartStreet").getContext('2d');
 		var labels = [];
 		var data = [];
@@ -280,7 +340,7 @@
 		var backColor = ['rgba(244, 88, 70, 0.5)','rgba(33, 150, 243, 0.5)','rgba(0, 188, 212, 0.5)','rgba(42, 185, 127, 0.5)','rgba(156, 39, 176, 0.5)','rgba(253, 178, 68, 0.5)'];
 		var bordColor = ['#F45846','#2196F3','#00BCD4','#2ab97f','#9C27B0','#fdb244'];
 		
-		for (var i = 0; i < list.length; i++) {
+		for (var i = 1; i < list.length; i++) {
 	        labels.push(list[i].streetname);
 	        data.push(list[i].amount);
 	        backgroundColor.push(backColor[i%6]);
@@ -346,6 +406,41 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/user";
+		window.location.href=url;
+	}
+	
+	function returnRecord() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
+	function returnRecordCPH() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordcph";
+		window.location.href=url;
+	}
+	
+	function returnRecordParking() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordpark";
+		window.location.href=url;
+	}
+	
+	function returnRecordStreet() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordstreet";
+		window.location.href=url;
+	}
+	
+	function returnRecordArea() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordarea";
 		window.location.href=url;
 	}
 	

@@ -131,19 +131,64 @@
                     
 					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车记录信息 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-target"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getRecord()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 停车记录查询
+                                <a href="javascript:void(0)" id="record" onclick="returnRecord()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 全部查询
+                                </a>
+                            </li>
+                            
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" id="recordcph" onclick="returnRecordCPH()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 按车牌查询
                                 </a>
                             </li>
                         
                             <li class="nav-item">
+                                <a href="javascript:void(0)" id="recordpark" onclick="returnRecordParking()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 按停车场查询
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="recordstreet" onclick="returnRecordStreet()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 按街道查询
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" id="recordarea" onclick="returnRecordArea()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 按城区查询
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+					<li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">       
+                        
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartStreet()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 按街道统计
+                                </a>
+                            </li>
+                                             
+                            <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link">
-                                    <i class="icon icon-graph"></i> 区域类型统计
+                                    <i class="icon icon-graph"></i> 按城区统计
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getChartType()"  class="nav-link">
+                                    <i class="icon icon-graph"></i> 按类型统计
                                 </a>
                             </li>
 
@@ -297,6 +342,41 @@
         window.location.href=url;
 	}
 	
+	function returnRecord() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/record";
+		window.location.href=url;
+	}
+	
+	function returnRecordCPH() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordcph";
+		window.location.href=url;
+	}
+	
+	function returnRecordParking() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordpark";
+		window.location.href=url;
+	}
+	
+	function returnRecordStreet() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordstreet";
+		window.location.href=url;
+	}
+	
+	function returnRecordArea() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+		var url = "http://localhost:8080/user/" + param + "/recordarea";
+		window.location.href=url;
+	}
+	
 	function getType(){
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -325,20 +405,33 @@
 		window.location.href=url;
 	}
 	
+	function getChartStreet(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartStreet";
+        window.location.href=url;  
+    }	
+	
 	function getChartArea(){
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-        var uul = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;
-    }	
+        var url = "http://localhost:8080/user/" + param + "/chartArea";
+        window.location.href=url;  
+    }
+	
+	function getChartType(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartType";
+        window.location.href=url;  
+    }
 	
 	function getChartTime(){
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
         var url = "http://localhost:8080/user/" + param + "/chartTime";
-        window.location.href=url;  
+        window.location.href=url;
     }
-	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);

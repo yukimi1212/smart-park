@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import com.zucc.smart.domain.Map;
-import java.util.Set;
 
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.ParkingType;

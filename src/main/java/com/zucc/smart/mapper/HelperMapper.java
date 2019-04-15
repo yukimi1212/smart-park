@@ -36,5 +36,5 @@ public interface HelperMapper {
 
 	ArrayList<String> getUserRecordIDTags(String cph);
 
-	ArrayList<String> getUserCphTags(String user_id);	
+	ArrayList<String> getUserCphTags(String user_id);
 }

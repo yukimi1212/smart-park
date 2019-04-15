@@ -172,7 +172,22 @@ public class SearchController {
 		list = userService.getAvailableChartTypeSearchTags();		
 		return list;
     }
-    //url:'http://localhost:8080/search/tags/' + param + '/chartType',
+    
+    @RequestMapping(value = "/tags/chartStreet", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableChartStreetSearchTags() {
+    	log.info("/search/tags/chartType");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableChartStreetSearchTags();		
+		return list;
+    }
+   
+    @RequestMapping(value = "/tags/chartArea", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableChartAreaSearchTags() {
+    	log.info("/search/tags/chartArea");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableChartAreaSearchTags();		
+		return list;
+    }
     
     @RequestMapping(value = "/tags/parking", method = RequestMethod.GET)
     public ArrayList<WordsVO> getAvailableParkingSearchTags(String source) {
@@ -205,6 +220,24 @@ public class SearchController {
     	log.info("/search/" + searchWord + "/time ----- " + source);   	
     	ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
 		listVO = recordService.getRecordChartTypeSearch(searchWord, source);
+
+		return listVO;
+    }
+    
+    @RequestMapping(value = "/{searchWord}/chartStreet", method = RequestMethod.GET)
+    public ArrayList<StreetVO> getRecordChartStreetSearch(@PathVariable("searchWord") String searchWord) {
+    	log.info("/search/" + searchWord + "/chartStreet");   	
+    	ArrayList<StreetVO> listVO = new ArrayList<StreetVO>();
+		listVO = recordService.getRecordChartStreetSearch(searchWord);
+
+		return listVO;
+    }
+    
+    @RequestMapping(value = "/{searchWord}/chartArea", method = RequestMethod.GET)
+    public ArrayList<AreaVO> getRecordChartAreaSearch(@PathVariable("searchWord") String searchWord) {
+    	log.info("/search/" + searchWord + "/chartArea");   	
+    	ArrayList<AreaVO> listVO = new ArrayList<AreaVO>();
+		listVO = recordService.getRecordChartAreaSearch(searchWord);
 
 		return listVO;
     }

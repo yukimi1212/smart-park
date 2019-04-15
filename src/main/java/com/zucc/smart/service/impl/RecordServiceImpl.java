@@ -320,6 +320,13 @@ public class RecordServiceImpl implements RecordService {
 		log.info("getRecordArea: ");
 		ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordAreaCount();
 		ArrayList<AreaVO> listVO = new ArrayList<AreaVO>();
+		
+		AreaVO areaVO = new AreaVO();
+		areaVO.setBusinesscode(0 + "");
+		areaVO.setAreaname("");
+		areaVO.setAmount(0);
+        listVO.add(areaVO);
+        
 		for(int i=0; i<listmap.size(); i++) {
 			HashMap<String, Object> map = listmap.get(i);
 			
@@ -327,11 +334,12 @@ public class RecordServiceImpl implements RecordService {
 			String amount = map.get("count(businesscode)").toString();
 			String areaname = helperMapper.getAreaName(businesscode);
 			
-			AreaVO areaVO = new AreaVO();
+			areaVO = new AreaVO();
 			areaVO.setBusinesscode(businesscode);
 			areaVO.setAreaname(areaname);
 			areaVO.setAmount(Integer.parseInt(amount));
             listVO.add(areaVO);
+            listVO.get(0).setAmount(listVO.get(0).getAmount() + Integer.parseInt(amount));
 //            System.out.println(areaVO.getBusinesscode() + "   " + areaVO.getAreaname() + "   " + areaVO.getAmount());
 		}
 		return listVO;
@@ -342,6 +350,13 @@ public class RecordServiceImpl implements RecordService {
 		log.info("getRecordStreet: ");
 		ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordStreetCount();
 		ArrayList<StreetVO> listVO = new ArrayList<StreetVO>();
+		
+		StreetVO streetVO = new StreetVO();
+		streetVO.setStreetcode(0 + "");
+		streetVO.setStreetname("");
+		streetVO.setAmount(0);
+        listVO.add(streetVO);
+        
 		for(int i=0; i<listmap.size(); i++) {
 			HashMap<String, Object> map = listmap.get(i);
 			
@@ -349,11 +364,12 @@ public class RecordServiceImpl implements RecordService {
 			String amount = map.get("count(streetcode)").toString();
 			String streetname = helperMapper.getStreetName(streetcode);
 			
-			StreetVO streetVO = new StreetVO();
+			streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
 			streetVO.setStreetname(streetname);
 			streetVO.setAmount(Integer.parseInt(amount));
             listVO.add(streetVO);
+            listVO.get(0).setAmount(listVO.get(0).getAmount() + Integer.parseInt(amount));
 		}
 		return listVO;
 	}
@@ -510,6 +526,79 @@ public class RecordServiceImpl implements RecordService {
 			listVO.add(typeVO);
 		}
 		listVO.get(0).setAmount(listRecord.size());
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<StreetVO> getRecordChartStreetSearch(String searchWord) {
+		log.info("getRecordChartStreetSearch：" + searchWord);
+		String businesscode = helperMapper.getBusinessCode(searchWord);
+		
+		ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordStreetCountWithArea(businesscode);
+		
+		ArrayList<StreetVO> listVO = new ArrayList<StreetVO>();
+		
+		StreetVO streetVO = new StreetVO();
+		streetVO.setStreetcode(0 + "");
+		streetVO.setStreetname("");
+		streetVO.setAmount(0);
+        listVO.add(streetVO);
+        
+		for(int i=0; i<listmap.size(); i++) {
+			HashMap<String, Object> map = listmap.get(i);
+			
+			String streetcode = map.get("streetcode").toString();
+			String amount = map.get("count(streetcode)").toString();
+			String streetname = helperMapper.getStreetName(streetcode);
+			System.out.println(streetcode + " " + amount + "  " + streetname);
+			
+			streetVO = new StreetVO();
+			streetVO.setStreetcode(streetcode);
+			streetVO.setStreetname(streetname);
+			streetVO.setAmount(Integer.parseInt(amount));
+            listVO.add(streetVO);
+            listVO.get(0).setAmount(listVO.get(0).getAmount() + Integer.parseInt(amount));
+		}
+		System.out.println(listVO.size());
+		return listVO;
+	}
+
+	@Override
+	public ArrayList<AreaVO> getRecordChartAreaSearch(String searchWord) {
+		log.info("getRecordChartAreaSearch: " + searchWord);
+		String typecode = helperMapper.getTypeCode(searchWord);
+		ArrayList<Parking> listparking = parkingMapper.getParkcodeByTypecode(typecode);
+		int[] areaAmount = {0,0,0,0,0,0,0};
+		
+		for(int n=0; n<listparking.size(); n++) {
+			ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordAreaCountWithType(listparking.get(n).getParkcode());
+		
+			for(int i=0; i<listmap.size(); i++) {
+				HashMap<String, Object> map = listmap.get(i);
+				
+				String businesscode = map.get("businesscode").toString();
+				int index = Integer.parseInt(businesscode.substring(14));
+			
+				int amount = Integer.parseInt(map.get("count(businesscode)").toString());
+				areaAmount[index] += amount;
+//				System.out.println("index: " + index + "   " + "amount: " + amount + "   " + "areaAmount[index]: " + areaAmount[index]);
+			}
+		}
+		
+		for (int n=1; n<areaAmount.length; n++) {
+			areaAmount[0] += areaAmount[n];
+		}
+		
+		ArrayList<AreaVO> listVO = new ArrayList<AreaVO>();
+		for (int n=0; n<areaAmount.length; n++) {
+			AreaVO areaVO = new AreaVO();
+			String businesscode = "00000000000000" + n;
+			areaVO.setBusinesscode(businesscode);
+			areaVO.setAmount(areaAmount[n]);
+			String areaname = helperMapper.getAreaName(businesscode);
+			areaVO.setAreaname(areaname);
+			listVO.add(areaVO);
+		}
 		return listVO;
 	}
 

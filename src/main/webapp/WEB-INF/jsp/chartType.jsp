@@ -258,7 +258,7 @@
  function checkSearchWord() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
-			getChartTime();
+			getChartType();
 		else{
 			var user_id = $("#user_id").html();
 			var param = encode64(user_id);
@@ -280,30 +280,6 @@
 		}		
 	}
 	
- 	function checkSearchWord() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getChartTime();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			$.ajax({
-	   			type:'GET',
-	     		url:'http://localhost:8080/search/' + sWord + '/check',
-	     		async:true,
-	     		data:{
-	     		},
-	     		success:function(result){
-	     			if(result != "null")
-	     				doSearch(sWord,result);
-	     		},
-	     		error:function(error){
-	     			var jsonData = JSON.stringify(error);
-	     	    	alert(jsonData)
-	     		}
-	 		})
-		}		
-	}
  	
 	function doSearch(sWord,source){
 		var sWord = $("#searchWord").val();
@@ -394,7 +370,7 @@ function getTypeChart(list) {
 	document.getElementById("sum").innerHTML = "&nbsp&nbsp总记录数：" + list[0].amount;
 	
 	$('#chartType').remove();
-	$('#card-body').append('<canvas id="chartType" width="100%" height="30"></canvas>');
+	$('#card-body').append('<canvas id="chartType" width="80%" height="30"></canvas>');
 	
 	var ctx = document.getElementById("chartType").getContext('2d');
 	var labels = [];
@@ -477,6 +453,41 @@ function returnUser() {
 	window.location.href=url;
 }
 
+function returnRecord() {
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+	var url = "http://localhost:8080/user/" + param + "/record";
+	window.location.href=url;
+}
+
+function returnRecordCPH() {
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+	var url = "http://localhost:8080/user/" + param + "/recordcph";
+	window.location.href=url;
+}
+
+function returnRecordParking() {
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+	var url = "http://localhost:8080/user/" + param + "/recordpark";
+	window.location.href=url;
+}
+
+function returnRecordStreet() {
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+	var url = "http://localhost:8080/user/" + param + "/recordstreet";
+	window.location.href=url;
+}
+
+function returnRecordArea() {
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+	var url = "http://localhost:8080/user/" + param + "/recordarea";
+	window.location.href=url;
+}
+
 function getType(){
 	var user_id = $("#user_id").html();
     var param = encode64(user_id);
@@ -540,11 +551,25 @@ function getUser() {
 	window.location.href=url;
 }
 
+function getChartStreet(){
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+    var url = "http://localhost:8080/user/" + param + "/chartStreet";
+    window.location.href=url;  
+}	
+
 function getChartArea(){
 	var user_id = $("#user_id").html();
     var param = encode64(user_id);
     var url = "http://localhost:8080/user/" + param + "/chartArea";
-    window.location.href=url;
+    window.location.href=url;  
+}
+
+function getChartType(){
+	var user_id = $("#user_id").html();
+    var param = encode64(user_id);
+    var url = "http://localhost:8080/user/" + param + "/chartType";
+    window.location.href=url;  
 }
 
 function getChartTime(){

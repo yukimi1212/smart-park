@@ -20,83 +20,83 @@
     	order by parkcode asc;
     </select>
     
-    <select id="getRecordWithStreet" resultMap="RecordMap" useCache="false">
+    <select id="getRecordWithStreet" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where streetcode = #{streetcode}
     	order by parkcode asc;
     </select>
     
-    <select id="getRecordWithArea" resultMap="RecordMap" useCache="false">
+    <select id="getRecordWithArea" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where businesscode = #{businesscode}
     	order by parkcode asc;
     </select>
     
-    <select id="getUserRecord" resultMap="RecordMap" useCache="false">
+    <select id="getUserRecord" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where cph = #{cph};
     </select>
 
 	<!-- 管理员 -->
-	<select id="searchRecordByID" resultMap="RecordMap" useCache="false">
+	<select id="searchRecordByID" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where ID like #{searchWord};
     </select>
 	
-	<select id="searchRecordByCPH" resultMap="RecordMap" useCache="false">
+	<select id="searchRecordByCPH" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where CPH like #{searchWord};
     </select>
     
-    <select id="searchRecordByParking" resultMap="RecordMap" useCache="false">
+    <select id="searchRecordByParking" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where parkcode = #{searchWord};
     </select>
     
-    <select id="searchRecordByStreet" resultMap="RecordMap" useCache="false">
+    <select id="searchRecordByStreet" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where streetcode = #{searchWord};
     </select>
     
-    <select id="searchRecordByArea" resultMap="RecordMap" useCache="false">
+    <select id="searchRecordByArea" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where businesscode = #{searchWord};
     </select>
      
     <!-- 用户 -->
-    <select id="searchUserRecordByID" resultMap="RecordMap" useCache="false">
+    <select id="searchUserRecordByID" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where ID like #{searchWord} and cph = #{cph};
     </select>
 	
-	<select id="searchUserRecordByCPH" resultMap="RecordMap" useCache="false">
+	<select id="searchUserRecordByCPH" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where CPH = #{searchWord} and cph = #{cph};
     </select>
     
-    <select id="searchUserRecordByParking" resultMap="RecordMap" useCache="false">
+    <select id="searchUserRecordByParking" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where parkcode = #{searchWord} and cph = #{cph};
     </select>
     
-    <select id="searchUserRecordByStreet" resultMap="RecordMap" useCache="false">
+    <select id="searchUserRecordByStreet" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where streetcode = #{searchWord} and cph = #{cph};
     </select>
     
-    <select id="searchUserRecordByArea" resultMap="RecordMap" useCache="false">
+    <select id="searchUserRecordByArea" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	where businesscode = #{searchWord} and cph = #{cph};
@@ -111,9 +111,16 @@
 	
 	
 	<!-- 按类别/街道/城区统计数量 -->
-	<select id="getRecordStreetCount" resultType="java.util.HashMap" useCache="false"> 
+	<select id="getRecordStreetCount" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false"> 
 		select streetcode, count(streetcode) 
 		from record 
+		group by streetcode
+	</select>
+	
+	<select id="getRecordStreetCountWithArea" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false"> 
+		select streetcode, count(streetcode) 
+		from record 
+		where businesscode = #{businesscode}
 		group by streetcode
 	</select>
 	
@@ -123,7 +130,14 @@
 		group by businesscode
 	</select>
 	
-	<select id="getRecordAreaTimeCount" resultType="java.lang.Integer" useCache="false"> 
+	<select id="getRecordAreaCountWithType" resultType="java.util.HashMap" useCache="false"> 
+		select businesscode, count(businesscode) 
+		from record 
+		where parkcode = #{parkcode}
+		group by businesscode
+	</select>
+	
+	<select id="getRecordAreaTimeCount" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false"> 
 		select businesscode,count(*) 
 		from record 
 		where inserttime like #{str} group by businesscode;
@@ -132,25 +146,25 @@
 	
 	
 	<!-- 按时段统计数量 -->	
-	<select id="getRecordTimeCount" resultType="java.lang.Integer" useCache="false"> 
+	<select id="getRecordTimeCount" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false"> 
 		select count(*) 
 		from record 
 		where inserttime like #{str}
 	</select>
 	
-	<select id="getRecordTimeCountForParking" resultType="java.lang.Integer" useCache="false"> 
+	<select id="getRecordTimeCountForParking" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false"> 
 		select count(*) 
 		from record 
 		where inserttime like #{str} and parkcode = #{parkcode}
 	</select>
 	
-	<select id="getRecordTimeCountForArea" resultType="java.lang.Integer" useCache="false"> 
+	<select id="getRecordTimeCountForArea" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false"> 
 		select count(*) 
 		from record 
 		where inserttime like #{str} and businesscode = #{businesscode}
 	</select>
 	
-	<select id="getRecordTimeCountForStreet" resultType="java.lang.Integer" useCache="false"> 
+	<select id="getRecordTimeCountForStreet" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false"> 
 		select count(*) 
 		from record 
 		where inserttime like #{str} and streetcode = #{streetcode}
