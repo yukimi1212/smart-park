@@ -203,7 +203,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 不同时段统计
+                                    <i class="icon icon-graph"></i> 按日期统计
                                 </a>
                             </li>
                         </ul>
@@ -471,11 +471,16 @@
 		var user_id = $("#user_id").html();
 		$("#tab").html("");
 		var str = "<thead><tr><th>停车场编号</th><th>街道编号</th><th>城区编号</th><th>停车场名</th><th>街道名</th>" + 
-					"<th>所属城区</th><th>停车场类型</th><th>停车位总数</th></tr></thead><tbody>";
+					"<th>所属城区</th><th>停车场类型</th><th>停车位总数</th>";
+		if (user_id == "admin")
+			str = str + "<th>操作</th>";
+		str += "</tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].parkcode + "</td><td>" + data[i].streetcode + "</td><td>" + data[i].businesscode 
 			+ "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" 
-			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td></tr>"; 
+			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td>"; 
+			if(user_id == "admin") 
+				str += "<td><a href=\"javascript:void(0)\" onclick=\"deleteParking(this)\">删除</a></td></tr>";
 		}
 		str = str + "</tbody>";
 		if(user_id == "admin")
@@ -488,6 +493,14 @@
 
 	function addParking() {
 		var url = "http://localhost:8080/admin/add";
+		window.location.href=url;
+	}
+	
+	function deleteParking(id) {
+		var rows = id.parentNode.parentNode.rowIndex;
+		var parkcode = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
+		alert(parkcode);
+		var url = "http://localhost:8080/admin/" + parkcode + "/delete";
 		window.location.href=url;
 	}
 	

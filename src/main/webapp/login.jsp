@@ -17,10 +17,10 @@
 
   <body class="login-body">
       
-      <div class="login-logo">
-          <!-- <img src="images/logo.PNG" alt="smart"/> -->
+<!--       <div class="login-logo">
+          <img src="images/logo.PNG" alt="smart"/>
       </div>
-
+ -->
       <h2 class="form-heading">登录</h2>
       <div class="container log-row">
       	<form id="form" class="form-signin" action="/login/user" method="get" enctype="multipart/form-data"> 

@@ -35,4 +35,6 @@ public interface ParkingService {
 			String areaname, String typename);
 
 	boolean checkParkCode(String parkcode);
+
+	void deleteParking(String parkcode);
 }

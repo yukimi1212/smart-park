@@ -67,4 +67,6 @@ public interface ParkingMapper {
 	ArrayList<Parking> parkingSearchByStreet(String searchWord);
 
 	ArrayList<Parking> parkingSearchByArea(String searchWord);
+
+	void deleteParking(String parkcode);
 }

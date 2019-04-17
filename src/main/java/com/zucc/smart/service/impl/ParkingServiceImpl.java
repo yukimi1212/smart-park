@@ -276,4 +276,11 @@ public class ParkingServiceImpl implements ParkingService {
 		
 		parkingMapper.addParking(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount,lng, lat);
 	}
+
+	@Override
+	public void deleteParking(String parkcode) {
+		log.info("deleteParking：" + parkcode);
+		
+		parkingMapper.deleteParking(parkcode);
+	}
 }

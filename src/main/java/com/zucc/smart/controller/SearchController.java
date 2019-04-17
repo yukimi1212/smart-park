@@ -125,19 +125,19 @@ public class SearchController {
 		return list;
     }
     
-    @RequestMapping(value = "/tags/time", method = RequestMethod.GET)
-    public ArrayList<WordsVO> getAvailableTimeTags() {
-    	log.info("/search/tags/time");   	
-    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
-		list = userService.getAvailableTimeTags();		
-		return list;
-    }
-    
     @RequestMapping(value = "/tags/typename", method = RequestMethod.GET)
     public ArrayList<WordsVO> getAvailableTypeNameTags() {
     	log.info("/search/tags/typename");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
 		list = userService.getAvaliableTypeNameTags();		
+		return list;
+    }
+    
+    @RequestMapping(value = "/tags/parkingname", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableParkingNameTags() {
+    	log.info("/search/tags/parkingname");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvaliableParkingNameTags();		
 		return list;
     }
 
@@ -206,11 +206,11 @@ public class SearchController {
 		return list;
     }
     
-    @RequestMapping(value = "/{searchWord}/time", method = RequestMethod.GET)
-    public ArrayList<TimeVO> getRecordTimeSearch(@PathVariable("searchWord") String searchWord, String source) {
-    	log.info("/search/" + searchWord + "/time ----- " + source);   	
+    @RequestMapping(value = "/time", method = RequestMethod.GET)
+    public ArrayList<TimeVO> getRecordTimeSearch(String sWordParking, String sWordStreet, String sWordArea, String starttime, String endtime ) {
+    	log.info("/search/time");   	
     	ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
-		listVO = recordService.getTimeSearch(searchWord, source);
+		listVO = recordService.getTimeSearch(sWordParking, sWordStreet, sWordArea, starttime, endtime);
 
 		return listVO;
     }

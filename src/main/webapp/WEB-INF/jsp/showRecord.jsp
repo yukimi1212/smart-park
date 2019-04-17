@@ -204,7 +204,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 不同时段统计
+                                    <i class="icon icon-graph"></i> 按日期统计
                                 </a>
                             </li>
                         </ul>

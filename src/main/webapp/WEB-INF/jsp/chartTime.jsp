@@ -17,15 +17,15 @@
     <style> 		
       	#search input[type=text] {
       		margin:0 auto;
-      		width:350px;
-      		height:50px;
+      		height:30px;
       		border:1px
         	font-size: 18px;
-        	width: 705px;
+        	width: 180px;
       	}
       	#search .button {
-        	padding: 10px;
+        	padding: 5px;
         	width: 90px;
+        	height:40px;
       	}
       	
       	.ui-autocomplete {
@@ -203,7 +203,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link active">
-                                    <i class="icon icon-graph"></i> 不同时段统计
+                                    <i class="icon icon-graph"></i> 按日期统计
                                 </a>
                             </li>
                         </ul>
@@ -220,17 +220,23 @@
             </nav>
         </div>
 		
-        <div class="content">   
+        <div class="content">
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="指定停车场/街道/城区/类型"  size="18px">
-    			<button class="button" type="submit" onclick="checkSearchWord()">搜索</button>
-  			</div><br>
+    			<input type="text" id="sWordParking" value="" placeholder="指定停车场"  size="18px">&nbsp / &nbsp
+    			<input type="text" id="sWordStreet" value="" placeholder="指定街道"  size="18px">&nbsp / &nbsp
+    			<input type="text" id="sWordArea" value="" placeholder="指定城区"  size="18px">&nbsp &nbsp &nbsp
+    			指定时间范围:
+    			<input type="text" id="starttime" placeholder="起始时间"  readonly="readonly"> -
+    			<input type="text" id="endtime" placeholder="结束时间"  readonly="readonly">&nbsp&nbsp&nbsp
+    			<button class="button" type="submit" onclick="doSearch()">搜索</button>
+  			</div>
+  			<br>
   			
              <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-light">
-                            	分时段（8：00 - 18：00）<sapn id="sum"></sapn>
+                            	范围： <sapn id="sum"></sapn>
                         </div>						
                 	    <div class="card-body" id="card-body">
                             <canvas id="chartTime" width="100%" height="30"></canvas>
@@ -250,58 +256,89 @@
 <script src="../../js/demo.js"></script>
 <script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
 <script src="../../js/jquery-ui.min.js"></script>
-
+<script src="../../js/jquery-ui.js"></script>
 </body>
 
 <script type="text/javascript">     
- 
- function checkSearchWord() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getChartTime();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			$.ajax({
-	   			type:'GET',
-	     		url:'http://localhost:8080/search/' + sWord + '/check',
-	     		async:true,
-	     		data:{
-	     		},
-	     		success:function(result){
-	     			if(result != "null")
-	     				doSearch(sWord,result);
-	     		},
-	     		error:function(error){
-	     			var jsonData = JSON.stringify(error);
-	     	    	alert(jsonData)
-	     		}
-	 		})
-		}		
+	
+	function datapicker(){		
+		$('#starttime').datepicker({
+			showButtonPanel:true,
+			dateFormat: 'yy/mm/dd',
+			closeText:"关闭",
+
+			showMonthAfterYear:true,
+			defaultDate:'2019/2/15',
+			minDate:'2019/2/15',
+			maxDate:'2019/5/17',
+			monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+		});
+				
+		$('#endtime').datepicker({
+			showButtonPanel:true,
+			dateFormat: 'yy/mm/dd',
+			closeText:"关闭",
+
+			showMonthAfterYear:true,
+			defaultDate:'2019/2/15',
+			minDate:'2019/2/15',
+			maxDate:'2019/5/17',
+			monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+			dayNamesMin: ['日','一','二','三','四','五','六'],
+			onSelect: function(selectedDate) {
+//				alert(selectedDate);
+			}
+		});
 	}
 
-	function doSearch(sWord,source){
-		$.ajax({
+	function doSearch(){
+		var sWordParking = $("#sWordParking").val();
+		var sWordStreet = $("#sWordStreet").val();
+		var sWordArea = $("#sWordArea").val();
+		var starttime = $("#starttime").val();
+		var endtime = $("#endtime").val();
+		if (starttime == "" && endtime != ""){
+			alert("请输入起始时间！")
+		}
+		else if (starttime != "" && endtime == ""){
+			alert("请输入结束时间！")
+		}
+		else {
+			$.ajax({
 				type:'GET',
-	 		url:'http://localhost:8080/search/' + sWord + '/time',
-	 		async:true,
-	 		data:{
-	 			'source':source
-	 		},
-	 		success:function(result){
-	 			getTimeChart(result);
-	 		},
-	 		error:function(error){
-	 			var jsonData = JSON.stringify(error);
-	 	    	alert(jsonData)
-	 		}
-		})
+		 		url:'http://localhost:8080/search/time',
+		 		async:true,
+		 		data:{
+		 			'sWordParking':sWordParking,
+		 			'sWordStreet':sWordStreet,
+		 			'sWordArea':sWordArea,
+		 			'starttime':starttime,
+		 			'endtime':endtime
+		 		},
+		 		success:function(result){
+		 			if (result.length == 0)
+		 				alert("请输入正确的时间段范围！");
+		 			getTimeChart(result);
+		 		},
+		 		error:function(error){
+		 			var jsonData = JSON.stringify(error);
+		 	    	alert(jsonData)
+		 		}
+			})	
+		}
+				
 	}
 	
 	window.onload = function(){	
 		auto();
-		var sWord = $("#searchWord").val();
-		if(sWord == "") {
+		datapicker();
+		var sWordParking = $("#sWordParking").val();
+		var sWordStreet = $("#sWordStreet").val();
+		var sWordArea = $("#sWordArea").val();
+		var starttime = $("#starttime").val();
+		var endtime = $("#endtime").val();
+		if(sWordParking == "" && sWordStreet == "" && sWordArea == "" && starttime == "" && endtime == "") {
 			var user_id = $("#user_id").html();
 			if(user_id == "admin"){
 				$("user").empty();
@@ -324,75 +361,145 @@
 				})	
 		}
 		else{
-			checkSearchWord();
+			doSearch();
 		}
 		
 	}
 
-function auto() {
-	var user_id = $("#user_id").html();
-	var param = encode64(user_id);
-    var availableTags = [];
-    $.ajax({
-		type:'GET',
- 		url:'http://localhost:8080/search/tags/time',
- 		async:true,
- 		data:{
- 		},
- 		success:function(list){
- 			for (var i = 0; i < list.length; i++) {
- 				availableTags.push(list[i].value);
- 		    }
- 		},
- 		error:function(error){
- 			var jsonData = JSON.stringify(error);
- 	    	alert(jsonData)
- 		}
-	})
+	function auto() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+		
+		var availableParkingTags = [];
+    	$.ajax({
+			type:'GET',
+ 			url:'http://localhost:8080/search/tags/parkingname',
+ 			async:true,
+ 			data:{
+ 			},
+ 			success:function(list){
+ 				for (var i = 0; i < list.length; i++) {
+ 					availableParkingTags.push(list[i].value);
+ 		    	}
+ 			},
+ 			error:function(error){
+ 				var jsonData = JSON.stringify(error);
+ 	    		alert(jsonData)
+ 			}
+		})
     
-    $( "#searchWord" ).autocomplete({
-    	source: availableTags,
-    	mustMatch: true,
-		change: function (event, ui) {
-	  		if (!ui.item) {
-	  			alert("请输入完整正确的停车场/街道/城区/类型名称！");
-	    		$(this).val('');
-	    	}
-	 	}
-    });
-
-  }
+   		$( "#sWordParking" ).autocomplete({
+    		source: availableParkingTags,
+    		mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("请输入完整正确的城区名！");
+		    		$(this).val('');
+		    	}
+		 	}
+    	});
+    	
+    	var availableStreetTags = [];
+    	$.ajax({
+			type:'GET',
+ 			url:'http://localhost:8080/search/tags/streetname',
+ 			async:true,
+ 			data:{
+ 			},
+ 			success:function(list){
+ 				for (var i = 0; i < list.length; i++) {
+ 					availableStreetTags.push(list[i].value);
+ 		    	}
+ 			},
+ 			error:function(error){
+ 				var jsonData = JSON.stringify(error);
+ 	    		alert(jsonData)
+ 			}
+		})
+    
+   		$( "#sWordStreet" ).autocomplete({
+    		source: availableStreetTags,
+    		mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("请输入完整正确的街道名！");
+		    		$(this).val('');
+		    	}
+		 	}
+    	});
+    	
+    	
+    	var availableAreaTags = [];
+    	$.ajax({
+			type:'GET',
+ 			url:'http://localhost:8080/search/tags/areaname',
+ 			async:true,
+ 			data:{
+ 			},
+ 			success:function(list){
+ 				for (var i = 0; i < list.length; i++) {
+ 					availableAreaTags.push(list[i].value);
+ 		    	}
+ 			},
+ 			error:function(error){
+ 				var jsonData = JSON.stringify(error);
+ 	    		alert(jsonData)
+ 			}
+		})
+    
+   		$( "#sWordArea" ).autocomplete({
+    		source: availableAreaTags,
+    		mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("请输入完整正确的城区名！");
+		    		$(this).val('');
+		    	}
+		 	}
+    	});
+  	}
 
 function getTimeChart(list) {
 	$("sum").empty();
-	document.getElementById("sum").innerHTML = "&nbsp&nbsp总记录数：" + list[0].amount;
+	
+	var sWordParking = $("#sWordParking").val();
+	var sWordStreet = $("#sWordStreet").val();
+	var sWordArea = $("#sWordArea").val();
+	var starttime = $("#starttime").val();
+	var endtime = $("#endtime").val();
+	if (starttime == "" && endtime == ""){
+		starttime = "2019/02/15";
+		endtime = "2019/05/17";
+	}
+	var str = starttime + " - " + endtime + " &nbsp 总记录数：" + list[0].amount;
+	if (sWordParking != "")
+		str = sWordParking + "&nbsp&nbsp" + str;
+	else if(sWordStreet != "")
+		str = sWordStreet + "&nbsp&nbsp" + str;
+	else if(sWordArea != "")
+		str = sWordArea + "&nbsp&nbsp" + str;
+	document.getElementById("sum").innerHTML = str;
+	
 	$('#chartTime').remove();
 	$('#card-body').append('<canvas id="chartTime" width="100%" height="30"></canvas>');
 	
 	var ctx = document.getElementById("chartTime").getContext('2d');
 	var labels = [];
 	var data = [];
-	var backgroundColor = [];
-	var borderColor = [];
-	var backColor = ['rgba(244, 88, 70, 0.5)','rgba(33, 150, 243, 0.5)','rgba(0, 188, 212, 0.5)','rgba(42, 185, 127, 0.5)','rgba(156, 39, 176, 0.5)','rgba(253, 178, 68, 0.5)'];
-	var bordColor = ['#F45846','#2196F3','#00BCD4','#2ab97f','#9C27B0','#fdb244'];
 	
 	for (var i = 1; i < list.length; i++) {
         labels.push(list[i].time);
         data.push(list[i].amount);
-        backgroundColor.push(backColor[i%6]);
-        borderColor.push(bordColor[i%6]);
     }
 	
 	var myLineChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: '记录数',
                 data: data,
-                backgroundColor: backgroundColor,
-                borderColor: borderColor,
+                borderColor: '#2196F3',
                 borderWidth: 1
             }]
         },

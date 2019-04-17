@@ -18,8 +18,6 @@ public interface RecordService {
 	ArrayList<RecordVO> getAdminRecord();
 
 	ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id, String source);
-	
-	
 
 	ArrayList<RecordVO> adminRecordIDSearch(String searchWord);	
 
@@ -55,7 +53,7 @@ public interface RecordService {
 
 	ArrayList<TimeVO> getRecordTime();
 
-	ArrayList<TimeVO> getTimeSearch(String searchWord, String source);
+	ArrayList<TimeVO> getTimeSearch(String sWordParking, String sWordStreet, String sWordArea, String starttime, String endtime);
 
 	ArrayList<ParkingTypeVO> getRecordChartTypeSearch(String searchWord, String source);
 

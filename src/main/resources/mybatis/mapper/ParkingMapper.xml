@@ -29,7 +29,17 @@
 	<select id="getAllParking" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		SELECT *
 		FROM parking
+		where state = 'true';
 	</select>
+	
+	<update id="deleteParking" parameterType="java.lang.String">
+        update parking
+        <set>
+            state = 'false'
+        </set>
+        where parkcode = #{parkcode}
+	</update> 
+	
 	
 	<select id="getParkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		SELECT *
@@ -180,9 +190,9 @@
 	
 	<insert id="addParking" parameterType="java.lang.String">
 		INSERT INTO parking
-		(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount, lng, lat)
+		(parkcode, streetcode, businesscode, parkname, streetname, areaname, typecode, parking_amount, lng, lat, state)
 		values
-		(#{parkcode}, #{streetcode}, #{businesscode},#{parkname}, #{streetname}, #{areaname},#{typecode}, #{parking_amount}, #{lng}, #{lat})
+		(#{parkcode}, #{streetcode}, #{businesscode},#{parkname}, #{streetname}, #{areaname},#{typecode}, #{parking_amount}, #{lng}, #{lat}, 'true')
 	</insert>
 	
 </mapper>

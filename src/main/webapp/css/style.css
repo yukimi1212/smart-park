@@ -2641,14 +2641,14 @@ a.add-btn {
 ------------------------------*/
 
 .login-body {
-    background-color: #2b2b2d;
+    background-color: #EBEDEB;
 }
 
 .login-body .login-logo {
     margin: 0;
     text-align: center;
-    background: #1b1b1d;
-    color: #fff;
+    background: #496784;
+    color: #c0c0c0;
     font-size: 18px;
     text-transform: uppercase;
     display: inline-block;
@@ -2665,7 +2665,7 @@ h2.form-heading {
     margin: 0;
     padding:30px 15px;
     text-align: center;
-    background: #222224;
+    background: #496784;
     color: #fff;
     font-size: 18px;
     text-transform: uppercase;

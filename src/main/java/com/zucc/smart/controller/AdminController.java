@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zucc.smart.service.DataManageService;
 import com.zucc.smart.service.ParkingService;
+import com.zucc.smart.service.VehicleService;
 import com.zucc.smart.service.impl.Decode;
 
 
@@ -20,6 +21,9 @@ import com.zucc.smart.service.impl.Decode;
 public class AdminController {
 	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 	 
+	@Autowired
+	ParkingService parkingService;
+	
     @RequestMapping(value = {"/", "/{searchWord}/{source}"})
     public String searchRecord(@PathVariable("searchWord") String searchWord, @PathVariable("source") String source, Map<String, Object> map) throws IOException {
     	log.info("/admin/" + searchWord + "/" + source);
@@ -56,5 +60,17 @@ public class AdminController {
 		map.put("user_name", "管理");
 		return "addParking"; 
 	}
+    
+    @RequestMapping(value = {"/", "/{parkcode}/delete"}) 
+   	public String deleteParking(@PathVariable("parkcode") String parkcode, Map<String, Object>map) throws IOException { 
+    	log.info("/park/" + parkcode + "/delete");   
+    	map.put("user_id", "admin");
+		map.put("user_name", "管理");
+    	map.put("searchWord", "");
+    	map.put("source", "form");
+    	
+    	parkingService.deleteParking(parkcode);
+   		return "parkingForm"; 
+   	}
 
 }

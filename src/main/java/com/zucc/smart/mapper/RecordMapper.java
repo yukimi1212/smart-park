@@ -64,4 +64,5 @@ public interface RecordMapper {
 
 	ArrayList<HashMap<String, Object>> getRecordAreaCountWithType(String parkcode);
 	
+	ArrayList<HashMap<String, Object>> getRecordTimeRange(String starttime, String endtime);
 }

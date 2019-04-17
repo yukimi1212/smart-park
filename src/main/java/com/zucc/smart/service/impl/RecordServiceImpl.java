@@ -30,7 +30,6 @@ import com.zucc.smart.vObject.UserVO;
 public class RecordServiceImpl implements RecordService {
 
 	private static final Logger log = LoggerFactory.getLogger(RecordServiceImpl.class);
-
 	@Autowired
 	RecordMapper recordMapper;
 	
@@ -380,99 +379,84 @@ public class RecordServiceImpl implements RecordService {
 		ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
 		TimeVO timeIni = new TimeVO("sum",0);
 		listVO.add(timeIni);
-		String first;
-		for(int i=7; i<20; i++) {
-			if(i<10)
-				first = "0" + i + "";
-			else
-				first = i + "";
-			String str = "%12/12/2011 " + first + "%";
+		
+		ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordTimeRange("2019/02/15", "2019/05/17");
+		for(int i=0; i<listmap.size(); i++) {
+			String str = listmap.get(i).get("inserttime").toString();
 			int amount = recordMapper.getRecordTimeCount(str);
 			TimeVO timeVO = new TimeVO();
 			timeVO.setAmount(amount);
-			timeVO.setTime(i + ":00 - " + (i+1) + ":00");
+			timeVO.setTime(str.substring(5));
 			listVO.add(timeVO);
 			listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
 		}
-		
 		return listVO;
 	}
 	
 	@Override
-	public ArrayList<TimeVO> getTimeSearch(String searchWord, String source) {
-		log.info("getTimeSearch：" + searchWord + "   " + source);
+	public ArrayList<TimeVO> getTimeSearch(String sWordParking, String sWordStreet, String sWordArea, String starttime, String endtime) {
+		log.info("getTimeSearch：" + starttime + " - " + endtime);
 		ArrayList<TimeVO> listVO = new ArrayList<TimeVO>();
+		
+		if (starttime.compareTo("") == 0 && endtime.compareTo("") == 0 ) {
+			starttime = "2019/02/15";
+			endtime = "2019/05/17";
+		}
+		else {
+			if (starttime.compareTo(endtime) > 0)
+				return listVO;
+		}
+		
 		TimeVO timeIni = new TimeVO("sum",0);
 		listVO.add(timeIni);
-		if(source.equals("park")) {
-			String parkcode = parkingMapper.getParkcode(searchWord);
-			String first;
-			for(int i=7; i<20; i++) {
-				if(i<10)
-					first = "0" + i + "";
-				else
-					first = i + "";
-				String str = "%12/12/2011 " + first + "%";
+		ArrayList<HashMap<String,Object>> listmap = recordMapper.getRecordTimeRange(starttime, endtime);
+		
+		if(sWordParking.compareTo("") != 0 ) {
+			String parkcode = parkingMapper.getParkcode(sWordParking);
+			for(int i=0; i<listmap.size(); i++) {
+				String str = listmap.get(i).get("inserttime").toString();
 				int amount = recordMapper.getRecordTimeCountForParking(str,parkcode);
 				TimeVO timeVO = new TimeVO();
 				timeVO.setAmount(amount);
-				timeVO.setTime(i + ":00 - " + (i+1) + ":00");
+				timeVO.setTime(str.substring(5));
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
 			}
 		}
-		else if(source.equals("street")) {
-			String streetcode = helperMapper.getStreetCode(searchWord);
-			String first;
-			for(int i=7; i<20; i++) {
-				if(i<10)
-					first = "0" + i + "";
-				else
-					first = i + "";
-				String str = "%12/12/2011 " + first + "%";
+		else if(sWordStreet.compareTo("") != 0) {
+			String streetcode = helperMapper.getStreetCode(sWordStreet);
+			for(int i=0; i<listmap.size(); i++) {
+				String str = listmap.get(i).get("inserttime").toString();
 				int amount = recordMapper.getRecordTimeCountForStreet(str,streetcode);
 				TimeVO timeVO = new TimeVO();
 				timeVO.setAmount(amount);
-				timeVO.setTime(i + ":00 - " + (i+1) + ":00");
+				timeVO.setTime(str.substring(5));
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
 			}
 		}
 		
-		else if(source.equals("area")) {
-			String businesscode = helperMapper.getBusinessCode(searchWord);
-			String first;
-			for(int i=7; i<20; i++) {
-				if(i<10)
-					first = "0" + i + "";
-				else
-					first = i + "";
-				String str = "%12/12/2011 " + first + "%";
+		else if(sWordArea.compareTo("") != 0) {
+			String businesscode = helperMapper.getBusinessCode(sWordArea);
+			for(int i=0; i<listmap.size(); i++) {
+				String str = listmap.get(i).get("inserttime").toString();
 				int amount = recordMapper.getRecordTimeCountForArea(str,businesscode);
 				TimeVO timeVO = new TimeVO();
 				timeVO.setAmount(amount);
-				timeVO.setTime(i + ":00 - " + (i+1) + ":00");
+				timeVO.setTime(str.substring(5));
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
 			}
 		}
-		else {
-			
-//			long start,end;
-//			start = System.currentTimeMillis();
-			
-			String typecode = helperMapper.getTypeCode(searchWord);
+/*		else if(sWordType.compareTo("") != 0){
+			String typecode = helperMapper.getTypeCode(sWordType);
 			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
 
-			String parkcode, first;
-			for(int i=7; i<20; i++) {
-				if(i<10)
-					first = "0" + i + "";
-				else
-					first = i + "";
-				String str = "%12/12/2011 " + first + "%";
+			String parkcode;
+			for(int i=0; i<listmap.size(); i++) {
+				String str = listmap.get(i).get("inserttime").toString();
 				TimeVO timeVO = new TimeVO();
-				timeVO.setTime(i + ":00 - " + (i+1) + ":00");
+				timeVO.setTime(str.substring(5));
 				timeVO.setAmount(0);
 				for(int p=0; p<parkingList.size(); p++) {
 					parkcode = parkingList.get(p).getParkcode();
@@ -483,9 +467,17 @@ public class RecordServiceImpl implements RecordService {
 				listVO.add(timeVO);
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + timeVO.getAmount());
 			}
-
-//			end = System.currentTimeMillis();  
-//			System.out.println("start time:" + start+ "; end time:" + end+ "; Run Time:" + (end - start) + "(ms)");
+		}*/
+		else {
+			for(int i=0; i<listmap.size(); i++) {
+				String str = listmap.get(i).get("inserttime").toString();
+				int amount = recordMapper.getRecordTimeCount(str);
+				TimeVO timeVO = new TimeVO();
+				timeVO.setAmount(amount);
+				timeVO.setTime(str.substring(5));
+				listVO.add(timeVO);
+				listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
+			}
 		}
 		
 		return listVO;
