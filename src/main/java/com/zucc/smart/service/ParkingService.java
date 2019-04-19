@@ -21,11 +21,11 @@ public interface ParkingService {
 
 	ArrayList<ParkingVO> parkingSearch(String searchWord, String source);
 
-	ArrayList<ParkingTypeVO> typeSearch(String searchWord);
+	ArrayList<ParkingTypeVO> parkingTypeSearch(String searchWord);
 
-	ArrayList<StreetVO> streetSearch(String searchWord);
+	ArrayList<StreetVO> parkingStreetSearch(String searchWord);
 
-	ArrayList<AreaVO> AreaSearch(String searchWord);
+	ArrayList<AreaVO> parkingAreaSearch(String searchWord);
 
 //	ArrayList<Map> getParkingMap();
 

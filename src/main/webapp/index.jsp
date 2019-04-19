@@ -203,47 +203,67 @@
 
 			<!-- What We Do -->
 			<div class="clean-what-we-do">
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jump()">
-						<i class="fa fa-html5"></i>
+						<i class="fa fa-map-marker"></i>
 						</a>
 					</div>
-					<h3>地图搜索</h3>
-					<p>实时定位搜索附近停车场；输入目的地搜索停车场。</p>
+					<h3>地图显示</h3>
+					<p>实时定位附近停车场，指定地点查看附近停车场。</p>
 				</div>
 
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jump()">
-						<i class="fa fa-laptop"></i>
-						</a>
-					</div>
-					<h3>信息查询与统计</h3>
-					<p>查询停车场信息，查询历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
-				</div>
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
-					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jump()">
-						<i class="fa fa-support"></i>
+						<i class="fa fa-pencil-square-o"></i>
 						</a>
 					</div>
 					<h3>数据录入</h3>
-					<p>录入相关信息。</p>
+					<p>添加新的数据。</p>
 				</div>
 				
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-search"></i>
+						</a>
+					</div>
+					<h3>信息查询</h3>
+					<p>查询停车场信息，查看历史停车记录。</p>
+				</div>
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-calculator"></i>
+						</a>
+					</div>
+					<h3>数据统计</h3>
+					<p>统计停车场，停车记录。</p>
+				</div>
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jump()">
+						<i class="fa fa-area-chart"></i>
+						</a>
+					</div>
+					<h3>可视化分析</h3>
+					<p>用图表展示统计结果，并进行预测分析。</p>
+				</div>
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jump()">
 						<i class="fa fa-user"></i>
 						</a>
 					</div>
-					<h3>个人信息</h3>
-					<p>查看，修改个人信息。</p>
+					<h3>用户管理</h3>
+					<p>管理所有已注册用户。</p>
 				</div>
-		 
+ 		 
 			</div>
 			<!-- What We Do End -->
 

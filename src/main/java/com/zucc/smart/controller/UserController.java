@@ -48,7 +48,9 @@ public class UserController {
         String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
         map.put("user_id", user_id);
-        return "chartArea";
+        map.put("searchWord", "");
+        map.put("source", "recordarea");
+        return "parkingArea";
     }
     
     @RequestMapping(value = {"/", "/{user_id}/chartStreet"})
@@ -59,7 +61,9 @@ public class UserController {
         String user_name = (userService.getUserById(user_id)).getUser_name();
     	map.put("user_name", user_name);
         map.put("user_id", user_id);
-        return "chartStreet";
+        map.put("searchWord", "");
+        map.put("source", "recordstreet");
+        return "parkingStreet";
     }
     
     @RequestMapping(value = {"/", "/{user_id}/chartType"})
@@ -71,8 +75,49 @@ public class UserController {
     	map.put("user_name", user_name);
         map.put("user_id", user_id);
         map.put("searchWord", "");
+        map.put("source", "recordtype");
+        return "parkingType";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/viewStreet"})
+    public String getViewStreet(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/viewStreet");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        map.put("searchWord", "");
+        map.put("source", "recordstreet");
+        return "chartStreet";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/viewArea"})
+    public String getViewArea(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/viewArea");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        map.put("searchWord", "");
+        map.put("source", "recordarea");
+        return "chartArea";
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/viewType"})
+    public String getViewType(@PathVariable("user_id") String user_id_obj, 
+    		Map<String, Object> map) throws IOException {
+    	String user_id = new String (Decode.decode(user_id_obj));
+    	log.info("/user/"+ user_id + "/viewType");
+        String user_name = (userService.getUserById(user_id)).getUser_name();
+    	map.put("user_name", user_name);
+        map.put("user_id", user_id);
+        map.put("searchWord", "");
+        map.put("source", "recordtype");
         return "chartType";
     }
+   
     
     @RequestMapping(value = {"/", "/{user_id}/chartTime"})
     public String getChartTime(@PathVariable("user_id") String user_id_obj, 
@@ -160,6 +205,7 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", "");
+    	map.put("source", "parkingtype");
         return "parkingType";
     }
     
@@ -172,6 +218,7 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", "");
+    	map.put("source", "parkingarea");
         return "parkingArea";
     }
     
@@ -184,6 +231,7 @@ public class UserController {
     	map.put("user_name", user_name);
     	map.put("user_id", user_id);
     	map.put("searchWord", "");
+    	map.put("source", "parkingstreet");
         return "parkingStreet";
     }
     
@@ -363,13 +411,15 @@ public class UserController {
     	    	
     	if(source.equals("form") || source.equals("formpark") || source.equals("formstreet") || source.equals("formarea"))
     		return "searchForm";
-    	else if(source.equals("type"))
+    	else if(source.equals("parkingtype") || source.equals("recordtype"))
     		return "searchType";
-    	else if(source.equals("street"))
+    	else if(source.equals("parkingstreet") || source.equals("recordstreet"))
     		return "searchStreet";
-    	else if(source.equals("area"))
+    	else if(source.equals("parkingarea") || source.equals("recordarea"))
     		return "searchArea";
     	else
     		return "searchRecord";
     }
+    
+    
 }

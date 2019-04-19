@@ -25,8 +25,8 @@
       <div class="container log-row">
       	<form id="form" class="form-signin" action="/login/register" method="post" enctype="multipart/form-data"> 
         	<div class="login-wrap">
-        		<span></span>
-              	<span style="color:#ff7f50">*为必填选项</span>
+              	<!-- <span style="color:#ff7f50">*为必填选项</span> -->
+              	*&nbsp 为必填选项
                	<input type="text" id="user_id" name="user_id" class="form-control" placeholder="用户ID	*" autofocus>
                 <span style="color:#f36616" id="warning_name"></span>
                 <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名	*">

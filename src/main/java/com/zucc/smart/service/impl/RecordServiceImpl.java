@@ -366,6 +366,7 @@ public class RecordServiceImpl implements RecordService {
 			streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
 			streetVO.setStreetname(streetname);
+			streetVO.setAreaname(helperMapper.getAreaNameByStreetCode(streetcode));
 			streetVO.setAmount(Integer.parseInt(amount));
             listVO.add(streetVO);
             listVO.get(0).setAmount(listVO.get(0).getAmount() + Integer.parseInt(amount));
@@ -533,6 +534,7 @@ public class RecordServiceImpl implements RecordService {
 		StreetVO streetVO = new StreetVO();
 		streetVO.setStreetcode(0 + "");
 		streetVO.setStreetname("");
+		streetVO.setAreaname("");
 		streetVO.setAmount(0);
         listVO.add(streetVO);
         
@@ -542,16 +544,17 @@ public class RecordServiceImpl implements RecordService {
 			String streetcode = map.get("streetcode").toString();
 			String amount = map.get("count(streetcode)").toString();
 			String streetname = helperMapper.getStreetName(streetcode);
-			System.out.println(streetcode + " " + amount + "  " + streetname);
+//			System.out.println(streetcode + " " + amount + "  " + streetname);
 			
 			streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
 			streetVO.setStreetname(streetname);
+			streetVO.setAreaname(helperMapper.getAreaNameByStreetCode(streetcode));
 			streetVO.setAmount(Integer.parseInt(amount));
             listVO.add(streetVO);
             listVO.get(0).setAmount(listVO.get(0).getAmount() + Integer.parseInt(amount));
 		}
-		System.out.println(listVO.size());
+//		System.out.println(listVO.size());
 		return listVO;
 	}
 

@@ -204,58 +204,79 @@
 
 			<!-- What We Do -->
 			<div class="clean-what-we-do">
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="map">
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="map">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToMap()">
-						<i class="fa fa-html5"></i>
+						<i class="fa fa-map-marker"></i>
 						</a>
 					</div>
-					<h3>地图搜索</h3>
-					<p>实时定位搜索附近停车场；输入目的地搜索停车场。</p>
-				</div>
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="adminRecord">
-					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToParking()">
-						<i class="fa fa-laptop"></i>
-						</a>
-					</div>
-					<h3>信息查询与统计</h3>
-					<p>查询停车场信息，查询所有历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
+					<h3>地图显示</h3>
+					<p>实时定位附近停车场，指定地点查看附近停车场。</p>
 				</div>
 				
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="userRecord">
-					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="jumpToParking()">
-						<i class="fa fa-laptop"></i>
-						</a>
-					</div>
-					<h3>信息查询与统计</h3>
-					<p>查询停车场信息，查看个人历史停车记录。综合所有数据，对停车场，停车记录等信息进行统计分析。</p>
-				</div>
-
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="userAdd">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="userAdd">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="addVehicle()">
-						<i class="fa fa-support"></i>
+						<i class="fa fa-pencil-square-o"></i>
 						</a>
 					</div>
 					<h3>数据录入</h3>
-					<p>添加个人登记车辆。</p>
+					<p>添加已绑定车辆。</p>
 				</div>
 				
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="adminAdd">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="adminAdd">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="addParking()">
-						<i class="fa fa-support"></i>
+						<i class="fa fa-pencil-square-o"></i>
 						</a>
 					</div>
 					<h3>数据录入</h3>
 					<p>添加停车场信息。</p>
 				</div>
 				
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="info">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="adminRecord">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jumpToParking()">
+						<i class="fa fa-search"></i>
+						</a>
+					</div>
+					<h3>信息查询</h3>
+					<p>查询停车场信息，查询所有历史停车记录。</p>
+				</div>
+				
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInLeft" data-wow-delay=".5s" id="userRecord">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="jumpToParking()">
+						<i class="fa fa-search"></i>
+						</a>
+					</div>
+					<h3>信息查询</h3>
+					<p>查询停车场信息，查看个人历史停车记录。</p>
+				</div>
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="dataStatistics">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="getType()">
+						<i class="fa fa-calculator"></i>
+						</a>
+					</div>
+					<h3>数据统计</h3>
+					<p>统计停车场，停车记录。</p>
+				</div>
+				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="view">
+					<div class="clean-icon">
+						<a href="javascript:void(0)" onclick="getChartStreet()">
+						<i class="fa fa-area-chart"></i>
+						</a>
+					</div>
+					<h3>可视化分析</h3>
+					<p>用图表展示统计结果，并进行预测分析。</p>
+				</div>
+ 				
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="info">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToUser()">
 						<i class="fa fa-user"></i>
@@ -265,7 +286,7 @@
 					<p>查看，修改个人信息。</p>
 				</div>
 				
-				<div class="col-md-3 col-sm-3 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="user">
+				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="user">
 					<div class="clean-icon">
 						<a href="javascript:void(0)" onclick="jumpToUser()">
 						<i class="fa fa-user"></i>
@@ -274,7 +295,7 @@
 					<h3>用户管理</h3>
 					<p>管理所有已注册用户。</p>
 				</div>
-		 
+ 		 
 			</div>
 			<!-- What We Do End -->
 
@@ -390,12 +411,12 @@
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/add";
-		window.location.href=url;
+		window.open(url);
 	}
 	
 	function addParking() {
 		var url = "http://localhost:8080/admin/add";
-		window.location.href=url;
+		window.open(url);
 	}
 	
 	function jumpToParking() {
@@ -405,12 +426,19 @@
         window.open(url);  
 	}
 	
-	function jumpToRecord() {
-		var user_id = document.getElementById("user_id").innerHTML;
+	function getType(){
+		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/record";
-		window.open(url);
+        var url = "http://localhost:8080/user/" + param + "/type";
+        window.open(url);
 	}
+	
+	function getChartStreet(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/chartStreet";
+        window.open(url);
+    }	
 	
 	function jumpToUser() {
 		var user_id = $("#user_id").html();

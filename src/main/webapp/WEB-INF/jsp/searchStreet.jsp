@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../vendor/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
+	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
     
     <style> 		
       	#search input[type=text] {
@@ -25,6 +27,24 @@
         	padding: 10px;
         	width: 90px;
       	}
+      	.ui-autocomplete {
+			max-width: 350px;
+	    	max-height: 200px;
+	    	overflow-y: auto;
+	    	overflow-x: hidden;
+  		}
+      	.viewbutton {
+    		background-color: #4c7594;
+    		border: none;
+    		color: white;
+    		padding: 10px 16px;
+    		text-align: center;
+    		text-decoration: none;
+    		display: inline-block;
+    		font-size: 12px;
+    		margin: 4px 2px;
+    		cursor: pointer;
+		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -46,6 +66,7 @@
                 	<img src="../../images/user.jpg" class="avatar avatar-sm" alt="user">
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
+                    <span id="source" style="display:none">${source }</span>
                 </a>					
 					
                 <div class="dropdown-menu dropdown-menu-right">
@@ -66,7 +87,7 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-title">数据展示</li>
+                    <li class="nav-title">查询与统计</li>
 					
                     <li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
@@ -101,100 +122,99 @@
                         </ul>
                     </li>
                     
-                    <li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle active">
-                            <i class="icon icon-target"></i> 停车场统计 <i class="fa fa-caret-left"></i>
-                        </a>
-
-                        <ul class="nav-dropdown-items">
-                        
-                            <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link">
-                                    <i class="icon icon-target"></i> 类型统计
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getArea()" class="nav-link">
-                                    <i class="icon icon-target"></i> 城区统计
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getStreet()" class="nav-link active">
-                                    <i class="icon icon-target"></i> 街道统计
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    
 					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-pin"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="record" onclick="returnRecord()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 全部查询
+                                    <i class="icon icon-pin"></i> 全部查询
                                 </a>
                             </li>
                             
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="recordcph" onclick="returnRecordCPH()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 按车牌查询
+                                    <i class="icon icon-pin"></i> 按车牌查询
                                 </a>
                             </li>
                         
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordpark" onclick="returnRecordParking()"  class="nav-link">
-                                    <i class="icon icon-graph"></i> 按停车场查询
+                                    <i class="icon icon-pin"></i> 按停车场查询
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordstreet" onclick="returnRecordStreet()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 按街道查询
+                                    <i class="icon icon-pin"></i> 按街道查询
                                 </a>
                             </li>
                             
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordarea" onclick="returnRecordArea()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 按城区查询
+                                    <i class="icon icon-fire"></i> 按城区查询
                                 </a>
                             </li>
                         </ul>
                     </li>
                     
 					<li class="nav-item nav-dropdown ">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-target"></i> 停车记录统计 <i class="fa fa-caret-left"></i>
+                        <a href="#" class="nav-link nav-dropdown-toggle active" id="recordStatic">
+                            <i class="icon icon-graph"></i> 数据统计 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">       
+                              
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getType()"  class="nav-link" id="recordType">
+                                    <i class="icon icon-graph"></i> 按类型统计
+                                </a>
+                            </li>
                         
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartStreet()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="getChartStreet()"  class="nav-link active">
                                     <i class="icon icon-graph"></i> 按街道统计
                                 </a>
                             </li>
                                              
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartArea()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="getArea()"  class="nav-link">
                                     <i class="icon icon-graph"></i> 按城区统计
                                 </a>
                             </li>
-                            
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item nav-dropdown ">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-layers"></i> 图表展示 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">       
+                                 
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartType()"  class="nav-link">
-                                    <i class="icon icon-graph"></i> 按类型统计
+                                <a href="javascript:void(0)" onclick="getViewType()"  class="nav-link">
+                                    <i class="icon icon-layers"></i> 按类型统计
+                                </a>
+                            </li>
+                        
+                        	<li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getViewStreet()"  class="nav-link">
+                                    <i class="icon icon-layers"></i> 按街道统计
+                                </a>
+                            </li>
+                                             
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="getViewArea()"  class="nav-link">
+                                    <i class="icon icon-layers"></i> 按城区统计
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartTime()" class="nav-link">
-                                    <i class="icon icon-graph"></i> 按日期统计
+                                <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link">
+                                    <i class="icon icon-layers"></i> 按日期统计
                                 </a>
                             </li>
                         </ul>
@@ -205,8 +225,7 @@
                         <a href="javascript:void(0)" onclick="getUser()" class="nav-link">
                             <i class="icon icon-puzzle"></i> <sapn id="user">个人信息</sapn>
                         </a>
-                    </li>
-                   
+                    </li>                  
                 </ul>
             </nav>
         </div>
@@ -254,6 +273,9 @@
 <script src="../../vendor/chart.js/chart.min.js"></script>
 <script src="../../js/carbon.js"></script>
 <script src="../../js/demo.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
+<script src="../../js/jquery-ui.js"></script>
+
 </body>
 
 <script type="text/javascript">  
@@ -275,35 +297,109 @@
 			document.getElementById("user").innerText = "用户管理";
 		}
 		var param = encode64(user_id);
-		$.ajax({
-   			type:'GET',
-     		url:'http://localhost:8080/search/street/user/' + param,
-     		async:true,
-     		data:{
-     			'searchWord':searchWord
-     		},
-     		success:function(result){
-     	    	showData(result);
-     	    	display();
-     		},
-     		error:function(error){
-     			var jsonData = JSON.stringify(error);
-     	    	alert(jsonData)
-     		}
- 		})
+		
+		var source = $("#source").html();
+
+		if (source == "parkingstreet"){
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/search/street/user/' + param,
+	     		async:true,
+	     		data:{
+	     			'searchWord':searchWord
+	     		},
+	     		success:function(result){
+	     	    	showParkingStreetData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		}
+		else {
+			auto();
+			var sWord = document.getElementById('searchWord');
+			sWord.setAttribute("placeholder", "指定城区");
+			
+			$.ajax({
+				type:'GET',
+		 		url:'http://localhost:8080/search/' + searchWord + '/chartStreet',
+		 		async:true,
+		 		data:{
+		 		},
+		 		success:function(result){
+		 			showRecordStreetData(result);
+	     			display();
+		 		},
+		 		error:function(error){
+		 			var jsonData = JSON.stringify(error);
+		 	    	alert(jsonData)
+		 		}
+			})
+		}
 	}
 	
-	function doSearch() {
-		var sWord = $("#searchWord").val();
-		if(sWord == "")
-			getStreet();
-		else{
-			var user_id = $("#user_id").html();
-			var param = encode64(user_id);
-			var url = "http://localhost:8080/user/" + param + "/" + sWord + "&street";
-	        window.location.href=url;
-		}		
+	function doSearch(){
+		var searchWord = $("#searchWord").val();
+		var source = $("#source").html();
+		if (source == "parkingstreet"){
+			if(searchWord == "")
+				getStreet();
+			else{
+				var user_id = $("#user_id").html();
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&parkingstreet";
+		        window.location.href=url;
+			}		
+		}
+		else {
+			if(searchWord == "")
+				getChartStreet();
+			else{
+				var user_id = $("#user_id").html();
+				var param = encode64(user_id);
+				var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&recordstreet";
+		        window.location.href=url;
+			}	
+		}
+		
 	}
+	
+	function auto() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+	    var availableTags = [];
+	    $.ajax({
+			type:'GET',
+	 		url:'http://localhost:8080/search/tags/chartStreet',
+	 		async:true,
+	 		data:{
+	 		},
+	 		success:function(list){
+	 			for (var i = 0; i < list.length; i++) {
+	 				availableTags.push(list[i].value);
+	 		    }
+	 		},
+	 		error:function(error){
+	 			var jsonData = JSON.stringify(error);
+	 	    	alert(jsonData)
+	 		}
+		})
+	    
+	    $( "#searchWord" ).autocomplete({
+	    	source: availableTags,
+	    	mustMatch: true,
+			change: function (event, ui) {
+		  		if (!ui.item) {
+		  			alert("请输入完整正确的城区名！");
+		    		$(this).val('');
+		    	}
+		 	}
+	    });
+
+	  }
 	
 	function returnForm() {
 		var user_id = $("#user_id").html();
@@ -389,15 +485,33 @@
 		window.location.href=url;
 	} 
 
-	function showData(data) {
+	function showParkingStreetData(data) {
 		$("#tab").html("");
 		var str = "<thead><tr><th>街道编号</th><th>街道名</th><th>所属城区</th><th>拥有停车场数量</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
 			str = str + "<tr><td>" + data[i].streetcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "按街道统计";
+		document.getElementById("name").innerHTML = "停车场统计  &nbsp &nbsp 总记录数：" + data[0].amount + "<a href=\"javascript:void(0)\" onclick=\"getChartStreet()\" class=\"viewbutton\" style=\"float:right\" >停车记录统计</a>";
 		$("#tab").append(str); 
+	}
+	
+	function showRecordStreetData(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>街道编号</th><th>街道名</th><th>所属城区</th><th>停车记录数量</th></tr></thead><tbody>";
+		for (var i = 1; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].streetcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "停车记录统计 &nbsp &nbsp 总记录数：" + data[0].amount + "<a href=\"javascript:void(0)\" onclick=\"getStreet()\" class=\"viewbutton\" style=\"float:right\" >停车场统计</a>" + " &nbsp &nbsp <a href=\"javascript:void(0)\" onclick=\"showView()\" class=\"viewbutton\" style=\"float:right\" >图表显示</a>";
+		$("#tab").append(str); 
+	}
+	
+	function showView() {
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
+        var url = "http://localhost:8080/user/" + param + "/viewStreet";
+        window.location.href=url;
 	}
 	
 	function getRecord() {
@@ -435,12 +549,33 @@
         window.location.href=url;  
     }
 	
-	function getChartTime(){
+	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartTime";
-        window.location.href=url;
-    }
+	    var url = "http://localhost:8080/user/" + param + "/viewType";
+	    window.location.href=url;  
+	}
+
+	function getViewStreet() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+	    var url = "http://localhost:8080/user/" + param + "/viewStreet";
+	    window.location.href=url;  
+	}
+
+	function getViewArea() {
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+	    var url = "http://localhost:8080/user/" + param + "/viewArea";
+	    window.location.href=url;  
+	}
+
+	function getViewTime(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+	    var url = "http://localhost:8080/user/" + param + "/chartTime";
+	    window.location.href=url;
+	}
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();

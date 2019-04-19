@@ -40,7 +40,6 @@
         where parkcode = #{parkcode}
 	</update> 
 	
-	
 	<select id="getParkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		SELECT *
 		FROM parking
@@ -50,6 +49,13 @@
 	<select id="getTypeCount" resultType="java.util.HashMap" useCache="false"> 
 		select typecode, count(typecode) 
 		from parking 
+		group by typecode
+	</select>
+	
+	<select id="searchTypeCount" resultType="java.util.HashMap" useCache="false"> 
+		select typecode, count(typecode) 
+		from parking 
+		where streetname = #{searchWord} or areaname = #{searchWord}
 		group by typecode
 	</select>
 	
@@ -90,7 +96,7 @@
 			or parkname like #{searchWord} or streetname like #{searchWord} 
 			or areaname like #{searchWord};
 	</select>
-	
+
 	<select id="parkingSearchByParking" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 

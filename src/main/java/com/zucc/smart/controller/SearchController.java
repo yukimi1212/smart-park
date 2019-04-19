@@ -62,7 +62,7 @@ public class SearchController {
     	log.info("/search/type/user/" + user_id + "-----" + searchWord);
     	
     	ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
-		list = parkingService.typeSearch(searchWord);		
+		list = parkingService.parkingTypeSearch(searchWord);		
 		return list;
     }
     
@@ -72,7 +72,7 @@ public class SearchController {
     	log.info("/search/area/user/" + user_id + "-----" + searchWord);
     	
     	ArrayList<AreaVO> list = new ArrayList<AreaVO>();
-		list = parkingService.AreaSearch(searchWord);		
+		list = parkingService.parkingAreaSearch(searchWord);		
 		return list;
     }
     
@@ -82,7 +82,7 @@ public class SearchController {
     	log.info("/search/street/user/" + user_id + "-----" + searchWord);
     	
     	ArrayList<StreetVO> list = new ArrayList<StreetVO>();
-		list = parkingService.streetSearch(searchWord);		
+		list = parkingService.parkingStreetSearch(searchWord);		
 		return list;
     }
     
@@ -175,7 +175,7 @@ public class SearchController {
     
     @RequestMapping(value = "/tags/chartStreet", method = RequestMethod.GET)
     public ArrayList<WordsVO> getAvailableChartStreetSearchTags() {
-    	log.info("/search/tags/chartType");   	
+    	log.info("/search/tags/chartStreet");   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
 		list = userService.getAvailableChartStreetSearchTags();		
 		return list;
@@ -217,7 +217,7 @@ public class SearchController {
     
     @RequestMapping(value = "/{searchWord}/chartType", method = RequestMethod.GET)
     public ArrayList<ParkingTypeVO> getRecordChartTypeSearch(@PathVariable("searchWord") String searchWord, String source) {
-    	log.info("/search/" + searchWord + "/time ----- " + source);   	
+    	log.info("/search/" + searchWord + "/chartType ----- " + source);   	
     	ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
 		listVO = recordService.getRecordChartTypeSearch(searchWord, source);
 

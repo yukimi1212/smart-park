@@ -19,13 +19,15 @@
     	SELECT count(*) 
     	FROM smart_park.vehicle 
     	where user_id = #{user_id}
-    </select> 
-    
-    <delete id="deleteVehicle" parameterType="java.lang.String">
-		DELETE
-		FROM vehicle
-		where cph = #{cph}
-	</delete>   
+    </select>  
+	
+	<update id="deleteVehicle" parameterType="java.lang.String">
+        update vehicle
+        <set>
+            state = 'false'
+        </set>
+        where cph = #{cph}
+	</update> 
 	
 	<insert id="addVehicle" parameterType="java.lang.String">
 		INSERT INTO vehicle

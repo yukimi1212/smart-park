@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.zucc.smart.domain.Parking;
+import com.zucc.smart.domain.ParkingType;
 
 public interface ParkingMapper {
 	ArrayList<Parking> getAllParking();
@@ -69,4 +70,7 @@ public interface ParkingMapper {
 	ArrayList<Parking> parkingSearchByArea(String searchWord);
 
 	void deleteParking(String parkcode);
+
+	ArrayList<HashMap<String, Object>> searchTypeCount(String searchWord);
+
 }

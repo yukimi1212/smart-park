@@ -65,17 +65,21 @@ public class ParkingServiceImpl implements ParkingService {
 		ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
 		
 		ArrayList<HashMap<String,Object>> listmap = parkingMapper.getTypeCount();
+		ParkingTypeVO typeVO = new ParkingTypeVO();
+		typeVO.setAmount(0);
+		list.add(typeVO);
 		
 		for(int i=0; i<listmap.size(); i++) {
 			HashMap<String,Object> map = listmap.get(i);
 			String typecode = map.get("typecode").toString();
 			String typename = parkingTypeMapper.getTypeName(typecode);	
 			int amount = Integer.parseInt(map.get("count(typecode)").toString());
-			ParkingTypeVO typeVO = new ParkingTypeVO();
+			typeVO = new ParkingTypeVO();
             typeVO.setTypecode(typecode);
             typeVO.setTypename(typename);
             typeVO.setAmount(amount);
             list.add(typeVO);
+            list.get(0).setAmount(list.get(0).getAmount() + amount);
 		}
 		
 		return list;
@@ -87,18 +91,22 @@ public class ParkingServiceImpl implements ParkingService {
 		ArrayList<AreaVO> list = new ArrayList<AreaVO>();
 		
 		ArrayList<HashMap<String,Object>> listmap = parkingMapper.getAreaCount();
-				
+		AreaVO areaVO = new AreaVO();
+		areaVO.setAmount(0);
+		list.add(areaVO);
+		
 		for(int i=0; i<listmap.size(); i++) {
 			HashMap<String,Object> map = listmap.get(i);
 	
 			String businesscode = map.get("BUSINESSCODE").toString();
 			String areaname = helperMapper.getAreaName(businesscode);	
 			int amount = Integer.parseInt(map.get("count(BUSINESSCODE)").toString());
-			AreaVO areaVO = new AreaVO();
+			areaVO = new AreaVO();
             areaVO.setBusinesscode(businesscode);
             areaVO.setAreaname(areaname);
             areaVO.setAmount(amount);
             list.add(areaVO);
+            list.get(0).setAmount(list.get(0).getAmount() + amount);
 		}
 		
 		return list;
@@ -110,6 +118,9 @@ public class ParkingServiceImpl implements ParkingService {
 		ArrayList<StreetVO> list = new ArrayList<StreetVO>();
 		
 		ArrayList<HashMap<String,Object>> listmap = parkingMapper.getStreetCount();
+		StreetVO streetVO = new StreetVO();
+		streetVO.setAmount(0);
+		list.add(streetVO);
 		
 		for(int i=0; i<listmap.size(); i++) {
 			HashMap<String,Object> map = listmap.get(i);
@@ -118,12 +129,13 @@ public class ParkingServiceImpl implements ParkingService {
 			String streetname = helperMapper.getStreetName(streetcode);
 			String areaname = helperMapper.getAreaNameByStreetCode(streetcode);
 			int amount = Integer.parseInt(map.get("count(streetcode)").toString());
-			StreetVO streetVO = new StreetVO();
+			streetVO = new StreetVO();
 			streetVO.setStreetcode(streetcode);
 			streetVO.setStreetname(streetname);
 			streetVO.setAreaname(areaname);
 			streetVO.setAmount(amount);
             list.add(streetVO);
+            list.get(0).setAmount(list.get(0).getAmount() + amount);
 		}
 		
 		return list;
@@ -148,10 +160,10 @@ public class ParkingServiceImpl implements ParkingService {
 		ArrayList<ParkingVO> listVO = changeToParkingVO(list);
 		return listVO;
 	}
-
+/*
 	@Override
-	public ArrayList<ParkingTypeVO> typeSearch(String searchWord) {
-		log.info("typeSearch：" + searchWord);
+	public ArrayList<ParkingTypeVO> parkingTypeSearch(String searchWord) {
+		log.info("parkingTypeSearch：" + searchWord);
 		searchWord = "%"+searchWord+"%";
 		
 		ArrayList<ParkingType> list = parkingTypeMapper.searchType(searchWord);
@@ -170,10 +182,37 @@ public class ParkingServiceImpl implements ParkingService {
 		
 		return listVO;
 	}
-
+*/
+	
 	@Override
-	public ArrayList<StreetVO> streetSearch(String searchWord) {
-		log.info("streetSearch：" + searchWord);
+	public ArrayList<ParkingTypeVO> parkingTypeSearch(String searchWord) {
+		log.info("parkingTypeSearch：" + searchWord);
+		ArrayList<ParkingTypeVO> list = new ArrayList<ParkingTypeVO>();
+		
+		ArrayList<HashMap<String,Object>> listmap = parkingMapper.searchTypeCount(searchWord);
+		ParkingTypeVO typeVO = new ParkingTypeVO();
+		typeVO.setAmount(0);
+		list.add(typeVO);
+		
+		for(int i=0; i<listmap.size(); i++) {
+			HashMap<String,Object> map = listmap.get(i);
+			String typecode = map.get("typecode").toString();
+			String typename = parkingTypeMapper.getTypeName(typecode);	
+			int amount = Integer.parseInt(map.get("count(typecode)").toString());
+			typeVO = new ParkingTypeVO();
+            typeVO.setTypecode(typecode);
+            typeVO.setTypename(typename);
+            typeVO.setAmount(amount);
+            list.add(typeVO);
+            list.get(0).setAmount(list.get(0).getAmount() + amount);
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public ArrayList<StreetVO> parkingStreetSearch(String searchWord) {
+		log.info("parkingStreetSearch：" + searchWord);
 		searchWord = "%"+searchWord+"%";
 		
 		ArrayList<HashMap<String,String>> listmap = parkingMapper.searchStreet(searchWord);
@@ -198,8 +237,8 @@ public class ParkingServiceImpl implements ParkingService {
 	}
 	
 	@Override
-	public ArrayList<AreaVO> AreaSearch(String searchWord) {
-		log.info("AreaSearch：" + searchWord);
+	public ArrayList<AreaVO> parkingAreaSearch(String searchWord) {
+		log.info("parkingAreaSearch：" + searchWord);
 		searchWord = "%"+searchWord+"%";
 		
 		ArrayList<HashMap<String,String>> listmap = parkingMapper.searchArea(searchWord);
