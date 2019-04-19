@@ -2,6 +2,7 @@ package com.zucc.smart.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,18 @@ public class RecordServiceImpl implements RecordService {
 				listAll.addAll(userRecordParkingSearch(sWord,cph));
 				listAll.addAll(userRecordStreetSearch(sWord,cph));
 				listAll.addAll(userRecordAreaSearch(sWord,cph));
+				
+				HashMap<String,Record> listmap = new HashMap<String,Record>();
+				for (int n=0; n<listAll.size(); n++) {
+					if (listmap.get(listAll.get(n).getId()) == null)
+						listmap.put(listAll.get(n).getId(), listAll.get(n));
+				}
+				
+				listAll = new ArrayList<Record>();
+				for(Map.Entry<String, Record> entry : listmap.entrySet()){
+		            listAll.add(entry.getValue());
+		        }
+
 			}
 			else if(source.equals("recordcph")) {
 				listAll.addAll(recordMapper.searchUserRecordByCPH(searchWord, cph));

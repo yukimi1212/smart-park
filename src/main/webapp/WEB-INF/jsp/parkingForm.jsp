@@ -33,6 +33,16 @@
 	    	overflow-y: auto;
 	    	overflow-x: hidden;
   		}
+  		.viewbutton {
+    		background-color: #4c7594;
+    		border: none;
+    		color: white;
+    		padding: 4px 12px;
+    		text-align: center;
+    		text-decoration: none;
+    		display: inline-block;
+    		font-size: 10px;	
+		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -112,37 +122,37 @@
                     
 					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-pin"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-compass"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="record" onclick="returnRecord()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 全部查询
+                                    <i class="icon icon-compass"></i> 全部查询
                                 </a>
                             </li>
                             
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="recordcph" onclick="returnRecordCPH()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 按车牌查询
+                                    <i class="icon icon-compass"></i> 按车牌查询
                                 </a>
                             </li>
                         
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordpark" onclick="returnRecordParking()"  class="nav-link">
-                                    <i class="icon icon-pin"></i> 按停车场查询
+                                    <i class="icon icon-compass"></i> 按停车场查询
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordstreet" onclick="returnRecordStreet()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 按街道查询
+                                    <i class="icon icon-compass"></i> 按街道查询
                                 </a>
                             </li>
                             
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordarea" onclick="returnRecordArea()" class="nav-link">
-                                    <i class="icon icon-fire"></i> 按城区查询
+                                    <i class="icon icon-compass"></i> 按城区查询
                                 </a>
                             </li>
                         </ul>
@@ -162,7 +172,7 @@
                             </li>
                         
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartStreet()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="getStreet()"  class="nav-link">
                                     <i class="icon icon-graph"></i> 按街道统计
                                 </a>
                             </li>
@@ -478,11 +488,11 @@
 			+ "</td><td>" + data[i].parkname + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" 
 			+ data[i].typename + "</td><td>" + data[i].parking_amount + "</td>"; 
 			if(user_id == "admin") 
-				str += "<td><a href=\"javascript:void(0)\" onclick=\"deleteParking(this)\">删除</a></td></tr>";
+				str += "<td><a href=\"javascript:void(0)\" onclick=\"deleteParking(this)\" class=\"viewbutton\">删除</a></td>";
 		}
-		str = str + "</tbody>";
+		str = str + "</tr></tbody>";
 		if(user_id == "admin")
-			document.getElementById("name").innerHTML = "所有停车场信息&nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"addParking()\">添加</a>";
+			document.getElementById("name").innerHTML = "所有停车场信息&nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"addParking()\" class=\"viewbutton\">添加</a>";
 		else
 			document.getElementById("name").innerHTML = "所有停车场信息";
 
@@ -497,7 +507,6 @@
 	function deleteParking(id) {
 		var rows = id.parentNode.parentNode.rowIndex;
 		var parkcode = $("#tab tr:eq(" + rows + ") td:eq(0)").html();
-		alert(parkcode);
 		var url = "http://localhost:8080/admin/" + parkcode + "/delete";
 		window.location.href=url;
 	}

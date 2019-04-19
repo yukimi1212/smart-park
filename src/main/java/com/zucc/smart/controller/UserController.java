@@ -411,11 +411,11 @@ public class UserController {
     	    	
     	if(source.equals("form") || source.equals("formpark") || source.equals("formstreet") || source.equals("formarea"))
     		return "searchForm";
-    	else if(source.equals("parkingtype") || source.equals("recordtype"))
+    	else if(source.equals("parkingtype") || source.equals("recordtypeStatic"))
     		return "searchType";
-    	else if(source.equals("parkingstreet") || source.equals("recordstreet"))
+    	else if(source.equals("parkingstreet") || source.equals("recordstreetStatic"))
     		return "searchStreet";
-    	else if(source.equals("parkingarea") || source.equals("recordarea"))
+    	else if(source.equals("parkingarea") || source.equals("recordareaStatic"))
     		return "searchArea";
     	else
     		return "searchRecord";

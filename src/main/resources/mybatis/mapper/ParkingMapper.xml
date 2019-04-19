@@ -17,12 +17,13 @@
 	<select id="checkParkCode" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false">
     	select count(*)
     	FROM parking
-    	where parkcode = #{parkcode}
+    	where parkcode = #{parkcode} and state = 'true'
     </select>
 	
 	<select id="getBusinesscode" resultMap="ParkingMap" useCache="false">
     	select distinct BUSINESSCODE
     	FROM parking
+    	where state = 'true'
     	group by BUSINESSCODE
     </select>
     
@@ -43,138 +44,141 @@
 	<select id="getParkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		SELECT *
 		FROM parking
-		where lng between #{down_lng} and #{up_lng} and lat between #{down_lat} and #{up_lat};
+		where lng between #{down_lng} and #{up_lng} and lat between #{down_lat} and #{up_lat} and state = 'true';
 	</select>
 	
 	<select id="getTypeCount" resultType="java.util.HashMap" useCache="false"> 
 		select typecode, count(typecode) 
 		from parking 
+		where state = 'true'
 		group by typecode
 	</select>
 	
 	<select id="searchTypeCount" resultType="java.util.HashMap" useCache="false"> 
 		select typecode, count(typecode) 
 		from parking 
-		where streetname = #{searchWord} or areaname = #{searchWord}
+		where streetname = #{searchWord} or areaname = #{searchWord} and state = 'true'
 		group by typecode
 	</select>
 	
 	<select id="getOneTypeCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
 		select count(parkcode) 
 		from parking 
-		where typecode = #{typecode}
+		where typecode = #{typecode} and state = 'true'
 	</select>
 	
 	<select id="getAreaCount" resultType="java.util.HashMap" useCache="false"> 
 		select BUSINESSCODE, count(BUSINESSCODE) 
 		from parking 
+		where state = 'true'
 		group by BUSINESSCODE
 	</select>
 	
 	<select id="getOneAreaCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
 		select count(parkcode) 
 		from parking 
-		where BUSINESSCODE = #{BUSINESSCODE}
+		where BUSINESSCODE = #{BUSINESSCODE} and state = 'true'
 	</select>
 	
 	<select id="getStreetCount" resultType="java.util.HashMap" useCache="false"> 
 		select streetcode, count(streetcode) 
 		from parking 
+		where state = 'true'
 		group by streetcode
 	</select>
 	
 	<select id="getOneStreetCount" parameterType="java.lang.String" resultType="java.lang.String" useCache="false"> 
 		select count(parkcode) 
 		from parking 
-		where streetcode = #{streetcode}
+		where streetcode = #{streetcode} and state = 'true';
 	</select>
 	
 	<select id="parkingSearch" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
-		where parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} 
+		where (parkcode like #{searchWord} or streetcode like #{searchWord} or businesscode like #{searchWord} 
 			or parkname like #{searchWord} or streetname like #{searchWord} 
-			or areaname like #{searchWord};
+			or areaname like #{searchWord}) and state = 'true' ;
 	</select>
 
 	<select id="parkingSearchByParking" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
-		where parkcode like #{searchWord} or parkname like #{searchWord};
+		where (parkcode like #{searchWord} or parkname like #{searchWord}) and state = 'true';
 	</select>
 	
 	<select id="parkingSearchByStreet" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
-		where streetcode like #{searchWord} or streetname like #{searchWord};
+		where (streetcode like #{searchWord} or streetname like #{searchWord}) and state = 'true';
 	</select>
 	
 	<select id="parkingSearchByArea" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select * 
 		from parking 
-		where businesscode like #{searchWord} or areaname like #{searchWord};
+		where (businesscode like #{searchWord} or areaname like #{searchWord}) and state = 'true';
 	</select>
 	
 	
 	<select id="searchStreet" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
 		select distinct streetcode,streetname
 		from parking 
-		where streetcode like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord}
+		where (streetcode like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord}) and state = 'true';
 	</select>
 	
 	<select id="searchArea" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
 		select distinct BUSINESSCODE,areaname
 		from parking 
-		where BUSINESSCODE like #{searchWord} or areaname like #{searchWord}
+		where (BUSINESSCODE like #{searchWord} or areaname like #{searchWord}) and state = 'true';
 	</select>
 	
 	<select id="searchParkcodeByParkname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct parkcode
 		from parking 
-		where parkname like #{searchWord}
+		where parkname like #{searchWord} and state = 'true'
 	</select>
 	
 	<select id="searchStreetcodeByStreetname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct streetcode
 		from parking 
-		where streetname like #{searchWord}
+		where streetname like #{searchWord} and state = 'true'
 	</select>
 	
 	<select id="searchBusinesscodeByAreaname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select distinct BUSINESSCODE
 		from parking 
-		where areaname like #{searchWord}
+		where areaname like #{searchWord} and state = 'true'
 	</select>
 	
 	<select id="getTypeCode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select *
 		from parking 
-		where parkcode = #{parkcode}
+		where parkcode = #{parkcode} and state = 'true'
 	</select>
 	
 	<select id="getParkcode" parameterType="java.lang.String" resultType="java.lang.String" useCache="false">
 		select parkcode
 		from parking 
-		where parkname = #{parkname}
+		where parkname = #{parkname} and state = 'true'
 	</select>
 	
 	<select id="getParkcodeByTypecode" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select *
 		from parking 
-		where typecode = #{typecode}
+		where typecode = #{typecode} and state = 'true'
 	</select>
 	
 	<select id="getParkcodeForLng" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select *
 		from parking 
-		where lng = #{lng}
+		where lng = #{lng} and state = 'true'
 		limit 1
 	</select>
 	
 	<select id="getParkcodeForLat" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">
 		select *
 		from parking 
-		where lat = #{lat}
+		where lat = #{lat} and state = 'true'
 		limit 1
 	</select>
 	

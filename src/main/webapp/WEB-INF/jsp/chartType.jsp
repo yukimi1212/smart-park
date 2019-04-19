@@ -124,37 +124,37 @@
                     
 					<li class="nav-item nav-dropdown ">
                         <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-pin"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
+                            <i class="icon icon-compass"></i> 停车记录查询 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="record" onclick="returnRecord()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 全部查询
+                                    <i class="icon icon-compass"></i> 全部查询
                                 </a>
                             </li>
                             
                         	<li class="nav-item">
                                 <a href="javascript:void(0)" id="recordcph" onclick="returnRecordCPH()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 按车牌查询
+                                    <i class="icon icon-compass"></i> 按车牌查询
                                 </a>
                             </li>
                         
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordpark" onclick="returnRecordParking()"  class="nav-link">
-                                    <i class="icon icon-pin"></i> 按停车场查询
+                                    <i class="icon icon-compass"></i> 按停车场查询
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordstreet" onclick="returnRecordStreet()" class="nav-link">
-                                    <i class="icon icon-pin"></i> 按街道查询
+                                    <i class="icon icon-compass"></i> 按街道查询
                                 </a>
                             </li>
                             
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="recordarea" onclick="returnRecordArea()" class="nav-link">
-                                    <i class="icon icon-fire"></i> 按城区查询
+                                    <i class="icon icon-compass"></i> 按城区查询
                                 </a>
                             </li>
                         </ul>
@@ -174,7 +174,7 @@
                             </li>
                         
                         	<li class="nav-item">
-                                <a href="javascript:void(0)" onclick="getChartStreet()"  class="nav-link">
+                                <a href="javascript:void(0)" onclick="getStreet()"  class="nav-link">
                                     <i class="icon icon-graph"></i> 按街道统计
                                 </a>
                             </li>
@@ -311,6 +311,7 @@
 	}
 	
 	window.onload = function(){	
+		alert("chartType.jsp");
 		auto();
 		var sWord = $("#searchWord").val();
 		if(sWord == "") {
