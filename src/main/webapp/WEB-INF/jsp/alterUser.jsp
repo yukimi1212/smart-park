@@ -35,6 +35,16 @@
     		display: inline-block;
     		font-size: 10px;	
 		}
+		.viewbutton2 {
+    		background-color: #4c7594;
+    		border: none;
+    		color: white;
+    		padding: 8px 14px;
+    		text-align: center;
+    		text-decoration: none;
+    		display: inline-block;
+    		font-size: 10px;	
+		}
 	</style> 
 </head>
 <body class="sidebar-fixed header-fixed">
@@ -206,7 +216,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link">
-                                    <i class="icon icon-layers"></i> 按日期统计
+                                    <i class="icon icon-layers"></i> 按时间统计
                                 </a>
                             </li>
                         </ul>
@@ -500,7 +510,7 @@
 		str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"alterUser(this)\" class=\"viewbutton\">确认修改</a>" + "</td></tr>"; 			
 		
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "用户信息  &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"getUser()\" class=\"viewbutton\">返回</a>";
+		document.getElementById("name").innerHTML = "用户信息  &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"getUser()\" class=\"viewbutton\">返回</a><a href=\"javascript:void(0)\" onclick=\"alterPwd()\" class=\"viewbutton2\" style=\"float:right\">重置密码</a>";
 		$("#tab").append(str); 
 		$("#alter_gender").val(user_gender);
 		$("#alter_phone").val(user_phone);
@@ -537,6 +547,35 @@
 	 		})	
 		}
 	}
+	
+	function alterPwd(){
+		var user_id = $("#user_id").html();
+	    var param = encode64(user_id);
+	    $.ajax({
+   			type:'POST',
+     		url:'http://localhost:8080/login/' + param + "/alterP",
+     		async:true,
+     		data:{
+     		},
+     		dataType:'json',
+     		success:function(result){
+     			var flag = result["flag"];
+     			if (flag == "true"){
+     				alert("已重置密码为：000000");
+     				var url = "http://localhost:8080/user/" + param + "/user";
+         			window.location.href=url;
+     			}
+     			else{
+     				alert("重置失败 请再次尝试！");
+     			}	     		
+     		},
+     		error:function(error){
+     			var jsonData = JSON.stringify(error);
+     	    	alert(jsonData)
+     		}
+ 		})	
+	}
+	
 	
 	function showRecord(id) {
 		var rows = id.parentNode.parentNode.rowIndex;

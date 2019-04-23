@@ -23,4 +23,6 @@ public interface UserMapper {
 	ArrayList<User> searchUser(String searchWord);
 
 	void alterUser(String user_id, String user_gender, String user_phone);
+
+	void alterPwd(String user_id);
 }

@@ -123,13 +123,13 @@
 	<select id="searchStreet" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
 		select distinct streetcode,streetname
 		from parking 
-		where (streetcode like #{searchWord} or streetname like #{searchWord} or areaname like #{searchWord}) and state = 'true';
+		where areaname = #{searchWord} and state = 'true';
 	</select>
 	
 	<select id="searchArea" parameterType="java.lang.String" resultType="java.util.HashMap" useCache="false">
 		select distinct BUSINESSCODE,areaname
 		from parking 
-		where (BUSINESSCODE like #{searchWord} or areaname like #{searchWord}) and state = 'true';
+		where typecode = #{searchWord} and state = 'true';
 	</select>
 	
 	<select id="searchParkcodeByParkname" parameterType="java.lang.String" resultMap="ParkingMap" useCache="false">

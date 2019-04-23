@@ -214,7 +214,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link">
-                                    <i class="icon icon-layers"></i> 按日期统计
+                                    <i class="icon icon-layers"></i> 按时间统计
                                 </a>
                             </li>
                         </ul>
@@ -232,8 +232,10 @@
 		
         <div class="content">   
         	<div id="search">
-    			<input type="text" id="searchWord" value="" placeholder="可按编号/街道名/城区名进行搜索" size="18px">
+    			<input type="text" id="searchWord" value="" placeholder="指定城区" size="18px">
     			<button class="button" type="submit" onclick="doSearch()">搜索</button>
+    			<a href="javascript:void(0)" onclick="getStreet()" class="viewbutton" style="float:right" id="streetStatic">停车记录统计</a>
+  				<a href="javascript:void(0)" onclick="showView()" class="viewbutton" style="float:right" id="view">图表显示</a>
   			</div>
   			<span id="tip"></span>
   			<br><br>
@@ -293,30 +295,23 @@
 	
 	function doSearch(){
 		var searchWord = $("#searchWord").val();
+		if(searchWord == "")
+			getStreet();
+		var user_id = $("#user_id").html();
+		var param = encode64(user_id);
 		var source = $("#source").html();
 		if (source == "parkingstreet"){
-			if(searchWord == "")
-				getStreet();
-			else{
-				var user_id = $("#user_id").html();
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&parkingstreet";
-		        window.location.href=url;
-			}		
+			var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&parkingstreet";
+		    window.location.href=url;					
 		}
 		else {
-			if(searchWord == "")
-				getChartStreet();
-			else{
-				var user_id = $("#user_id").html();
-				var param = encode64(user_id);
-				var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&recordstreetStatic";
-		        window.location.href=url;
-			}	
+			var url = "http://localhost:8080/user/" + param + "/" + searchWord + "&recordstreetStatic";
+		    window.location.href=url;
 		}
 	}
 	
 	window.onload = function(){
+		auto();
 		var user_id = $("#user_id").html();
 		var source = $("#source").html();
 		var param = encode64(user_id);
@@ -327,6 +322,7 @@
 		}
 		
 		if (source == "parkingstreet"){
+			document.getElementById("view").style.display = "none"; 
 			$.ajax({
 	   			type:'GET',
 	     		url:'http://localhost:8080/park/' + param + '/street',
@@ -344,10 +340,7 @@
 	 		})
 		}
 		else {
-			auto();
-			var sWord = document.getElementById('searchWord');
-			sWord.setAttribute("placeholder", "指定城区");	
-			
+			var type = $("#streetStatic").html("停车场统计");
 			$.ajax({
 	   			type:'GET',
 	     		url:'http://localhost:8080/record/' + param + '/street',
@@ -407,7 +400,8 @@
 			str = str + "<tr><td>" + data[i].streetcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "停车场统计 &nbsp &nbsp 总记录数：" + data[0].amount + "<a href=\"javascript:void(0)\" onclick=\"getChartStreet()\" class=\"viewbutton\" style=\"float:right\" >停车记录统计</a>";
+		document.getElementById("name").innerHTML = "停车场统计 &nbsp &nbsp 总记录数：" + data[0].amount;
+		$("#tip").html("（上城区，下城区，江干区，拱墅区，西湖区，风景名胜区）");
 		$("#tab").append(str); 
 	}
 	
@@ -418,7 +412,7 @@
 			str = str + "<tr><td>" + data[i].streetcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].amount + "</td></tr>"; 
 		}
 		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "停车记录统计 &nbsp &nbsp 总记录数：" + data[0].amount + "<a href=\"javascript:void(0)\" onclick=\"getStreet()\" class=\"viewbutton\" style=\"float:right\" >停车场统计</a>" + "<a href=\"javascript:void(0)\" onclick=\"showView()\" class=\"viewbutton\" style=\"float:right\" >图表显示</a>";
+		document.getElementById("name").innerHTML = "停车记录统计 &nbsp &nbsp 总记录数：" + data[0].amount;
 		$("#tip").html("（上城区，下城区，江干区，拱墅区，西湖区，风景名胜区）");
 		$("#tab").append(str); 
 	}
@@ -510,7 +504,12 @@
 	function getStreet() {
 		var user_id = $("#user_id").html();
 		var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/street";
+		var source = $("#source").html();
+		var url;
+		if (source == "parkingstreet")
+	       	url = "http://localhost:8080/user/" + param + "/chartStreet";
+		else
+			url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
 	
@@ -527,27 +526,6 @@
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
-	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
 	
 	function getViewType() {
 		var user_id = $("#user_id").html();

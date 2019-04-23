@@ -2,11 +2,13 @@ package com.zucc.smart.controller;
 
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import com.zucc.smart.domain.User;
 import com.zucc.smart.service.BuildLngAndLat;
 import com.zucc.smart.service.DataManageService;
 import com.zucc.smart.service.UserService;
+import com.zucc.smart.service.impl.Decode;
 
 
 @RestController
@@ -90,6 +93,16 @@ public class LoginController {
         
         String str = "{\"flag\":\"" + flag + "\"}";
         return str;
+    }
+    
+    @RequestMapping(value = {"/", "/{user_id}/alterP"}, method = RequestMethod.POST) 
+	public String alterPwd(@PathVariable("user_id") String user_id_obj) throws IOException { 
+    	String user_id = new String(Decode.decode(user_id_obj)); 
+    	log.info("/login/"+ user_id + "/alterP");
+    	String flag = "";
+    	flag = userService.alterPwd(user_id);
+    	String str = "{\"flag\":\"" + flag + "\"}";
+    	return str; 
     }
     
     public static boolean isInteger(String str) {      	

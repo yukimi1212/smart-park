@@ -203,7 +203,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link">
-                                    <i class="icon icon-layers"></i> 按日期统计
+                                    <i class="icon icon-layers"></i> 按时间统计
                                 </a>
                             </li>
                         </ul>

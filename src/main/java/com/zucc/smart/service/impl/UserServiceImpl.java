@@ -357,4 +357,18 @@ public class UserServiceImpl implements UserService {
 		return listVO;
 	}
 
+	@Override
+	public String alterPwd(String user_id) {
+		log.info("alterPwd：" + user_id);
+		String flag = "";
+		userMapper.alterPwd(user_id);
+		ArrayList<User> user = userMapper.getUserById(user_id);
+		if (user.get(0).getUser_pwd().equals("000000")) {
+			flag = "true";
+		}
+		else
+			flag = "false";
+		return flag;
+	}
+
 }

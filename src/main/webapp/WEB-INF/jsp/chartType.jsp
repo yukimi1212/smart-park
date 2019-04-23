@@ -214,7 +214,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link">
-                                    <i class="icon icon-layers"></i> 按日期统计
+                                    <i class="icon icon-layers"></i> 按时间统计
                                 </a>
                             </li>
                         </ul>
@@ -234,6 +234,7 @@
         	<div id="search">
     			<input type="text" id="searchWord" value="" placeholder="指定街道名/城区名"  size="18px">
     			<button class="button" type="submit" onclick="checkSearchWord()">搜索</button>
+    			<a href="javascript:void(0)" onclick="getChartType()" class="viewbutton" style="float:right" >表格显示</a>
   			</div><br>
   			
             <div class="row">
@@ -311,7 +312,6 @@
 	}
 	
 	window.onload = function(){	
-		alert("chartType.jsp");
 		auto();
 		var sWord = $("#searchWord").val();
 		if(sWord == "") {
@@ -378,7 +378,7 @@ function auto() {
 
 function getTypeChart(list) {
 	$("sum").empty();
-	document.getElementById("sum").innerHTML = "停车记录统计 &nbsp &nbsp 总记录数：" + list[0].amount + "<a href=\"javascript:void(0)\" onclick=\"getChartType()\" class=\"viewbutton\" style=\"float:right\" >表格显示</a>";;
+	document.getElementById("sum").innerHTML = "停车记录统计 &nbsp &nbsp 总记录数：" + list[0].amount;
 
 	$('#chartType').remove();
 	$('#card-body').append('<canvas id="chartType" width="80%" height="30"></canvas>');
@@ -594,20 +594,6 @@ function getViewType() {
 	var user_id = $("#user_id").html();
     var param = encode64(user_id);
     var url = "http://localhost:8080/user/" + param + "/viewType";
-    window.location.href=url;  
-}
-
-function getChartStreet(){
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-    var url = "http://localhost:8080/user/" + param + "/chartStreet";
-    window.location.href=url;  
-}	
-
-function getChartArea(){
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-    var url = "http://localhost:8080/user/" + param + "/chartArea";
     window.location.href=url;  
 }
 

@@ -462,26 +462,6 @@ public class RecordServiceImpl implements RecordService {
 				listVO.get(0).setAmount(listVO.get(0).getAmount() + amount);
 			}
 		}
-/*		else if(sWordType.compareTo("") != 0){
-			String typecode = helperMapper.getTypeCode(sWordType);
-			ArrayList<Parking> parkingList = parkingMapper.getParkcodeByTypecode(typecode);
-
-			String parkcode;
-			for(int i=0; i<listmap.size(); i++) {
-				String str = listmap.get(i).get("inserttime").toString();
-				TimeVO timeVO = new TimeVO();
-				timeVO.setTime(str.substring(5));
-				timeVO.setAmount(0);
-				for(int p=0; p<parkingList.size(); p++) {
-					parkcode = parkingList.get(p).getParkcode();
-					int amount = recordMapper.getRecordTimeCountForParking(str,parkcode);
-					timeVO.setAmount(timeVO.getAmount() + amount);
-				}
-				
-				listVO.add(timeVO);
-				listVO.get(0).setAmount(listVO.get(0).getAmount() + timeVO.getAmount());
-			}
-		}*/
 		else {
 			for(int i=0; i<listmap.size(); i++) {
 				String str = listmap.get(i).get("inserttime").toString();

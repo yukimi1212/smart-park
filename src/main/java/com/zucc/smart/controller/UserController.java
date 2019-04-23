@@ -357,7 +357,7 @@ public class UserController {
 	  public String alterUser(@PathVariable("user_id") String user_id_obj, 
 			  Map<String, Object>map) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/user/"+ user_id + "/alterU");
+		  log.info("/user/"+ user_id + "/alter");
 		  User user = userService.getUserById(user_id); 
 		  map.put("user_name",user.getUser_name());
 		  map.put("user_gender", user.getUser_gender());
@@ -365,8 +365,6 @@ public class UserController {
 		  map.put("user_id", user_id); 
 		  return "alterUser"; 
 	  }
-	  
-	  
 	  
 	  @RequestMapping(value = {"/", "/{user_id}/alterU"}) 
 	  public String alterUser(@PathVariable("user_id") String user_id_obj, String user_gender, 

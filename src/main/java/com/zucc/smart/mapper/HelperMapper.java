@@ -12,7 +12,7 @@ public interface HelperMapper {
 	
 	String getBusinessCode(String businesscode);
 	
-	String getTypeCode(String typecode);
+	String getTypeCode(String typename);
 	
 	String getAreaNameByStreetCode(String streetcode);
 	

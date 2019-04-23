@@ -202,7 +202,7 @@
 
                             <li class="nav-item">
                                 <a href="javascript:void(0)" onclick="getViewTime()" class="nav-link active">
-                                    <i class="icon icon-layers"></i> 按日期统计
+                                    <i class="icon icon-layers"></i> 按时间统计
                                 </a>
                             </li>
                         </ul>
@@ -620,27 +620,6 @@ function getUser() {
     var param = encode64(user_id);
 	var url = "http://localhost:8080/user/" + param + "/user";
 	window.location.href=url;
-}
-
-function getChartStreet(){
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-    var url = "http://localhost:8080/user/" + param + "/chartStreet";
-    window.location.href=url;  
-}	
-
-function getChartArea(){
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-    var url = "http://localhost:8080/user/" + param + "/chartArea";
-    window.location.href=url;  
-}
-
-function getChartType(){
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-    var url = "http://localhost:8080/user/" + param + "/chartType";
-    window.location.href=url;  
 }
 
 function getViewType() {

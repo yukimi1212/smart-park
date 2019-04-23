@@ -213,7 +213,7 @@ public class ParkingServiceImpl implements ParkingService {
 	@Override
 	public ArrayList<StreetVO> parkingStreetSearch(String searchWord) {
 		log.info("parkingStreetSearch：" + searchWord);
-		searchWord = "%"+searchWord+"%";
+//		searchWord = "%"+searchWord+"%";
 		
 		ArrayList<HashMap<String,String>> listmap = parkingMapper.searchStreet(searchWord);
 		ArrayList<StreetVO> listVO = new ArrayList<StreetVO>();
@@ -239,9 +239,9 @@ public class ParkingServiceImpl implements ParkingService {
 	@Override
 	public ArrayList<AreaVO> parkingAreaSearch(String searchWord) {
 		log.info("parkingAreaSearch：" + searchWord);
-		searchWord = "%"+searchWord+"%";
-		
-		ArrayList<HashMap<String,String>> listmap = parkingMapper.searchArea(searchWord);
+//		searchWord = "%"+searchWord+"%";
+		String typecode = helperMapper.getTypeCode(searchWord);
+		ArrayList<HashMap<String,String>> listmap = parkingMapper.searchArea(typecode);
 		ArrayList<AreaVO> listVO = new ArrayList<AreaVO>();
         
 		for(int i=0; i<listmap.size(); i++) {
