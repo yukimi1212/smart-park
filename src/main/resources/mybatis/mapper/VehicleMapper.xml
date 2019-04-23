@@ -7,12 +7,19 @@
 		<result column="cph" property="cph" />
 		<result column="cartype" property="cartype" />
 		<result column="user_id" property="user_id" />
+		<result column="state" property="state" />
 	</resultMap>
 
 	<select id="getUserVehicle" parameterType="java.lang.String" resultMap="VehicleMap" useCache="false">
     	select *
     	FROM vehicle
-    	where user_id = #{user_id}
+    	where user_id = #{user_id} and state = 'true'
+    </select> 
+    
+    <select id="getUserVehicleForAdmin" parameterType="java.lang.String" resultMap="VehicleMap" useCache="false">
+    	select *
+    	FROM vehicle
+    	where user_id = #{check_id}
     </select> 
     
     <select id="getVehicleCount" parameterType="java.lang.String" resultType="java.lang.Integer" useCache="false">
@@ -31,9 +38,9 @@
 	
 	<insert id="addVehicle" parameterType="java.lang.String">
 		INSERT INTO vehicle
-		(cph, cartype, user_id)
+		(cph, cartype, user_id, state)
 		values
-		(#{cph}, #{cartype}, #{user_id})
+		(#{cph}, #{cartype}, #{user_id}, 'true')
 	</insert>  
 	 
 </mapper>

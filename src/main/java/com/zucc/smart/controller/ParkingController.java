@@ -78,11 +78,11 @@ public class ParkingController {
     	return list;
     }
     
-    @RequestMapping(value = {"/", "/{user_id}/addV"}) 
+    @RequestMapping(value = {"/", "/{user_id}/add"}) 
 	  public String addVehicle(@PathVariable("user_id") String user_id_obj, 
 			  String cph, String cartype) throws IOException { 
 		  String user_id = new String(Decode.decode(user_id_obj)); 
-		  log.info("/park/"+ user_id + "/addV ----- " + cph + "   " + cartype);
+		  log.info("/park/"+ user_id + "/add ----- " + cph + "   " + cartype);
 		  String flag = "true";
 		  if(cph == "")
 			  flag = "请输入车牌号";

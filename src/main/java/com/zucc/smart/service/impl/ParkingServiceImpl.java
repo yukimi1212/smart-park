@@ -160,29 +160,6 @@ public class ParkingServiceImpl implements ParkingService {
 		ArrayList<ParkingVO> listVO = changeToParkingVO(list);
 		return listVO;
 	}
-/*
-	@Override
-	public ArrayList<ParkingTypeVO> parkingTypeSearch(String searchWord) {
-		log.info("parkingTypeSearch：" + searchWord);
-		searchWord = "%"+searchWord+"%";
-		
-		ArrayList<ParkingType> list = parkingTypeMapper.searchType(searchWord);
-		ArrayList<ParkingTypeVO> listVO = new ArrayList<ParkingTypeVO>();
-		
-		for(int i=0; i<list.size(); i++) {
-			String a = parkingMapper.getOneTypeCount(list.get(i).getTypecode());
-			int amount = Integer.parseInt(a);
-			
-			ParkingTypeVO typeVO = new ParkingTypeVO();
-			typeVO.setTypecode(list.get(i).getTypecode());
-			typeVO.setTypename(list.get(i).getTypename());
-			typeVO.setAmount(amount);
-			listVO.add(typeVO);
-		}
-		
-		return listVO;
-	}
-*/
 	
 	@Override
 	public ArrayList<ParkingTypeVO> parkingTypeSearch(String searchWord) {

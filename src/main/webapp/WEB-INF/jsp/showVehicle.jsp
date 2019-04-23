@@ -25,6 +25,7 @@
         	padding: 10px;
         	width: 90px;
       	}
+      	
       	.viewbutton {
     		background-color: #4c7594;
     		border: none;
@@ -282,7 +283,7 @@
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
-			returnUser();
+			getUser();
 		else{
 			var user_id = $("#user_id").html();
 		    var param = encode64(user_id);
@@ -343,9 +344,7 @@
 	     	    	alert(jsonData)
 	     		}
 	 		})
-		}
-	    
-		
+		}		
 	}
 	
 	function returnForm() {
@@ -375,14 +374,7 @@
         var url = "http://localhost:8080/user/" + param + "/formarea";
         window.location.href=url;
 	}
-	
-	function returnUser() {
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/user";
-		window.location.href=url;
-	}
-	
+
 	function returnRecord() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -444,16 +436,20 @@
 		$("#tab").html("");
 		var str = "<thead><tr><th>车牌号</th><th>真实车牌号</th><th>车辆类型</th><th>停车记录";
 		if(user_id == "admin")
-			str = str + "</th></tr></thead><tbody>";
+			str = str + "</th><th>使用状态</th></tr></thead><tbody>";
 		else	
 			str = str + "</th><th>操作</th></tr></thead><tbody>";
 		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].cartype + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\" class=\"viewbutton\">查看</a>";
+			str = str + "<tr><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].cartype + "</td><td><a href=\"javascript:void(0)\" onclick=\"showRecord(this)\" class=\"viewbutton\">查看</a></td>";
 			
-			if(user_id == "admin")
-				str = str + "</td></tr>";
+			if(user_id == "admin"){
+				if (data[i].state == 'true')
+					str = str + "<td>绑定中</td></tr>";
+				else
+					str = str + "<td>已解除绑定</td></tr>";
+			}
 			else	
-				str = str + "</td><td><a href=\"javascript:void(0)\" onclick=\"deleteVehicle(this)\" class=\"viewbutton\">删除</a></td></tr>"; 
+				str = str + "<td><a href=\"javascript:void(0)\" onclick=\"deleteVehicle(this)\" class=\"viewbutton\">删除</a></td></tr>"; 
 		}
 		str = str + "</tbody>";
 		document.getElementById("name").innerHTML = "车辆信息 &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"addVehicle()\" class=\"viewbutton\">添加</a> &nbsp&nbsp&nbsp<a href=\"javascript:void(0)\" onclick=\"getUser()\" class=\"viewbutton\">返回</a>";
@@ -509,28 +505,7 @@
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
-	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
-	
+
 	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);

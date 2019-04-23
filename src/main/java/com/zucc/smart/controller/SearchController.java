@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zucc.smart.domain.Map;
-import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.Vehicle;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.RecordService;
@@ -112,7 +111,7 @@ public class SearchController {
     	log.info("/search/vehicle/admin ----- " + check_id);
     	
     	ArrayList<Vehicle> list = new ArrayList<Vehicle>();
-		list = vehicleService.getUserVehicle(check_id);		
+		list = vehicleService.getUserVehicleForAdmin(check_id);		
 		return list;
     }
     
@@ -203,6 +202,14 @@ public class SearchController {
     	log.info("/search/tags/" + user_id + "/record    " + source );   	
     	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
 		list = userService.getAvailableUserRecordSearchTags(user_id, source);		
+		return list;
+    }
+    
+    @RequestMapping(value = "/tags/user", method = RequestMethod.GET)
+    public ArrayList<WordsVO> getAvailableUserTags() {
+    	log.info("/search/tags/user");   	
+    	ArrayList<WordsVO> list = new ArrayList<WordsVO>();
+		list = userService.getAvailableUserTags();		
 		return list;
     }
     

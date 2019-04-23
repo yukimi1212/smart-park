@@ -327,7 +327,7 @@
         window.location.href=url;
 	}
 	
-	function returnUser() {
+	function getUser() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/user";
@@ -368,28 +368,7 @@
 		var url = "http://localhost:8080/user/" + param + "/recordarea";
 		window.location.href=url;
 	}
-	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
-	
+
 	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -439,13 +418,6 @@
 		window.location.href=url;
 	}	
 	
-	function getUser() {
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/user";
-		window.location.href=url;
-	}
-	
 	function deleteVehicle(id) {
 		var user_id = $("#user_id").html();
 		var rows = id.parentNode.parentNode.rowIndex;
@@ -473,7 +445,7 @@
 		var cartype = document.getElementById("cartype").value;
 		$.ajax({
 	   		type:'GET',
-	     	url:'http://localhost:8080/park/' + param + "/addV",
+	     	url:'http://localhost:8080/park/' + param + "/add",
 	     	async:true,
 	     	dataType:'json',
 	     	data:{

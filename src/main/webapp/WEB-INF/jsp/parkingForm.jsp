@@ -526,27 +526,6 @@
 		window.location.href=url;
 	}
 	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
-	
 	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);

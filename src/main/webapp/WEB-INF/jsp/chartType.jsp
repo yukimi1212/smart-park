@@ -457,13 +457,6 @@ function returnFormArea() {
     window.location.href=url;
 }
 
-function returnUser() {
-	var user_id = $("#user_id").html();
-    var param = encode64(user_id);
-	var url = "http://localhost:8080/user/" + param + "/user";
-	window.location.href=url;
-}
-
 function returnRecord() {
 	var user_id = $("#user_id").html();
     var param = encode64(user_id);

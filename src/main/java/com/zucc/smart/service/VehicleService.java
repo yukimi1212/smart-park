@@ -10,4 +10,6 @@ public interface VehicleService {
 	void deleteVehicle(String cph);
 
 	void addVehicle(String cph, String cartype, String user_id);
+
+	ArrayList<Vehicle> getUserVehicleForAdmin(String check_id);
 }

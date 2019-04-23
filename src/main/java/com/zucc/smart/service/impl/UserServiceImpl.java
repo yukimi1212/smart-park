@@ -1,6 +1,8 @@
 package com.zucc.smart.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -369,6 +371,25 @@ public class UserServiceImpl implements UserService {
 		else
 			flag = "false";
 		return flag;
+	}
+
+	@Override
+	public ArrayList<WordsVO> getAvailableUserTags() {
+		log.info("getAvailableUserTags：");
+		
+		ArrayList<WordsVO> listVO = new ArrayList<WordsVO>();
+		ArrayList<User> listUser = userMapper.getAllUser();
+		HashMap<String,String> map = new HashMap<String,String>();
+		for(int i=0; i<listUser.size(); i++) {
+			if (map.get(listUser.get(i).getUser_name()) == null)
+				map.put(listUser.get(i).getUser_name(), listUser.get(i).getUser_name());
+		}
+		for (Entry<String, String> entry : map.entrySet()) {
+			WordsVO wordsVO = new WordsVO();
+			wordsVO.setValue(entry.getKey());
+			listVO.add(wordsVO);
+		}
+		return listVO;
 	}
 
 }

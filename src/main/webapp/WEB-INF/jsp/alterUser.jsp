@@ -291,7 +291,7 @@
 	function doSearch() {
 		var sWord = $("#searchWord").val();
 		if(sWord == "")
-			returnUser();
+			getUser();
 		else{
 			var user_id = $("#user_id").html();
 		    var param = encode64(user_id);
@@ -386,7 +386,7 @@
         window.location.href=url;
 	}
 	
-	function returnUser() {
+	function getUser() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
 		var url = "http://localhost:8080/user/" + param + "/user";
@@ -427,28 +427,7 @@
 		var url = "http://localhost:8080/user/" + param + "/recordarea";
 		window.location.href=url;
 	}
-	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
-	
+
 	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
@@ -591,21 +570,6 @@
 		var url = "http://localhost:8080/user/" + param + "/record";
 		window.location.href=url;
 	}
-	
-	
-	function getUser() {
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-		var url = "http://localhost:8080/user/" + param + "/user";
-		window.location.href=url;
-	}
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;
-    }	
 	
 	function jumpToIndex() {
 		var user_id = $("#user_id").html();

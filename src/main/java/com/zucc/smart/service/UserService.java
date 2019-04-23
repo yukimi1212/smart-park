@@ -52,5 +52,7 @@ public interface UserService {
 	ArrayList<WordsVO> getAvailableChartAreaSearchTags();
 
 	String alterPwd(String user_id);
+
+	ArrayList<WordsVO> getAvailableUserTags();
 	
 }

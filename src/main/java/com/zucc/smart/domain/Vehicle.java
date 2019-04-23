@@ -4,6 +4,7 @@ public class Vehicle {
 	private String cph;
 	private String cartype;
 	private String user_id;
+	private String state;
 
 	public String getCph() {
 		return cph;
@@ -22,6 +23,12 @@ public class Vehicle {
 	}
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

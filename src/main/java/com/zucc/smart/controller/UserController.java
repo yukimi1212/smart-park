@@ -315,6 +315,7 @@ public class UserController {
     	map.put("search_id", search_id);
     	map.put("user_name", "管理");
     	map.put("user_id", "admin");
+    	map.put("source", "record");
         return "showRecord";
     }
     

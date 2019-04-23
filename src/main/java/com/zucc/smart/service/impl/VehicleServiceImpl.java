@@ -28,6 +28,14 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
+	public ArrayList<Vehicle> getUserVehicleForAdmin(String check_id) {
+		log.info("getUserVehicleForAdmin：" + check_id);
+		ArrayList<Vehicle> list = new ArrayList<Vehicle>();
+		list = vehicleMapper.getUserVehicleForAdmin(check_id);
+		return list;
+	}
+	
+	@Override
 	public void deleteVehicle(String cph) {
 		log.info("deleteVehicle：" + cph);
 		vehicleMapper.deleteVehicle(cph);

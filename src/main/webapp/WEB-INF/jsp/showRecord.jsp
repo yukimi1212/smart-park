@@ -55,6 +55,7 @@
                     <span class="small ml-1 d-md-down-none" id="user_name">${user_name }</span>
                     <span id="user_id" style="display:none">${user_id }</span>
                     <span id="search_id" style="display:none">${search_id }</span>
+                    <span id="search_name" style="display:none">${search_name }</span>
                     <span id="source" style="display:none">${source }</span>
                 </a>					
 					
@@ -278,13 +279,7 @@
 	var end;
 	
 	function auto(source) {
-		var searchWord = $("#searchWord").val();
 		var user_id = $("#user_id").html();
-
-		var user_name = $("#user_name").html();
-		if(user_name == searchWord)
-			document.getElementById("searchWord").value = "";
-
 		var param = encode64(user_id);
 	    var availableTags = [];
 	    $.ajax({
@@ -350,6 +345,7 @@
 	
 	$(document).ready(function(){  
 		showForm();
+		
 		var source = $("#source").html();
 		auto(source);
 		
@@ -383,7 +379,17 @@
 	
 	function showForm(){
 		var search_id = $("#search_id").html();		
- 		if(search_id == "admin"){
+		var user_id = $("#user_id").html();
+		var search_name = $("#search_name").html();		
+		var user_name = $("#user_name").html();
+
+		if (user_id == "admin") 
+			document.getElementById("user").innerText = "用户管理";
+		
+		if (user_name == search_name)
+			document.getElementById("searchWord").value = "";
+
+ 		if (search_id == "admin"){
  			$("user").empty();
  			document.getElementById("user").innerText = "用户管理";			
  			$.ajax({
@@ -402,7 +408,7 @@
      			}
  			})
 		}
-		else{
+		else {
 			var param = encode64(search_id);
 			$.ajax({
 	   			type:'GET',
@@ -525,28 +531,7 @@
 		var url = "http://localhost:8080/user/" + param + "/user";
 		window.location.href=url;
 	}
-	
-	function getChartStreet(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.location.href=url;  
-    }	
-	
-	function getChartArea(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartArea";
-        window.location.href=url;  
-    }
-	
-	function getChartType(){
-		var user_id = $("#user_id").html();
-	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartType";
-        window.location.href=url;  
-    }
-	
+
 	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
