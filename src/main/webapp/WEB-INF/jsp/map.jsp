@@ -53,7 +53,7 @@ body {
             var geolocation = new BMap.Geolocation();  
             geolocation.getCurrentPosition(function(r){  
             	if(this.getStatus() == BMAP_STATUS_SUCCESS){  
-                	var mk = new BMap.Marker(r.point);  
+            	  	var mk = new BMap.Marker(r.point);  
                 	var user_id = $("#user_id").html();
             	    var param = encode64(user_id);
                 	$.ajax({
@@ -72,7 +72,9 @@ body {
     		     	    	alert(jsonData)
     		     		}
     		 		})   
-                    map.addOverlay(mk);  
+    		 	 
+            		map.addOverlay(mk);  
+                	mk.setAnimation(BMAP_ANIMATION_BOUNCE);
                     map.panTo(r.point);  
                 }  
                 else {  
@@ -108,7 +110,6 @@ body {
 	function getMap(list,point){		
 		
 		map.centerAndZoom(point, 16);      
-        map.addOverlay(new BMap.Marker(point)); 
 		
         var i = 0;
         for (;i<list.length;i++) {
@@ -154,6 +155,9 @@ body {
 		     			'lat':point.lat
 		     		},
 		     		success:function(result){
+		     			var mk = new BMap.Marker(point);  
+	            		map.addOverlay(mk);  
+	                	mk.setAnimation(BMAP_ANIMATION_BOUNCE);
 		     			getMap(result,point);
 		     		},
 		     		error:function(error){
@@ -165,9 +169,6 @@ body {
 		 }, 
 		"杭州市");
 	}
-	
-	
-
 
 	var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";  
 
