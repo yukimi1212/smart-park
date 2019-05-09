@@ -61,7 +61,7 @@
 	<update id="alterPwd" parameterType="java.lang.String">
         update user
         <set>
-            user_pwd = '000000'
+            user_pwd = #{new_pwd}
         </set>
         where user_id = #{user_id}
 	</update>

@@ -94,15 +94,16 @@ public class LoginController {
         String str = "{\"flag\":\"" + flag + "\"}";
         return str;
     }
+
     
-    @RequestMapping(value = {"/", "/{user_id}/alterP"}, method = RequestMethod.POST) 
-	public String alterPwd(@PathVariable("user_id") String user_id_obj) throws IOException { 
-    	String user_id = new String(Decode.decode(user_id_obj)); 
-    	log.info("/login/"+ user_id + "/alterP");
-    	String flag = "";
-    	flag = userService.alterPwd(user_id);
-    	String str = "{\"flag\":\"" + flag + "\"}";
-    	return str; 
+    @RequestMapping(value = {"/", "/{user_id}/alter"}, method = RequestMethod.POST) 
+   	public String alterPassword(@PathVariable("user_id") String user_id_obj, String old_pwd, String new_pwd) throws IOException { 
+       	String user_id = new String(Decode.decode(user_id_obj)); 
+       	log.info("/login/"+ user_id + "/alter  -- " + old_pwd + " -- " + new_pwd);
+       	String flag = "";
+       	flag = userService.alterPwd(user_id, old_pwd, new_pwd);
+       	String str = "{\"flag\":\"" + flag + "\"}";
+       	return str; 
     }
     
     public static boolean isInteger(String str) {      	

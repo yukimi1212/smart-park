@@ -378,6 +378,18 @@ public class UserController {
 		  map.put("user_id", user_id); 
 		  return "showUser";   
 	  }
+	  
+	  @RequestMapping(value = {"/", "/{user_id}/pwd"}) 
+	  public String alterPwd(@PathVariable("user_id") String user_id_obj, String user_gender, 
+			  String user_phone, Map<String, Object>map) throws IOException { 
+		  String user_id = new String(Decode.decode(user_id_obj)); 
+		  log.info("/user/"+ user_id + "/pwd");
+		  userService.alterUser(user_id, user_gender, user_phone);
+		  String user_name = (userService.getUserById(user_id)).getUser_name(); 
+		  map.put("user_name",user_name); 
+		  map.put("user_id", user_id); 
+		  return "alterPwd";   
+	  }
 	 
     
     @RequestMapping(value = {"/", "/{user_id}/delete"})

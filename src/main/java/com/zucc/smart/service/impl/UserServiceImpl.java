@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User checkUser(String user_id, String user_pwd) {
         log.info("checkUser: " + user_id + " " + user_pwd);
-        User user = userMapper.checkUser(user_id, user_pwd);
-        return user;
+        ArrayList<User> user = userMapper.checkUser(user_id, user_pwd);
+        return user.get(0);
 	}
 
 	@Override
@@ -358,21 +358,7 @@ public class UserServiceImpl implements UserService {
 		listVO.addAll(getAvaliableTypeNameTags());
 		return listVO;
 	}
-
-	@Override
-	public String alterPwd(String user_id) {
-		log.info("alterPwd：" + user_id);
-		String flag = "";
-		userMapper.alterPwd(user_id);
-		ArrayList<User> user = userMapper.getUserById(user_id);
-		if (user.get(0).getUser_pwd().equals("000000")) {
-			flag = "true";
-		}
-		else
-			flag = "false";
-		return flag;
-	}
-
+	
 	@Override
 	public ArrayList<WordsVO> getAvailableUserTags() {
 		log.info("getAvailableUserTags：");
@@ -390,6 +376,22 @@ public class UserServiceImpl implements UserService {
 			listVO.add(wordsVO);
 		}
 		return listVO;
+	}
+
+	@Override
+	public String alterPwd(String user_id, String old_pwd, String new_pwd) {
+		log.info("alterPwd：" + user_id);
+		String flag = "";
+		ArrayList<User> checkuser = userMapper.checkUser(user_id, old_pwd);
+		if(checkuser.size() == 0)
+			return "false";
+		userMapper.alterPwd(user_id, new_pwd);
+		ArrayList<User> user = userMapper.getUserById(user_id);
+		if (user.get(0).getUser_pwd().equals(new_pwd))
+			flag = "true";
+		else
+			flag = "false";
+		return flag;
 	}
 
 }

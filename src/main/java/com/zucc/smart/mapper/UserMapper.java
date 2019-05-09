@@ -10,7 +10,7 @@ import com.zucc.smart.domain.User;
 @Mapper
 public interface UserMapper {
 	
-	User checkUser(String user_id, String user_pwd);
+	ArrayList<User> checkUser(String user_id, String user_pwd);
 
 	ArrayList<User> getUserById(String user_id);
 	
@@ -24,5 +24,5 @@ public interface UserMapper {
 
 	void alterUser(String user_id, String user_gender, String user_phone);
 
-	void alterPwd(String user_id);
+	void alterPwd(String user_id, String new_pwd);
 }
