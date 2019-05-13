@@ -268,7 +268,7 @@
 				
 				<div class="col-md-2 col-sm-2 col-xs-12 clean-blurb-round-icon wow bounceInRight" data-wow-delay=".5s" id="view">
 					<div class="clean-icon">
-						<a href="javascript:void(0)" onclick="getChartStreet()">
+						<a href="javascript:void(0)" onclick="getViewType()">
 						<i class="fa fa-area-chart"></i>
 						</a>
 					</div>
@@ -433,12 +433,12 @@
         window.open(url);
 	}
 	
-	function getChartStreet(){
+	function getViewType() {
 		var user_id = $("#user_id").html();
 	    var param = encode64(user_id);
-        var url = "http://localhost:8080/user/" + param + "/chartStreet";
-        window.open(url);
-    }	
+	    var url = "http://localhost:8080/user/" + param + "/viewType";
+	    window.open(url);
+	}	
 	
 	function jumpToUser() {
 		var user_id = $("#user_id").html();
