@@ -15,8 +15,8 @@ public interface RecordService {
 
 	ArrayList<RecordVO> getUserRecord(String user_id);
 
-	ArrayList<RecordVO> getAdminRecord();
-
+	ArrayList<RecordVO> getAdminRecord(int limit, int offset);
+	
 	ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id, String source);
 
 	ArrayList<RecordVO> adminRecordIDSearch(String searchWord);	
@@ -60,5 +60,7 @@ public interface RecordService {
 	ArrayList<StreetVO> getRecordChartStreetSearch(String searchWord);
 
 	ArrayList<AreaVO> getRecordChartAreaSearch(String searchWord);
+
+	int getAdminRecordCount();
 
 }

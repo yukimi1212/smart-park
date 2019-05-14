@@ -399,6 +399,7 @@
 		}
 	}
 	
+	
 	function jumpToMap(){
 		var user_id = document.getElementById("user_id").innerHTML;
 	    var param = encode64(user_id);

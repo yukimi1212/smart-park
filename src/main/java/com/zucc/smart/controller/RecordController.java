@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zucc.smart.domain.Parking;
 import com.zucc.smart.domain.Record;
+import com.zucc.smart.domain.TableInfo;
 import com.zucc.smart.domain.User;
 import com.zucc.smart.service.ParkingService;
 import com.zucc.smart.service.RecordService;
@@ -52,11 +53,15 @@ public class RecordController {
 	 * 管理员访问纪录
 	 */
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public ArrayList<RecordVO> getAdminParkingForm() {
-    	log.info("/record/admin/form");
-        ArrayList<RecordVO> list = new ArrayList<RecordVO>();
-        list = recordService.getAdminRecord();
-    	return list;
+    public TableInfo<RecordVO> getAdminParkingForm(int limit, int offset) {
+    	log.info("/record/admin/form ----- " + limit + "  " + offset);
+        ArrayList<RecordVO> list = recordService.getAdminRecord(limit, offset);
+        int count = recordService.getAdminRecordCount(); 
+        TableInfo<RecordVO> tableInfo = new TableInfo<RecordVO>();
+		tableInfo.setTotal(count);
+		tableInfo.setRows(list);
+ 
+		return tableInfo;
     }
     
     

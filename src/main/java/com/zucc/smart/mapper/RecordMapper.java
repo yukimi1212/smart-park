@@ -8,6 +8,8 @@ import com.zucc.smart.domain.Record;
 public interface RecordMapper {
 
 	/* 管理员 */
+	ArrayList<Record> getAllRecordLimit(int offset, int i);
+	
 	ArrayList<Record> getAllRecord();
 
 	ArrayList<Record> searchRecordByID(String searchWord);
@@ -65,4 +67,6 @@ public interface RecordMapper {
 	ArrayList<HashMap<String, Object>> getRecordAreaCountWithType(String parkcode);
 	
 	ArrayList<HashMap<String, Object>> getRecordTimeRange(String starttime, String endtime);
+
+	int getAllRecordCount();
 }

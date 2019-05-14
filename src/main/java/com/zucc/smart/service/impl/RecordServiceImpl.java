@@ -65,13 +65,20 @@ public class RecordServiceImpl implements RecordService {
 	}
 
 	@Override
-	public ArrayList<RecordVO> getAdminRecord() {
+	public ArrayList<RecordVO> getAdminRecord(int limit, int offset) {
 		log.info("getAdminRecord: admin");
-		ArrayList<Record> list = recordMapper.getAllRecord();
+		ArrayList<Record> list = recordMapper.getAllRecordLimit(offset+1, limit);
 		ArrayList<RecordVO> listVO = changeToRecordVO(list);
 		return listVO;
 	}
 
+	@Override
+	public int getAdminRecordCount() {
+		log.info("getAdminRecordCount: admin");
+		int count = recordMapper.getAllRecordCount();
+		return count;
+	}
+	
 	@Override
 	public ArrayList<RecordVO> userRecordSearch(String searchWord, String user_id, String source) {
 		log.info("userRecordSearch: " + user_id + "  searchWord：" + searchWord + " source：" + source);
@@ -589,5 +596,6 @@ public class RecordServiceImpl implements RecordService {
 		}
 		return listVO;
 	}
+
 
 }

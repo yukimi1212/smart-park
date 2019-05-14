@@ -13,7 +13,10 @@
     <link rel="shortcut icon" href="../../images/ico/favicon.png">
     <link rel="stylesheet" type="text/css" href="../../css/jquery.autocomplete.css">
 	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
-    
+ 	
+	<link href="../../css/bootstrap-table.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap-table.css" rel="stylesheet">
+	    
     <style> 		
       	#search input[type=text] {
       		margin:0 auto;
@@ -108,7 +111,6 @@
                                     <i class="icon icon-target"></i> 按城区查询
                                 </a>
                             </li>
-
                         </ul>
                     </li>
                     
@@ -243,6 +245,7 @@
                     </div>
                 </div>
                 
+               <!--  
                 <a id="btn0"></a>		
  				<a id="sjzl"></a>&nbsp;
                 <a  href="#" id="btn1">首页</a>
@@ -252,7 +255,8 @@
                 <a>&nbsp&nbsp转到&nbsp;</a>
                 <input id="changePage" type="text" size="1" maxlength="4"/>
                 <a>页&nbsp;</a>
-                <a  href="#" id="btn5">&nbsp&nbsp跳转</a>
+                <a  href="#" id="btn5">&nbsp&nbsp跳转</a> -->
+                
             </div>
         </div>
     </div>
@@ -265,6 +269,10 @@
 <script src="../../js/demo.js"></script>
 <script type="text/javascript" src="../../js/jquery.autocomplete.min.js"></script>
 <script src="../../js/jquery-ui.min.js"></script>
+
+<script src="../../js/bootstrap-table.js"></script>
+<script src="../../js/bootstrap-table-zh-CN.min.js"></script>
+
 </body>
 
 <script type="text/javascript">  
@@ -277,6 +285,209 @@
 	var page;            //总页数
 	var begin;
 	var end;
+	
+	function initTable(url) {		
+		var oTable = new TableInit();
+		oTable.Init(url);
+	}
+	
+	var TableInit = function () {
+	    var oTableInit = new Object();
+	    //初始化Table
+	    oTableInit.Init = function (url) {
+	        $('#tab').bootstrapTable({
+	            url: url,         //请求后台的URL（*）
+	            method: 'get',                      //请求方式（*）
+	            toolbar: '#toolbar',                //工具按钮用哪个容器
+	            striped: true,                      //是否显示行间隔色
+	            cache: true,                        //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+	            pagination: true,                   //是否显示分页（*）
+	            sortable: false,                    //是否启用排序
+	            sortOrder: "asc",                   //排序方式
+	            queryParams: oTableInit.queryParams,//传递参数（*）
+	            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+	            pageNumber: 1,                      //初始化加载第一页，默认第一页
+	            pageSize: 50,                       //每页的记录行数（*）
+	            pageList: [10, 50, 100, 500, 1000],        //可供选择的每页的行数（*）
+	            search: false,                      //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+	            contentType: "application/x-www-form-urlencoded",
+	            strictSearch: true,
+	            showColumns: true,                  //是否显示所有的列
+	            showRefresh: true,                  //是否显示刷新按钮
+	            minimumCountColumns: 2,             //最少允许的列数
+	            clickToSelect: true,                //是否启用点击选中行
+	            height: 1000,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+	            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+	            showToggle: false,                   //是否显示详细视图和列表视图的切换按钮
+	            cardView: false,                    //是否显示详细视图
+	            detailView: false,                  //是否显示父子表
+	            columns: [
+	            {
+	                field: 'id',
+	                title: '记录编号',
+	               	align: 'center',
+	               	valign: 'middle'
+	            }, {
+	            	field: 'cph',
+	            	title: '车牌号',
+	                formatter: operator,             
+	               	align: 'center',
+	                valign: 'middle'
+	            }, {
+	                field: 'parkname',
+	                title: '停车场名',
+	                align: 'center',
+		            valign: 'middle'
+	            },{
+	                field: 'berthcode',
+	                title: '车位编号',
+	                align: 'center',
+		            valign: 'middle'
+	            },{
+	                field: 'streetname',
+	                title: '所属街道',
+	                align: 'center',
+		            valign: 'middle'
+	            }, {
+	                field: 'areaname',
+	                title: '所属城区',
+	                align: 'center',
+		            valign: 'middle'
+	            },{
+	                field: 'inserttime',
+	                title: '驶入时间',
+	                align: 'center',
+		            valign: 'middle'
+	            },{
+	                field: 'dealtime',
+	                title: '驶离时间',
+	                align: 'center',
+		            valign: 'middle'
+	            },]
+	        });
+	        
+	    };  
+	    
+	    //得到查询的参数
+	    oTableInit.queryParams = function (params) {
+	        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+	            limit: params.limit,   //页面大小
+	            offset:params.offset
+	        };
+	        return temp;
+	    };
+	    return oTableInit;
+	};
+
+ 
+	function operator(value,row,index) {//赋予的参数
+//		alert(value);
+	    return [
+	    	subString(value,3,6)
+	    ].join('');
+	} 
+	
+
+	function showData(data) {
+		$("#tab").html("");
+		var str = "<thead><tr><th>记录编号</th><th>车牌号</th><th>真实车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>驶入时间</th><th>驶离时间</th></tr></thead><tbody>";
+		for (var i = 0; i < data.length; i++) {
+			str = str + "<tr><td>" + data[i].id + "</td><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
+		}
+		str = str + "</tbody>";
+		document.getElementById("name").innerHTML = "停车记录";
+		$("#tab").append(str); 
+		$('tr').find('th:eq(2)').hide();
+		$('tr').find('td:eq(2)').hide();
+	}
+	
+	$(document).ready(function(){  
+		showForm();
+		
+		var source = $("#source").html();
+		auto(source);
+		
+		if(source != "record"){
+			var sWord = document.getElementById('searchWord');
+			var clzall = document.getElementById('record');    
+			clzall.setAttribute("class", "nav-link");
+			
+			if(source == "recordcph"){
+				var clzpark = document.getElementById('recordcph');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "请输入完整车牌号进行搜索");
+			}
+			else if(source == "recordpark"){
+				var clzpark = document.getElementById('recordpark');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "可按停车场名进行搜索");
+			}
+			else if(source == 'recordstreet'){
+				var clzpark = document.getElementById('recordstreet');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "可按街道名进行搜索");
+			}
+			else if(source == 'recordarea'){
+				var clzpark = document.getElementById('recordarea');    
+				clzpark.setAttribute("class", "nav-link active");
+				sWord.setAttribute("placeholder", "可按城区名进行搜索");
+			}
+		}
+	});	
+	
+	function showForm(){
+		var search_id = $("#search_id").html();		
+		var user_id = $("#user_id").html();
+		var search_name = $("#search_name").html();		
+		var user_name = $("#user_name").html();
+				
+		if (user_id == "admin") 
+			document.getElementById("user").innerText = "用户管理";
+		
+		if (user_name == search_name)
+			document.getElementById("searchWord").value = "";
+
+ 		if (search_id == "admin"){
+ 			$("user").empty();
+ 			document.getElementById("user").innerText = "用户管理";	
+/*			$.ajax({
+   				type:'GET',
+     			url:'http://localhost:8080/record/form',
+     			async:true,
+     			data:{
+     			},
+     			success:function(result){
+     	    		showData(result);
+     	    		display();
+     			},
+     			error:function(error){
+     				var jsonData = JSON.stringify(error);
+     	    		alert(jsonData)
+     			}
+ 			})
+*/
+			var url = "http://localhost:8080/record/form";
+ 			initTable(url);
+		}
+		else {
+			var param = encode64(search_id);
+			$.ajax({
+	   			type:'GET',
+	     		url:'http://localhost:8080/record/' + param + '/form',
+	     		async:true,
+	     		data:{
+	     		},
+	     		success:function(result){
+	     	    	showData(result);
+	     	    	display();
+	     		},
+	     		error:function(error){
+	     			var jsonData = JSON.stringify(error);
+	     	    	alert(jsonData)
+	     		}
+	 		})
+		} 
+	}
 	
 	function auto(source) {
 		var user_id = $("#user_id").html();
@@ -341,91 +552,6 @@
 				window.location.href=url;
 			}		
 		}
-	}
-	
-	$(document).ready(function(){  
-		showForm();
-		
-		var source = $("#source").html();
-		auto(source);
-		
-		if(source != "record"){
-			var sWord = document.getElementById('searchWord');
-			var clzall = document.getElementById('record');    
-			clzall.setAttribute("class", "nav-link");
-			
-			if(source == "recordcph"){
-				var clzpark = document.getElementById('recordcph');    
-				clzpark.setAttribute("class", "nav-link active");
-				sWord.setAttribute("placeholder", "请输入完整车牌号进行搜索");
-			}
-			else if(source == "recordpark"){
-				var clzpark = document.getElementById('recordpark');    
-				clzpark.setAttribute("class", "nav-link active");
-				sWord.setAttribute("placeholder", "可按停车场名进行搜索");
-			}
-			else if(source == 'recordstreet'){
-				var clzpark = document.getElementById('recordstreet');    
-				clzpark.setAttribute("class", "nav-link active");
-				sWord.setAttribute("placeholder", "可按街道名进行搜索");
-			}
-			else if(source == 'recordarea'){
-				var clzpark = document.getElementById('recordarea');    
-				clzpark.setAttribute("class", "nav-link active");
-				sWord.setAttribute("placeholder", "可按城区名进行搜索");
-			}
-		}
-	});	
-	
-	function showForm(){
-		var search_id = $("#search_id").html();		
-		var user_id = $("#user_id").html();
-		var search_name = $("#search_name").html();		
-		var user_name = $("#user_name").html();
-
-		if (user_id == "admin") 
-			document.getElementById("user").innerText = "用户管理";
-		
-		if (user_name == search_name)
-			document.getElementById("searchWord").value = "";
-
- 		if (search_id == "admin"){
- 			$("user").empty();
- 			document.getElementById("user").innerText = "用户管理";			
- 			$.ajax({
-   				type:'GET',
-     			url:'http://localhost:8080/record/form',
-     			async:true,
-     			data:{
-     			},
-     			success:function(result){
-     	    		showData(result);
-     	    		display();
-     			},
-     			error:function(error){
-     				var jsonData = JSON.stringify(error);
-     	    		alert(jsonData)
-     			}
- 			})
-		}
-		else {
-			var param = encode64(search_id);
-			$.ajax({
-	   			type:'GET',
-	     		url:'http://localhost:8080/record/' + param + '/form',
-	     		async:true,
-	     		data:{
-	     		},
-	     		success:function(result){
-	     	    	showData(result);
-	     	    	display();
-	     		},
-	     		error:function(error){
-	     			var jsonData = JSON.stringify(error);
-	     	    	alert(jsonData)
-	     		}
-	 		})
-		} 
 	}
 	
 	function returnForm() {
@@ -511,19 +637,6 @@
 		var url = "http://localhost:8080/user/" + param + "/street";
 		window.location.href=url;
 	} 
-
-	function showData(data) {
-		$("#tab").html("");
-		var str = "<thead><tr><th>记录编号</th><th>车牌号</th><th>真实车牌号</th><th>停车场名</th><th>车位编号</th><th>所属街道</th><th>所属城区</th><th>驶入时间</th><th>驶离时间</th></tr></thead><tbody>";
-		for (var i = 0; i < data.length; i++) {
-			str = str + "<tr><td>" + data[i].id + "</td><td>" + subString(data[i].cph,3,6) + "</td><td>" + data[i].cph + "</td><td>" + data[i].parkname + "</td><td>" + data[i].berthcode + "</td><td>" + data[i].streetname + "</td><td>" + data[i].areaname + "</td><td>" + data[i].inserttime + "</td><td>" + data[i].dealtime + "</td></tr>"; 
-		}
-		str = str + "</tbody>";
-		document.getElementById("name").innerHTML = "停车记录";
-		$("#tab").append(str); 
-		$('tr').find('th:eq(2)').hide();
-		$('tr').find('td:eq(2)').hide();
-	}
 
 	function getUser() {
 		var user_id = $("#user_id").html();

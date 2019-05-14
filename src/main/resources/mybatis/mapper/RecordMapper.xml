@@ -14,12 +14,23 @@
 		<result column="dealtime" property="dealtime" />
 	</resultMap>
 
-	<select id="getAllRecord" resultMap="RecordMap" useCache="false">
+	<select id="getAllRecordLimit" resultMap="RecordMap" useCache="false">
+    	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
+    	FROM record
+    	order by id asc limit #{offset}, #{i};
+    </select>
+    
+    <select id="getAllRecord" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
     	order by parkcode asc;
     </select>
     
+    <select id="getAllRecordCount" resultType="java.lang.Integer" useCache="false"> 
+		select count(*) 
+		from record 
+	</select>
+	
     <select id="getRecordWithStreet" parameterType="java.lang.String" resultMap="RecordMap" useCache="false">
     	select id,berthcode,cph,parkcode,streetcode,businesscode,inserttime,dealtime
     	FROM record
