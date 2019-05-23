@@ -241,6 +241,7 @@
                                 <table class="table" id="tab">
                                     
                                 </table>
+                                <sapn>（车辆类型：01-跑车  02-轿车  03-面包车  04-新能源汽车  05-越野车）</sapn>
                             </div>
                         </div>
                     </div>
